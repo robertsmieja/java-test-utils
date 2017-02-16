@@ -20,4 +20,12 @@ public interface HashCodeTests<T> extends TestProducer<T> {
 
         assertNotEquals(differentValueAsObject.hashCode(), differentValue.hashCode());
     }
+
+    @Test
+    default void differentValuesHaveDifferentHashCodes() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        T value = createValue();
+        T differentValue = createDifferentValue();
+
+        assertNotEquals(createDifferentValue().hashCode(), createValue());
+    }
 }

@@ -14,7 +14,7 @@ public interface EqualsTests<T> extends TestProducer<T> {
     }
 
     @Test
-    default void testNotEquals(Object firstObject, Object secondObject) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void testNotEquals() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Assertions.assertNotEquals(createValue(), createDifferentValue());
         Assertions.assertNotEquals(createDifferentValue(), createValue());
         Assertions.assertNotEquals(null, createValue());
