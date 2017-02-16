@@ -1,8 +1,11 @@
 package com.robertsmieja.test.utils.junit;
 
+import org.apache.commons.lang3.reflect.MethodUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -10,22 +13,14 @@ public interface HashCodeTests<T> extends TestProducer<T> {
 
     @Test
     default void isNotUsingDefaultHashCodeImplementation() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        T value = createValue();
-        Object valueAsObject = (Object)value;
+        Class<T> tClass = getTypeClass();
 
-        assertNotEquals(valueAsObject.hashCode(), value.hashCode());
-
-        T differentValue = createDifferentValue();
-        Object differentValueAsObject = (Object)differentValue;
-
-        assertNotEquals(differentValueAsObject.hashCode(), differentValue.hashCode());
+        Method hashCodeMethod = MethodUtils.getAccessibleMethod(tClass, "hashCode");
+        Assertions.assertNotNull(hashCodeMethod, "hashCode() method not implemented");
     }
 
     @Test
     default void differentValuesHaveDifferentHashCodes() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        T value = createValue();
-        T differentValue = createDifferentValue();
-
-        assertNotEquals(createDifferentValue().hashCode(), createValue());
+        Assertions.assertNotEquals(createDifferentValue().hashCode(), createValue().hashCode());
     }
 }
