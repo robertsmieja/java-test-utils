@@ -36,9 +36,9 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
             if (getter == null) {
                 Assertions.fail("Unable to find getter <" + GET_PREFIX + capitalizedFieldName + "> for field <" + field + ">");
             }
-            Method setter = MethodUtils.getAccessibleMethod(getTypeClass(), SET_PREFIX + capitalizedFieldName);
+            Method setter = MethodUtils.getAccessibleMethod(getTypeClass(), SET_PREFIX + capitalizedFieldName, field.getType());
             if (setter == null) {
-                Assertions.fail("Unable to find getter <" + GET_PREFIX + capitalizedFieldName + "> for field <" + field + ">");
+                Assertions.fail("Unable to find getter <" + SET_PREFIX + capitalizedFieldName + "> for field <" + field + ">");
             }
             listOfFieldGetterSetter.add(new ImmutableTriple<>(field, getter, setter));
         }
