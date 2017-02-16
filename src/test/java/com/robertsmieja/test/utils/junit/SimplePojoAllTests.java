@@ -2,7 +2,7 @@ package com.robertsmieja.test.utils.junit;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class SimplePojoTests implements EqualsTests<SimplePojo>, GettersAndSettersTests<SimplePojo>, HashCodeTests<SimplePojo>, ToStringTests<SimplePojo> {
+public class SimplePojoAllTests implements AllBasicTests<SimplePojo> {
     @Override
     public Class<SimplePojo> getTypeClass() {
         return SimplePojo.class;

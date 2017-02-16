@@ -1,25 +1,9 @@
 package com.robertsmieja.test.utils.junit;
 
-public class SimplePojo {
+public class ComplexPojo {
     String stringValue;
     Integer integerValue;
     Long longValue;
-
-    public static SimplePojo createValue(){
-        SimplePojo pojo = new SimplePojo();
-        pojo.setIntegerValue(99);
-        pojo.setLongValue(22L);
-        pojo.setStringValue("CoolString");
-        return pojo;
-    }
-
-    public static SimplePojo createDifferentValue(){
-        SimplePojo pojo = new SimplePojo();
-        pojo.setIntegerValue(22);
-        pojo.setLongValue(99L);
-        pojo.setStringValue("LessCoolString");
-        return pojo;
-    }
 
     public String getStringValue() {
         return stringValue;
