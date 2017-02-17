@@ -18,6 +18,9 @@ package com.robertsmieja.test.utils.junit.annotations;
 
 import java.lang.annotation.*;
 
+/**
+ * An annotation to mark a field that the GettersAndSettersTests should ignore
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
