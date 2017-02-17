@@ -16,6 +16,8 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.domain.SimplePojo;
+
 import java.lang.reflect.InvocationTargetException;
 
 public class SimplePojoTests implements EqualsTests<SimplePojo>, GettersAndSettersTests<SimplePojo>, HashCodeTests<SimplePojo>, ToStringTests<SimplePojo> {

@@ -20,6 +20,7 @@ import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
+import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.jupiter.api.Assertions;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.robertsmieja.test.utils.junit.Internal.findMethodForFieldOrFail;
+
 /**
  * A set of tests surrounding getter and setter methods.
  * Contains the following tests:
@@ -42,9 +45,10 @@ import java.util.stream.Collectors;
  */
 public interface GettersAndSettersTests<T> extends TestProducer<T> {
 
-    String GET_PREFIX = "get";
-    String SET_PREFIX = "set";
-    String SYNTHETIC_FIELD_PREFIX = "$";
+    String GET_METHOD_PREFIX = "get";
+    String IS_METHOD_PREFIX = "is";
+    String SET_METHOD_PREFIX = "set";
+//    String SYNTHETIC_FIELD_PREFIX = "$";
 
     @Test
     @DisplayName("Test getters and setters")
@@ -52,7 +56,7 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
         List<Field> allFields = FieldUtils.getAllFieldsList(getTypeClass());
         List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(getTypeClass(), IgnoreForTests.class);
         List<Field> fieldsToTest = allFields.stream()
-                .filter(field -> !StringUtils.startsWith(field.getName(), SYNTHETIC_FIELD_PREFIX))
+                .filter(field -> !field.isSynthetic())
                 .filter(field -> !excludedFields.contains(field))
                 .collect(Collectors.toList());
 
@@ -61,15 +65,17 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
         T differentValue = createDifferentValue();
 
         for (Field field : fieldsToTest) {
-            String capitalizedFieldName = StringUtils.capitalize(field.getName());
-            Method getter = MethodUtils.getAccessibleMethod(getTypeClass(), GET_PREFIX + capitalizedFieldName);
-            if (getter == null) {
-                Assertions.fail("Unable to find getter <" + GET_PREFIX + capitalizedFieldName + "> for field <" + field + ">");
+
+
+            Method getter;
+            if (Boolean.class.equals(field.getType()) || boolean.class.equals(field.getType())){
+                getter = findMethodForFieldOrFail(getTypeClass(), IS_METHOD_PREFIX, field);
+            } else {
+                getter = findMethodForFieldOrFail(getTypeClass(), GET_METHOD_PREFIX, field);
             }
-            Method setter = MethodUtils.getAccessibleMethod(getTypeClass(), SET_PREFIX + capitalizedFieldName, field.getType());
-            if (setter == null) {
-                Assertions.fail("Unable to find getter <" + SET_PREFIX + capitalizedFieldName + "> for field <" + field + ">");
-            }
+
+            Method setter = findMethodForFieldOrFail(getTypeClass(), SET_METHOD_PREFIX, field, field.getType());
+
             listOfFieldGetterSetter.add(new ImmutableTriple<>(field, getter, setter));
 
             Object originalFieldValue = getter.invoke(value);

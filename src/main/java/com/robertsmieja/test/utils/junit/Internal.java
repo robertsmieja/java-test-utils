@@ -16,11 +16,13 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.junit.jupiter.api.Assertions;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -45,5 +47,18 @@ public class Internal {
     static void doNotUseDefaultMethod(Class aClass, String methodName, Class... parameterTypes) {
         Method methodToCheck = MethodUtils.getAccessibleMethod(aClass, methodName, parameterTypes);
         Assertions.assertNotEquals(Object.class, methodToCheck.getDeclaringClass(), methodName + "() method not implemented");
+    }
+
+    static Method findMethodForFieldOrFail(Class aClass, String accessorPrefix, Field field) {
+        return findMethodForFieldOrFail(aClass, accessorPrefix, field, (Class[]) null);
+    }
+
+    static Method findMethodForFieldOrFail(Class aClass, String accessorPrefix, Field field, Class... paramTypes){
+        String desiredMethodName = accessorPrefix + StringUtils.capitalize(field.getName());
+        Method method = MethodUtils.getAccessibleMethod(aClass, desiredMethodName, paramTypes);
+        if (method == null){
+            Assertions.fail("Unable to find <" + desiredMethodName + "> for field <" + field + ">");
+        }
+        return method;
     }
 }

@@ -16,23 +16,30 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.domain.SimplePojo;
+import com.robertsmieja.test.utils.junit.AllBasicTests;
+import com.robertsmieja.test.utils.junit.domain.ComplexPojo;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class SimplePojoAllTests implements AllBasicTests<SimplePojo> {
+public class ComplexPojoTests implements AllBasicTests<ComplexPojo>{
+
     @Override
-    public Class<SimplePojo> getTypeClass() {
-        return SimplePojo.class;
+    public Class<ComplexPojo> getTypeClass() {
+        return ComplexPojo.class;
     }
 
     @Override
-    public SimplePojo createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return SimplePojo.createValue();
+    public ComplexPojo createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        return new ComplexPojo();
     }
 
     @Override
-    public SimplePojo createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return SimplePojo.createDifferentValue();
+    public ComplexPojo createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        ComplexPojo value = new ComplexPojo();
+        value.setLongValue(2L);
+        value.setIntegerValue(1);
+        value.setStringValue("String");
+        value.setBooleanValue(true);
+        return value;
     }
 }
