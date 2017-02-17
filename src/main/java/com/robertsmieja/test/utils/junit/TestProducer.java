@@ -24,9 +24,21 @@ import java.lang.reflect.InvocationTargetException;
 
 import static com.robertsmieja.test.utils.junit.Internal.defaultCreateValueImplementation;
 
+/**
+ * A base interface that defines the following methods:
+ *  getTypeClass() which returns the class under test's Class
+ *  createValue() which returns an instance of the class under test
+ *  createDifferentValue() which returns an instance of the class under test, with different values in each field
+ *
+ * By default it will attempt to use a no-arg constructor to create for the createValue() and createDifferentValue() methods
+ *
+ * @param <T> The class under test
+ */
 public interface TestProducer<T> {
+    //TODO find a way to get the class without requiring the implementing class to have a new method
     Class<T> getTypeClass();
 
+    //TODO find a way to intelligently create values of the class under test
     default T createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
         return defaultCreateValueImplementation(getTypeClass());
     }

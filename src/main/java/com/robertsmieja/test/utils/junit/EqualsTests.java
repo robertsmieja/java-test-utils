@@ -22,6 +22,15 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * A set of tests for the equals() method.
+ * Contains the following tests:
+ *  - A test that checks if the default equals() implementation is used, and fails if it is
+ *  - A test to make sure instances of the same values are equal to each other
+ *  - A test to make sure different values are not equal to each other
+ *
+ * @param <T> The class under test
+ */
 public interface EqualsTests<T> extends TestProducer<T> {
 
     @Test
@@ -36,8 +45,6 @@ public interface EqualsTests<T> extends TestProducer<T> {
     default void differentValuesShouldNotBeEquals() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Assertions.assertNotEquals(createValue(), createDifferentValue());
         Assertions.assertNotEquals(createDifferentValue(), createValue());
-        Assertions.assertNotEquals(null, createValue());
-        Assertions.assertNotEquals(null, createDifferentValue());
     }
 
     @Test

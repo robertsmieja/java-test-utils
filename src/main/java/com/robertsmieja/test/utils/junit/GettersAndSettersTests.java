@@ -33,6 +33,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A set of tests surrounding getter and setter methods.
+ * Contains the following tests:
+ *  - A test to make sure all getters will return the value that was passed into set, and handle null values correctly
+ *
+ * @param <T> The class under test
+ */
 public interface GettersAndSettersTests<T> extends TestProducer<T> {
 
     String GET_PREFIX = "get";

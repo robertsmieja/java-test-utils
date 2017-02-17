@@ -25,8 +25,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * To make sure that the behavior of both createValue() methods in the interface are independent of each other, we need
- * a "helper" method.
+ * This is an internal class that should not be used.
+ *
+ * This class solely holds static methods, in order to reduce code duplication.
  */
 public class Internal {
     private Internal() {

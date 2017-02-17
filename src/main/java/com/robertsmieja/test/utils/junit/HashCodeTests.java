@@ -22,12 +22,28 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * A set of tests for the hashCode() method.
+ * Contains the following tests:
+ *  - A test that checks if the default hashCode() implementation is used, and fails if it is
+ *  - A test to make sure instances of the same values return the same hashCodes
+ *  - A test to make sure different values return different hashCodes
+ *
+ * @param <T> The class under test
+ */
 public interface HashCodeTests<T> extends TestProducer<T> {
 
     @Test
     @DisplayName("Do not use default hashCode()")
     default void doNotUseDefaultHashCode() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Internal.doNotUseDefaultMethod(getTypeClass(), "hashCode");
+    }
+
+    @Test
+    @DisplayName("Same values have different hashCode() results")
+    default void sameValuesHaveDifferentHashCodeResults() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Assertions.assertEquals(createValue().hashCode(), createValue().hashCode());
+        Assertions.assertEquals(createDifferentValue().hashCode(), createDifferentValue().hashCode());
     }
 
     @Test

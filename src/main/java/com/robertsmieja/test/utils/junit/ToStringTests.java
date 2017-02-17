@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,12 +24,28 @@ import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ * A set of tests for the toString() method.
+ * Contains the following tests:
+ *  - A test that checks if the default toString() implementation is used, and fails if it is
+ *  - A test to make sure instances of the same values return the same toStrings
+ *  - A test to make sure different values return different toStrings
+ *
+ * @param <T> The class under test
+ */
 public interface ToStringTests<T> extends TestProducer<T> {
 
     @Test
     @DisplayName("Different values should have different toString() results")
     default void differentValuesShouldHaveDifferentToStringResults() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         assertNotEquals(createValue().toString(), createDifferentValue().toString());
+    }
+
+    @Test
+    @DisplayName("Same values should have the same toString() results")
+    default void sameValuesShouldHaveTheSameToStringResults() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Assertions.assertEquals(createValue().toString(), createValue().toString());
+        Assertions.assertEquals(createDifferentValue().toString(), createDifferentValue().toString());
     }
 
     @Test
