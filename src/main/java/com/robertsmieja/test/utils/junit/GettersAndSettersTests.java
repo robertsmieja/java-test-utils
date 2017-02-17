@@ -37,13 +37,17 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
 
     String GET_PREFIX = "get";
     String SET_PREFIX = "set";
+    String SYNTHETIC_FIELD_PREFIX = "$";
 
     @Test
     @DisplayName("Test getters and setters")
     default void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         List<Field> allFields = FieldUtils.getAllFieldsList(getTypeClass());
         List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(getTypeClass(), IgnoreForTests.class);
-        List<Field> fieldsToTest = allFields.stream().filter(field -> !excludedFields.contains(field)).collect(Collectors.toList());
+        List<Field> fieldsToTest = allFields.stream()
+                .filter(field -> !StringUtils.startsWith(field.getName(), SYNTHETIC_FIELD_PREFIX))
+                .filter(field -> !excludedFields.contains(field))
+                .collect(Collectors.toList());
 
         List<Triple<Field, Method, Method>> listOfFieldGetterSetter = new ArrayList<>();
         T value = createValue();

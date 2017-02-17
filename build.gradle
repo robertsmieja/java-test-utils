@@ -12,6 +12,7 @@ group 'com.robertsmieja'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'eclipse'
+apply plugin: 'jacoco'
 apply plugin: 'java'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
@@ -24,4 +25,21 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'org.junit.jupiter:junit-jupiter-api:5.0.0-M3'
     runtime 'org.junit.jupiter:junit-jupiter-engine:5.0.0-M3'
+}
+
+
+jacoco {
+    toolVersion = '0.7.9'
+}
+//TODO Why is afterEvaluate needed?
+afterEvaluate {
+    jacoco.applyTo(tasks.junitPlatformTest)
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
+    executionData = files('build/jacoco/junitPlatformTest.exec')
 }
