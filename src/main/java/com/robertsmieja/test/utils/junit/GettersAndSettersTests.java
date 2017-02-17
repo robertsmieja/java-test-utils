@@ -4,7 +4,6 @@ import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
-import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.jupiter.api.Assertions;
@@ -28,9 +27,11 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
     default void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         List<Field> allFields = FieldUtils.getAllFieldsList(getTypeClass());
         List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(getTypeClass(), IgnoreForTests.class);
-        List<Field> fieldsToTest = allFields.stream().filter(field ->!excludedFields.contains(field)).collect(Collectors.toList());
+        List<Field> fieldsToTest = allFields.stream().filter(field -> !excludedFields.contains(field)).collect(Collectors.toList());
 
         List<Triple<Field, Method, Method>> listOfFieldGetterSetter = new ArrayList<>();
+        T value = createValue();
+        T differentValue = createDifferentValue();
 
         for (Field field : fieldsToTest) {
             String capitalizedFieldName = StringUtils.capitalize(field.getName());
@@ -43,15 +44,6 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
                 Assertions.fail("Unable to find getter <" + SET_PREFIX + capitalizedFieldName + "> for field <" + field + ">");
             }
             listOfFieldGetterSetter.add(new ImmutableTriple<>(field, getter, setter));
-        }
-
-        T value = createValue();
-        T differentValue = createDifferentValue();
-
-        for (Triple<Field, Method, Method> fieldGetterSetter : listOfFieldGetterSetter){
-            Field field = fieldGetterSetter.getLeft();
-            Method getter = fieldGetterSetter.getMiddle();
-            Method setter = fieldGetterSetter.getRight();
 
             Object originalFieldValue = getter.invoke(value);
             Object differentFieldValue = getter.invoke(differentValue);
@@ -65,8 +57,8 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
             newFieldValue = getter.invoke(value);
             Assertions.assertEquals(originalFieldValue, newFieldValue);
 
-            if (!getter.getReturnType().isPrimitive()){
-                setter.invoke(value, (Object)null);
+            if (!getter.getReturnType().isPrimitive()) {
+                setter.invoke(value, (Object) null);
                 newFieldValue = getter.invoke(value);
                 Assertions.assertNull(newFieldValue);
             }

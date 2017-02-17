@@ -13,11 +13,11 @@ public interface TestProducer<T> {
 
     default T createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
         return defaultCreateValueImplementation(getTypeClass());
-    };
+    }
 
     default T createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
         return defaultCreateValueImplementation(getTypeClass());
-    };
+    }
 
     @Test
     @DisplayName("Can create values successfully")

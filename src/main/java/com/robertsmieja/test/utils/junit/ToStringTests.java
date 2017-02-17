@@ -1,12 +1,9 @@
 package com.robertsmieja.test.utils.junit;
 
-import org.apache.commons.lang3.reflect.MethodUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
