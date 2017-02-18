@@ -18,6 +18,7 @@ package com.robertsmieja.test.utils.junit.domain;
 
 import com.robertsmieja.test.utils.junit.TestProducer;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +31,7 @@ public class TestProducerTests implements TestProducer<SimplePojo>{
     }
 
     @Test
-    @Tag("Default values are created successfully")
+    @DisplayName("Default values are created successfully")
     public void defaultValuesAreCreatedSuccessfully() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         SimplePojo value = createValue();
         SimplePojo differentValue = createDifferentValue();

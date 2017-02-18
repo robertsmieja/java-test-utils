@@ -40,6 +40,7 @@ public class ComplexPojoTests implements AllBasicTests<ComplexPojo>{
         value.setIntegerValue(1);
         value.setStringValue("String");
         value.setBooleanValue(true);
+        value.setBigBooleanValue(true);
         return value;
     }
 }

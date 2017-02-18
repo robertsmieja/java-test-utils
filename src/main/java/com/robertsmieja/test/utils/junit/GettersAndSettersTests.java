@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.robertsmieja.test.utils.junit.Internal.accessorMethodNameForField;
 import static com.robertsmieja.test.utils.junit.Internal.findMethodForFieldOrFail;
 
 /**
@@ -53,8 +54,9 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
     @Test
     @DisplayName("Test getters and setters")
     default void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        List<Field> allFields = FieldUtils.getAllFieldsList(getTypeClass());
-        List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(getTypeClass(), IgnoreForTests.class);
+        Class aClass = getTypeClass();
+        List<Field> allFields = FieldUtils.getAllFieldsList(aClass);
+        List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
         List<Field> fieldsToTest = allFields.stream()
                 .filter(field -> !field.isSynthetic())
                 .filter(field -> !excludedFields.contains(field))
@@ -65,16 +67,11 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
         T differentValue = createDifferentValue();
 
         for (Field field : fieldsToTest) {
-
-
-            Method getter;
-            if (Boolean.class.equals(field.getType()) || boolean.class.equals(field.getType())){
-                getter = findMethodForFieldOrFail(getTypeClass(), IS_METHOD_PREFIX, field);
-            } else {
-                getter = findMethodForFieldOrFail(getTypeClass(), GET_METHOD_PREFIX, field);
+            Method getter = MethodUtils.getAccessibleMethod(aClass, accessorMethodNameForField(GET_METHOD_PREFIX, field));
+            if (getter == null){
+                getter = findMethodForFieldOrFail(aClass, IS_METHOD_PREFIX, field);
             }
-
-            Method setter = findMethodForFieldOrFail(getTypeClass(), SET_METHOD_PREFIX, field, field.getType());
+            Method setter = findMethodForFieldOrFail(aClass, SET_METHOD_PREFIX, field, field.getType());
 
             listOfFieldGetterSetter.add(new ImmutableTriple<>(field, getter, setter));
 

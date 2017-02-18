@@ -16,12 +16,16 @@
 
 package com.robertsmieja.test.utils.junit.domain;
 
+import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
+
 public class ComplexPojo {
-    String stringValue;
-    Integer integerValue;
-    Long longValue;
-    boolean booleanValue;
-//    Object $mockSyntheticField;
+    @IgnoreForTests
+    private Object fieldToIgnore;
+    private String stringValue;
+    private Integer integerValue;
+    private Long longValue;
+    private boolean booleanValue;
+    private Boolean bigBooleanValue;
 
     public String getStringValue() {
         return stringValue;
@@ -55,6 +59,25 @@ public class ComplexPojo {
         this.booleanValue = booleanValue;
     }
 
+    public Boolean getBigBooleanValue() {
+        return bigBooleanValue;
+    }
+
+    public void setBigBooleanValue(Boolean bigBooleanValue) {
+        this.bigBooleanValue = bigBooleanValue;
+    }
+
+    @Override
+    public String toString() {
+        return "ComplexPojo{" +
+                "stringValue='" + stringValue + '\'' +
+                ", integerValue=" + integerValue +
+                ", longValue=" + longValue +
+                ", booleanValue=" + booleanValue +
+                ", bigBooleanValue=" + bigBooleanValue +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,7 +88,8 @@ public class ComplexPojo {
         if (booleanValue != that.booleanValue) return false;
         if (stringValue != null ? !stringValue.equals(that.stringValue) : that.stringValue != null) return false;
         if (integerValue != null ? !integerValue.equals(that.integerValue) : that.integerValue != null) return false;
-        return longValue != null ? longValue.equals(that.longValue) : that.longValue == null;
+        if (longValue != null ? !longValue.equals(that.longValue) : that.longValue != null) return false;
+        return bigBooleanValue != null ? bigBooleanValue.equals(that.bigBooleanValue) : that.bigBooleanValue == null;
     }
 
     @Override
@@ -74,16 +98,8 @@ public class ComplexPojo {
         result = 31 * result + (integerValue != null ? integerValue.hashCode() : 0);
         result = 31 * result + (longValue != null ? longValue.hashCode() : 0);
         result = 31 * result + (booleanValue ? 1 : 0);
+        result = 31 * result + (bigBooleanValue != null ? bigBooleanValue.hashCode() : 0);
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "ComplexPojo{" +
-                "stringValue='" + stringValue + '\'' +
-                ", integerValue=" + integerValue +
-                ", longValue=" + longValue +
-                ", booleanValue=" + booleanValue +
-                '}';
-    }
 }
