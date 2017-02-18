@@ -19,7 +19,7 @@ package com.robertsmieja.test.utils.junit.annotations;
 import java.lang.annotation.*;
 
 /**
- * An annotation to mark a field that the GettersAndSettersTests should ignore
+ * An annotation to mark a field that the {@link com.robertsmieja.test.utils.junit.GettersAndSettersTests} should ignore
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
