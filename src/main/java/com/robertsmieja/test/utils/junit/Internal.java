@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
  *
  * This class solely holds static methods, in order to reduce code duplication.
  */
-public class Internal {
+class Internal {
     Internal() { } //package default for code coverage
 
     static <T> T defaultCreateValueImplementation(Class<T> tClass) throws IllegalAccessException, InvocationTargetException, InstantiationException {
