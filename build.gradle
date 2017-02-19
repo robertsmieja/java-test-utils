@@ -24,8 +24,10 @@ repositories {
 
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'org.jetbrains:annotations:15.0'
     compile 'org.junit.jupiter:junit-jupiter-api:5.0.0-M3'
-    runtime 'org.junit.jupiter:junit-jupiter-engine:5.0.0-M3'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.0-M3'
+    testCompile 'org.junit.vintage:junit-vintage-engine:4.12.0-M3'
 }
 
 
@@ -53,6 +55,9 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
 
+            artifact javadocJar {
+                classifier "javadoc"
+            }
             artifact sourceJar {
                 classifier "sources"
             }
@@ -67,6 +72,10 @@ publishing {
 
 task generateJavadoc(type: Javadoc) {
     source = sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar){
+    from generateJavadoc.outputs
 }
 
 task sourceJar(type: Jar) {
