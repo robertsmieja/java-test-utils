@@ -31,9 +31,13 @@ import static com.robertsmieja.test.utils.junit.GettersAndSettersTestUtil.ensure
 /**
  * A set of tests surrounding getter and setter methods.
  * Contains the following tests:
- *  - A test to make sure all getters will return the value that was passed into set, and handle null values correctly
+ * <ul>
+ * <li> A test to make sure all getters will return the value that was passed into set, and handle null values correctly </li>
+ * </ul>
  *
  * @param <T> The class under test
+ *
+ * @since 1.0.0
  */
 public interface GettersAndSettersTests<T> extends TestProducer<T> {
 

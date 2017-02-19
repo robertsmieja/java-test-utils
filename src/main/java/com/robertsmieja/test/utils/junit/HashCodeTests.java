@@ -25,11 +25,15 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * A set of tests for the hashCode() method.
  * Contains the following tests:
- *  - A test that checks if the default hashCode() implementation is used, and fails if it is
- *  - A test to make sure instances of the same values return the same hashCodes
- *  - A test to make sure different values return different hashCodes
+ * <ul>
+ * <li> A test that checks if the default hashCode() implementation is used, and fails if it is </li>
+ * <li> A test to make sure instances of the same values return the same hashCodes </li>
+ * <li> A test to make sure different values return different hashCodes </li>
+ * </ul>
  *
  * @param <T> The class under test
+ *
+ * @since 1.0.0
  */
 public interface HashCodeTests<T> extends TestProducer<T> {
 

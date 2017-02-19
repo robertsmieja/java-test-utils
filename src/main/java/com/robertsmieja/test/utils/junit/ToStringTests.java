@@ -27,11 +27,15 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 /**
  * A set of tests for the toString() method.
  * Contains the following tests:
- *  - A test that checks if the default toString() implementation is used, and fails if it is
- *  - A test to make sure instances of the same values return the same toStrings
- *  - A test to make sure different values return different toStrings
+ * <ul>
+ * <li> A test that checks if the default toString() implementation is used, and fails if it is </li>
+ * <li> A test to make sure instances of the same values return the same toStrings </li>
+ * <li> A test to make sure different values return different toStrings </li>
+ * </ul>
  *
  * @param <T> The class under test
+ *
+ * @since 1.0.0
  */
 public interface ToStringTests<T> extends TestProducer<T> {
 

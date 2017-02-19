@@ -28,11 +28,14 @@ import java.lang.reflect.Method;
 
 /**
  * This is an internal class that should not be used.
- *
+ * <p>
  * This class solely holds static methods, in order to reduce code duplication.
+ *
+ * @since 1.0.0
  */
 class Internal {
-    Internal() { } //package default for code coverage
+    Internal() {
+    } //package default for code coverage
 
     static <T> T defaultCreateValueImplementation(Class<T> tClass) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<T> constructor = ConstructorUtils.getAccessibleConstructor(tClass);
@@ -48,16 +51,16 @@ class Internal {
         Assertions.assertNotEquals(Object.class, methodToCheck.getDeclaringClass(), methodName + "() method not implemented");
     }
 
-    static Method findMethodForFieldOrFail(Class aClass, String accessorPrefix, Field field, Class... paramTypes){
+    static Method findMethodForFieldOrFail(Class aClass, String accessorPrefix, Field field, Class... paramTypes) {
         String desiredMethodName = accessorMethodNameForField(accessorPrefix, field);
         Method method = MethodUtils.getAccessibleMethod(aClass, desiredMethodName, paramTypes);
-        if (method == null){
+        if (method == null) {
             Assertions.fail("Unable to find <" + desiredMethodName + "> for field <" + field + ">");
         }
         return method;
     }
 
-    static String accessorMethodNameForField(String accessorPrefix, Field field){
+    static String accessorMethodNameForField(String accessorPrefix, Field field) {
         return accessorPrefix + StringUtils.capitalize(field.getName());
     }
 }

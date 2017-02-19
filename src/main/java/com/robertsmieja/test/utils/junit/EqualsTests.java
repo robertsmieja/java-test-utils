@@ -25,11 +25,15 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * A set of tests for the equals() method.
  * Contains the following tests:
- *  - A test that checks if the default equals() implementation is used, and fails if it is
- *  - A test to make sure instances of the same values are equal to each other
- *  - A test to make sure different values are not equal to each other
+ * <ul>
+ * <li> A test that checks if the default equals() implementation is used, and fails if it is </li>
+ * <li> A test to make sure instances of the same values are equal to each other </li>
+ * <li> A test to make sure different values are not equal to each other </li>
+ * </ul>
  *
  * @param <T> The class under test
+ *
+ * @since 1.0.0
  */
 public interface EqualsTests<T> extends TestProducer<T> {
 

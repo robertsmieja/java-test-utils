@@ -33,12 +33,13 @@ import static com.robertsmieja.test.utils.junit.Internal.accessorMethodNameForFi
 import static com.robertsmieja.test.utils.junit.Internal.findMethodForFieldOrFail;
 
 class GettersAndSettersTestUtil {
-    GettersAndSettersTestUtil() {}
+    GettersAndSettersTestUtil() {
+    }
 
     @NotNull
-    static ImmutablePair<Method, Method> getGetterAndSetterForField(@NotNull Class aClass, @NotNull Field field){
+    static ImmutablePair<Method, Method> getGetterAndSetterForField(@NotNull Class aClass, @NotNull Field field) {
         Method getter = MethodUtils.getAccessibleMethod(aClass, accessorMethodNameForField(GettersAndSettersTests.GET_METHOD_PREFIX, field));
-        if (getter == null){
+        if (getter == null) {
             getter = findMethodForFieldOrFail(aClass, GettersAndSettersTests.IS_METHOD_PREFIX, field);
         }
         Method setter = Internal.findMethodForFieldOrFail(aClass, GettersAndSettersTests.SET_METHOD_PREFIX, field, field.getType());
