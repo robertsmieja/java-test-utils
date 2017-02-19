@@ -30,7 +30,6 @@ dependencies {
     testCompile 'org.junit.vintage:junit-vintage-engine:4.12.0-M3'
 }
 
-
 /* Code Coverage */
 jacoco {
     toolVersion = '0.7.9'
@@ -70,14 +69,20 @@ publishing {
     }
 }
 
-task generateJavadoc(type: Javadoc) {
+javadoc {
     source = sourceSets.main.allJava
+    classpath = configurations.compile
 }
 
+/* Additional Jars */
 task javadocJar(type: Jar){
-    from generateJavadoc.outputs
+    from javadoc
 }
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
+}
+
+artifacts {
+    archives jar, javadocJar, sourceJar
 }
