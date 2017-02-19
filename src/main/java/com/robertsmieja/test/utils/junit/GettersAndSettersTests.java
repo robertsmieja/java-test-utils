@@ -16,13 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.reflect.FieldUtils;
-import org.apache.commons.lang3.reflect.MethodUtils;
-import org.apache.commons.lang3.reflect.TypeUtils;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,12 +24,9 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.robertsmieja.test.utils.junit.Internal.accessorMethodNameForField;
-import static com.robertsmieja.test.utils.junit.Internal.findMethodForFieldOrFail;
+import static com.robertsmieja.test.utils.junit.GettersAndSettersTestUtil.ensureFieldCanHandleNullValues;
 
 /**
  * A set of tests surrounding getter and setter methods.
@@ -49,31 +40,20 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
     String GET_METHOD_PREFIX = "get";
     String IS_METHOD_PREFIX = "is";
     String SET_METHOD_PREFIX = "set";
-//    String SYNTHETIC_FIELD_PREFIX = "$";
 
     @Test
     @DisplayName("Test getters and setters")
     default void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Class aClass = getTypeClass();
-        List<Field> allFields = FieldUtils.getAllFieldsList(aClass);
-        List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
-        List<Field> fieldsToTest = allFields.stream()
-                .filter(field -> !field.isSynthetic())
-                .filter(field -> !excludedFields.contains(field))
-                .collect(Collectors.toList());
+        List<Field> fieldsToTest = GettersAndSettersTestUtil.getFields(aClass);
 
-        List<Triple<Field, Method, Method>> listOfFieldGetterSetter = new ArrayList<>();
         T value = createValue();
         T differentValue = createDifferentValue();
 
         for (Field field : fieldsToTest) {
-            Method getter = MethodUtils.getAccessibleMethod(aClass, accessorMethodNameForField(GET_METHOD_PREFIX, field));
-            if (getter == null){
-                getter = findMethodForFieldOrFail(aClass, IS_METHOD_PREFIX, field);
-            }
-            Method setter = findMethodForFieldOrFail(aClass, SET_METHOD_PREFIX, field, field.getType());
-
-            listOfFieldGetterSetter.add(new ImmutableTriple<>(field, getter, setter));
+            ImmutablePair<Method, Method> getterAndSetter = GettersAndSettersTestUtil.getGetterAndSetterForField(aClass, field);
+            Method getter = getterAndSetter.getLeft();
+            Method setter = getterAndSetter.getRight();
 
             Object originalFieldValue = getter.invoke(value);
             Object differentFieldValue = getter.invoke(differentValue);
@@ -87,11 +67,8 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
             newFieldValue = getter.invoke(value);
             Assertions.assertEquals(originalFieldValue, newFieldValue);
 
-            if (!getter.getReturnType().isPrimitive()) {
-                setter.invoke(value, (Object) null);
-                newFieldValue = getter.invoke(value);
-                Assertions.assertNull(newFieldValue);
-            }
+            ensureFieldCanHandleNullValues(value, getter, setter);
         }
     }
+
 }
