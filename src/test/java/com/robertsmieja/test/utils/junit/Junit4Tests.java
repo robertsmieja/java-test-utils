@@ -41,7 +41,7 @@ public class Junit4Tests {
     }
 
     @Test
-    public void tesToString(){
+    public void testToString(){
 
     }
 }
