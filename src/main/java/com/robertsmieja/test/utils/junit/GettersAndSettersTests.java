@@ -16,17 +16,12 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
 
-import static com.robertsmieja.test.utils.junit.GettersAndSettersTestUtil.ensureFieldCanHandleNullValues;
+import static com.robertsmieja.test.utils.junit.GettersAndSettersTestUtil.runAllGettersAndSettersTests;
 
 /**
  * A set of tests surrounding getter and setter methods.
@@ -48,31 +43,6 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
     @Test
     @DisplayName("Test getters and setters")
     default void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        Class aClass = getTypeClass();
-        List<Field> fieldsToTest = GettersAndSettersTestUtil.getFields(aClass);
-
-        T value = createValue();
-        T differentValue = createDifferentValue();
-
-        for (Field field : fieldsToTest) {
-            ImmutablePair<Method, Method> getterAndSetter = GettersAndSettersTestUtil.getGetterAndSetterForField(aClass, field);
-            Method getter = getterAndSetter.getLeft();
-            Method setter = getterAndSetter.getRight();
-
-            Object originalFieldValue = getter.invoke(value);
-            Object differentFieldValue = getter.invoke(differentValue);
-
-            setter.invoke(value, differentFieldValue);
-            Object newFieldValue = getter.invoke(value);
-
-            Assertions.assertNotEquals(originalFieldValue, newFieldValue);
-
-            setter.invoke(value, originalFieldValue);
-            newFieldValue = getter.invoke(value);
-            Assertions.assertEquals(originalFieldValue, newFieldValue);
-
-            ensureFieldCanHandleNullValues(value, getter, setter);
-        }
+        runAllGettersAndSettersTests(getTypeClass(), createValue(), createDifferentValue());
     }
-
 }
