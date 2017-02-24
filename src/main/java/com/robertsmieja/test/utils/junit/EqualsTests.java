@@ -54,6 +54,6 @@ public interface EqualsTests<T> extends TestProducer<T> {
     @Test
     @DisplayName("Do not use default equals()")
     default void doNotUseDefaultEquals() {
-        Internal.doNotUseDefaultMethod(getTypeClass(), "equals", Object.class);
+        Internal.doNotUseDefaultMethod(getClassOfGenericTypeArgument(), "equals", Object.class);
     }
 }

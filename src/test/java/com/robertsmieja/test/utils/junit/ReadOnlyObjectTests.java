@@ -30,11 +30,6 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 public class ReadOnlyObjectTests implements GettersAndSettersTests<ReadOnlyObject>{
     @Override
-    public Class<ReadOnlyObject> getTypeClass() {
-        return ReadOnlyObject.class;
-    }
-
-    @Override
     public ReadOnlyObject createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
         return new ReadOnlyObject(1, "coolData");
     }

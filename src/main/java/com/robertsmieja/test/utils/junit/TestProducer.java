@@ -21,13 +21,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import static com.robertsmieja.test.utils.junit.Internal.defaultCreateValueImplementation;
 
 /**
  * A base interface that defines the following methods:
  * <ul>
- * <li> getTypeClass() which returns the class under test's Class </li>
+ * <li> getClassOfGenericTypeArgument() which returns the class under test's Class </li>
  * <li> createValue() which returns an instance of the class under test </li>
  * <li> createDifferentValue() which returns an instance of the class under test, with different values in each field </li>
  * </ul>
@@ -38,16 +40,23 @@ import static com.robertsmieja.test.utils.junit.Internal.defaultCreateValueImple
  * @since 1.0.0
  */
 public interface TestProducer<T> {
-    //TODO find a way to get the class without requiring the implementing class to have a new method
-    Class<T> getTypeClass();
+    default Class<T> getClassOfGenericTypeArgument(){
+        //TODO Clean this up to be more readable? is that possible?
+        //TODO make sure this works with complicated interface/class hierarchies
+        Class ourCurrentClass = getClass();
+        Type[] ourCurrentInterfaces = ourCurrentClass.getGenericInterfaces();
+        ParameterizedType currentInterface = (ParameterizedType) ourCurrentInterfaces[0];
+        Type genericTypeArgument = currentInterface.getActualTypeArguments()[0];
+        return (Class<T>) genericTypeArgument;
+    }
 
     //TODO find a way to intelligently create values of the class under test
     default T createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return defaultCreateValueImplementation(getTypeClass());
+        return defaultCreateValueImplementation(getClassOfGenericTypeArgument());
     }
 
     default T createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return defaultCreateValueImplementation(getTypeClass());
+        return defaultCreateValueImplementation(getClassOfGenericTypeArgument());
     }
 
     @Test

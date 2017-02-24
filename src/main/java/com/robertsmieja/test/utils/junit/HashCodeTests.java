@@ -40,7 +40,7 @@ public interface HashCodeTests<T> extends TestProducer<T> {
     @Test
     @DisplayName("Do not use default hashCode()")
     default void doNotUseDefaultHashCode() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        Internal.doNotUseDefaultMethod(getTypeClass(), "hashCode");
+        Internal.doNotUseDefaultMethod(getClassOfGenericTypeArgument(), "hashCode");
     }
 
     @Test

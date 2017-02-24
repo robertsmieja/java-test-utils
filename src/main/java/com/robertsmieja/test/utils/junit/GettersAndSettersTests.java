@@ -43,6 +43,6 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
     @Test
     @DisplayName("Test getters and setters")
     default void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        runAllGettersAndSettersTests(getTypeClass(), createValue(), createDifferentValue());
+        runAllGettersAndSettersTests(getClassOfGenericTypeArgument(), createValue(), createDifferentValue());
     }
 }

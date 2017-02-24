@@ -55,6 +55,6 @@ public interface ToStringTests<T> extends TestProducer<T> {
     @Test
     @DisplayName("Do not use default toString()")
     default void doNotUseDefaultToString() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        Internal.doNotUseDefaultMethod(getTypeClass(), "toString");
+        Internal.doNotUseDefaultMethod(getClassOfGenericTypeArgument(), "toString");
     }
 }

@@ -26,7 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class TestProducerTests implements TestProducer<SimplePojo>{
     @Override
-    public Class<SimplePojo> getTypeClass() {
+    public Class<SimplePojo> getClassOfGenericTypeArgument() {
         return SimplePojo.class;
     }
 

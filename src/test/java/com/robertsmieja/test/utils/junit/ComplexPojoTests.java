@@ -24,11 +24,6 @@ import java.lang.reflect.InvocationTargetException;
 public class ComplexPojoTests implements AllBasicTests<ComplexPojo>{
 
     @Override
-    public Class<ComplexPojo> getTypeClass() {
-        return ComplexPojo.class;
-    }
-
-    @Override
     public ComplexPojo createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
         return new ComplexPojo();
     }

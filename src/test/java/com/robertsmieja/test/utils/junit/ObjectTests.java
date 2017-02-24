@@ -28,11 +28,6 @@ public class ObjectTests implements EqualsTests<Object>, ToStringTests<Object>, 
     Object differentValue = new Object();
 
     @Override
-    public Class<Object> getTypeClass() {
-        return Object.class;
-    }
-
-    @Override
     public Object createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
         return value;
     }
