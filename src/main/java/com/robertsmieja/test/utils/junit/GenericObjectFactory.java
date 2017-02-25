@@ -41,35 +41,33 @@ public class GenericObjectFactory {
     final static Map<Class<?>, Pair<?, ?>> classToValuesMap = new ConcurrentHashMap<>();
 
     static {
-        {
-            //primitives
-            classToValuesMap.put(Boolean.class, new ImmutablePair<>(Boolean.valueOf(false), Boolean.valueOf(true)));
-            classToValuesMap.put(Byte.class, new ImmutablePair<>(Byte.valueOf((byte) 0x11), Byte.valueOf((byte) 0xCC)));
-            classToValuesMap.put(Character.class, new ImmutablePair<>(Character.valueOf('b'), Character.valueOf('d')));
-            classToValuesMap.put(Double.class, new ImmutablePair<>(Double.valueOf(-2.22F), Double.valueOf(2.22F)));
-            classToValuesMap.put(Float.class, new ImmutablePair<>(Float.valueOf(-1.1F), Float.valueOf(1.1F)));
-            classToValuesMap.put(Integer.class, new ImmutablePair<>(Integer.valueOf(-100), Integer.valueOf(100)));
-            classToValuesMap.put(Long.class, new ImmutablePair<>(Long.valueOf(-1000L), Long.valueOf(1000L)));
-            classToValuesMap.put(Short.class, new ImmutablePair<>(Short.valueOf((short) -10), Short.valueOf((short) 10)));
-            classToValuesMap.put(String.class, new ImmutablePair<>("value", "differentValue"));
+        //primitives
+        classToValuesMap.put(Boolean.class, new ImmutablePair<>(Boolean.valueOf(false), Boolean.valueOf(true)));
+        classToValuesMap.put(Byte.class, new ImmutablePair<>(Byte.valueOf((byte) 0x11), Byte.valueOf((byte) 0xCC)));
+        classToValuesMap.put(Character.class, new ImmutablePair<>(Character.valueOf('b'), Character.valueOf('d')));
+        classToValuesMap.put(Double.class, new ImmutablePair<>(Double.valueOf(-2.22F), Double.valueOf(2.22F)));
+        classToValuesMap.put(Float.class, new ImmutablePair<>(Float.valueOf(-1.1F), Float.valueOf(1.1F)));
+        classToValuesMap.put(Integer.class, new ImmutablePair<>(Integer.valueOf(-100), Integer.valueOf(100)));
+        classToValuesMap.put(Long.class, new ImmutablePair<>(Long.valueOf(-1000L), Long.valueOf(1000L)));
+        classToValuesMap.put(Short.class, new ImmutablePair<>(Short.valueOf((short) -10), Short.valueOf((short) 10)));
+        classToValuesMap.put(String.class, new ImmutablePair<>("value", "differentValue"));
 
-            //arrays
-            classToValuesMap.put(Boolean[].class, new ImmutablePair<>(new Boolean[]{Boolean.valueOf(false)}, new Boolean[]{Boolean.valueOf(true)}));
-            classToValuesMap.put(Byte[].class, new ImmutablePair<>(new Byte[]{Byte.valueOf((byte) 0x11)}, new Byte[]{Byte.valueOf((byte) 0xCC)}));
-            classToValuesMap.put(Character[].class, new ImmutablePair<>(new Character[]{Character.valueOf('b')}, new Character[]{Character.valueOf('d')}));
-            classToValuesMap.put(Double[].class, new ImmutablePair<>(new Double[]{Double.valueOf(-2.22F)}, new Double[]{Double.valueOf(2.22F)}));
-            classToValuesMap.put(Float[].class, new ImmutablePair<>(new Float[]{Float.valueOf(-1.1F)}, new Float[]{Float.valueOf(1.1F)}));
-            classToValuesMap.put(Integer[].class, new ImmutablePair<>(new Integer[]{Integer.valueOf(-100)}, new Integer[]{Integer.valueOf(100)}));
-            classToValuesMap.put(Long[].class, new ImmutablePair<>(new Long[]{Long.valueOf(-1000L)}, new Long[]{Long.valueOf(1000L)}));
-            classToValuesMap.put(Short[].class, new ImmutablePair<>(new Short[]{Short.valueOf((short) -10)}, new Short[]{Short.valueOf((short) 10)}));
-            classToValuesMap.put(String[].class, new ImmutablePair<>(new String[]{"value"}, new String[]{"differentValue"}));
-        }
+        //arrays
+        classToValuesMap.put(Boolean[].class, new ImmutablePair<>(new Boolean[]{Boolean.valueOf(false)}, new Boolean[]{Boolean.valueOf(true)}));
+        classToValuesMap.put(Byte[].class, new ImmutablePair<>(new Byte[]{Byte.valueOf((byte) 0x11)}, new Byte[]{Byte.valueOf((byte) 0xCC)}));
+        classToValuesMap.put(Character[].class, new ImmutablePair<>(new Character[]{Character.valueOf('b')}, new Character[]{Character.valueOf('d')}));
+        classToValuesMap.put(Double[].class, new ImmutablePair<>(new Double[]{Double.valueOf(-2.22F)}, new Double[]{Double.valueOf(2.22F)}));
+        classToValuesMap.put(Float[].class, new ImmutablePair<>(new Float[]{Float.valueOf(-1.1F)}, new Float[]{Float.valueOf(1.1F)}));
+        classToValuesMap.put(Integer[].class, new ImmutablePair<>(new Integer[]{Integer.valueOf(-100)}, new Integer[]{Integer.valueOf(100)}));
+        classToValuesMap.put(Long[].class, new ImmutablePair<>(new Long[]{Long.valueOf(-1000L)}, new Long[]{Long.valueOf(1000L)}));
+        classToValuesMap.put(Short[].class, new ImmutablePair<>(new Short[]{Short.valueOf((short) -10)}, new Short[]{Short.valueOf((short) 10)}));
+        classToValuesMap.put(String[].class, new ImmutablePair<>(new String[]{"value"}, new String[]{"differentValue"}));
     }
 
     //Keep track of user inputs
     final static Map<Class<?>, Pair<?, ?>> additionalClassToValuesMap = new ConcurrentHashMap<>();
 
-    public static void registerClassAndValues(Class<?> aClass, Object value, Object differentValue) {
+    public static <T> void registerClassAndValues(Class<T> aClass, T value, T differentValue) {
         additionalClassToValuesMap.put(aClass, new ImmutablePair<>(value, differentValue));
     }
 

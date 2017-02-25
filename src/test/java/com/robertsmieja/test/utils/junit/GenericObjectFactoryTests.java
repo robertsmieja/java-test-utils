@@ -26,6 +26,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class GenericObjectFactoryTests {
 
     @Test
+    @DisplayName("Test constructor")
+    public void testConstructor(){
+        GenericObjectFactory objectUnderTest = new GenericObjectFactory();
+        assertNotNull(objectUnderTest);
+    }
+
+    @Test
     @DisplayName("Instantiate Object successfully")
     public void instantiateObjectSuccessfully() throws ObjectFactoryException {
         Object object = GenericObjectFactory.createObjectForClass(Object.class);
