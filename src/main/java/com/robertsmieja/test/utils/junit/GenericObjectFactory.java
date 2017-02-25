@@ -35,15 +35,14 @@ import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getSetter
 
 public class GenericObjectFactory {
 
-    private final static String GET_LEFT_FROM_PAIR = "getLeft";
-    private final static String GET_RIGHT_FROM_PAIR = "getRight";
-
     //Create sensible defaults
     //Delegate to valueOf() to take advantage of caching when possible, except for Strings
     //It doesn't make sense to use valueOf for String
     final static Map<Class<?>, Pair<?, ?>> classToValuesMap = new ConcurrentHashMap<>();
     //Keep track of user inputs
     final static Map<Class<?>, Pair<?, ?>> additionalClassToValuesMap = new ConcurrentHashMap<>();
+    private final static String GET_LEFT_FROM_PAIR = "getLeft";
+    private final static String GET_RIGHT_FROM_PAIR = "getRight";
 
     static {
         //primitives

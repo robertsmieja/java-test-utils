@@ -18,7 +18,5 @@ package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.domain.ChildComplexPojo;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class ChildComplexPojoTests implements AllBasicTests<ChildComplexPojo> {
 }

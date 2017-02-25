@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * A set of tests for the equals() method.
  * Contains the following tests:
