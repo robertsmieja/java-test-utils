@@ -26,22 +26,22 @@ public class Junit4Tests {
     SimplePojo objectUnderTest;
 
     @Test
-    public void testGettersAndSetters(){
+    public void testGettersAndSetters() {
 
     }
 
     @Test
-    public void testEquals(){
+    public void testEquals() {
 
     }
 
     @Test
-    public void testHashCode(){
+    public void testHashCode() {
 
     }
 
     @Test
-    public void testToString(){
+    public void testToString() {
 
     }
 }

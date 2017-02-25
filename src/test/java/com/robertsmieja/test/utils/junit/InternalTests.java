@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class InternalTests {
 
     @Test
-    public void testConstructor(){
+    public void testConstructor() {
         Internal instance = new Internal();
         assertNotNull(instance);
     }

@@ -17,17 +17,8 @@
 package com.robertsmieja.test.utils.junit.domain;
 
 public class NestedPojo {
-    //Non-static inner class creates a synthetic filed
-    class InnerNestedPojo {
-        String stringValue;
-
-        public String getStringValue() {
-            return stringValue;
-        }
-
-        public void setStringValue(String stringValue) {
-            this.stringValue = stringValue;
-        }
+    public static Class<InnerNestedPojo> getInnerClass() {
+        return InnerNestedPojo.class;
     }
 
     public InnerNestedPojo createInnerValue() {
@@ -42,7 +33,16 @@ public class NestedPojo {
         return value;
     }
 
-    public static Class<InnerNestedPojo> getInnerClass(){
-        return InnerNestedPojo.class;
+    //Non-static inner class creates a synthetic filed
+    class InnerNestedPojo {
+        String stringValue;
+
+        public String getStringValue() {
+            return stringValue;
+        }
+
+        public void setStringValue(String stringValue) {
+            this.stringValue = stringValue;
+        }
     }
 }

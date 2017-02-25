@@ -44,7 +44,7 @@ public class ObjectTests implements EqualsTests<Object>, ToStringTests<Object>, 
         try {
             HashCodeTests.super.doNotUseDefaultHashCode();
             Assertions.fail("Expected AssertionFailedError!");
-        } catch (AssertionFailedError expectedException){
+        } catch (AssertionFailedError expectedException) {
             Assertions.assertEquals("hashCode() method not implemented ==> expected: not equal but was: <class java.lang.Object>", expectedException.getMessage());
         }
     }
@@ -55,7 +55,7 @@ public class ObjectTests implements EqualsTests<Object>, ToStringTests<Object>, 
         try {
             ToStringTests.super.doNotUseDefaultToString();
             Assertions.fail("Expected AssertionFailedError!");
-        } catch (AssertionFailedError expectedException){
+        } catch (AssertionFailedError expectedException) {
             Assertions.assertEquals("toString() method not implemented ==> expected: not equal but was: <class java.lang.Object>", expectedException.getMessage());
         }
     }
@@ -66,7 +66,7 @@ public class ObjectTests implements EqualsTests<Object>, ToStringTests<Object>, 
         try {
             EqualsTests.super.doNotUseDefaultEquals();
             Assertions.fail("Expected AssertionFailedError!");
-        } catch (AssertionFailedError expectedException){
+        } catch (AssertionFailedError expectedException) {
             Assertions.assertEquals("equals() method not implemented ==> expected: not equal but was: <class java.lang.Object>", expectedException.getMessage());
         }
     }

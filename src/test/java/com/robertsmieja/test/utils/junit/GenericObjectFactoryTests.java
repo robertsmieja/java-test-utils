@@ -28,7 +28,7 @@ public class GenericObjectFactoryTests {
 
     @Test
     @DisplayName("Test constructor")
-    public void testConstructor(){
+    public void testConstructor() {
         GenericObjectFactory objectUnderTest = new GenericObjectFactory();
         assertNotNull(objectUnderTest);
     }

@@ -23,9 +23,10 @@ import com.robertsmieja.test.utils.junit.domain.SimplePojo;
  * for tests
  */
 public class SimplePojoFactory {
-    private SimplePojoFactory() {}
+    private SimplePojoFactory() {
+    }
 
-    public static SimplePojo createValue(){
+    public static SimplePojo createValue() {
         SimplePojo pojo = new SimplePojo();
         pojo.setIntegerValue(99);
         pojo.setLongValue(22L);
@@ -33,7 +34,7 @@ public class SimplePojoFactory {
         return pojo;
     }
 
-    public static SimplePojo createDifferentValue(){
+    public static SimplePojo createDifferentValue() {
         SimplePojo pojo = new SimplePojo();
         pojo.setIntegerValue(22);
         pojo.setLongValue(99L);

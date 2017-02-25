@@ -17,6 +17,7 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -29,7 +30,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.robertsmieja.test.utils.junit.Internal.accessorMethodNameForField;
 import static com.robertsmieja.test.utils.junit.Internal.failToFindMethodForField;
 
 class GettersAndSettersUtils {
@@ -54,11 +54,11 @@ class GettersAndSettersUtils {
         if (getter == null) {
             getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.GET_METHOD_PREFIX, field));
         }
-        if (getter == null){
+        if (getter == null) {
             failToFindMethodForField(field, accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
         }
         Method setter = getSetterForField(field);
-        if (setter == null){
+        if (setter == null) {
             failToFindMethodForField(field, accessorMethodNameForField(GettersAndSettersTests.SET_METHOD_PREFIX, field));
         }
         return new ImmutablePair<>(getter, setter);
@@ -98,5 +98,10 @@ class GettersAndSettersUtils {
                 .filter(field -> !field.isSynthetic())
                 .filter(field -> !excludedFields.contains(field))
                 .collect(Collectors.toList());
+    }
+
+    @NotNull
+    static String accessorMethodNameForField(String accessorPrefix, Field field) {
+        return accessorPrefix + StringUtils.capitalize(field.getName());
     }
 }

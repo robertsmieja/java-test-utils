@@ -16,7 +16,6 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.jetbrains.annotations.NotNull;
@@ -44,10 +43,6 @@ class Internal {
         return constructor.newInstance();
     }
 
-    static void doNotUseDefaultMethod(Class aClass, String methodName) {
-        doNotUseDefaultMethod(aClass, methodName, (Class[]) null);
-    }
-
     static void doNotUseDefaultMethod(Class aClass, String methodName, Class... parameterTypes) {
         Method methodToCheck = MethodUtils.getAccessibleMethod(aClass, methodName, parameterTypes);
         Assertions.assertNotEquals(Object.class, methodToCheck.getDeclaringClass(), methodName + "() method not implemented");
@@ -57,8 +52,4 @@ class Internal {
         Assertions.fail("Unable to find <" + desiredMethodName + "> for field <" + field + ">");
     }
 
-    @NotNull
-    static String accessorMethodNameForField(String accessorPrefix, Field field) {
-        return accessorPrefix + StringUtils.capitalize(field.getName());
-    }
 }

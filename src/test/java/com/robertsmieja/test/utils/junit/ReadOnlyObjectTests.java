@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * This test class covers instances where there are no setters for fields
  */
-public class ReadOnlyObjectTests implements GettersAndSettersTests<ReadOnlyObject>{
+public class ReadOnlyObjectTests implements GettersAndSettersTests<ReadOnlyObject> {
     @Override
     public ReadOnlyObject createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
         return new ReadOnlyObject(1, "coolData");
@@ -45,7 +45,7 @@ public class ReadOnlyObjectTests implements GettersAndSettersTests<ReadOnlyObjec
         try {
             GettersAndSettersTests.super.testGettersAndSetters();
             fail("Expected an AssertionFailedError");
-        } catch (AssertionFailedError assertionFailedError){
+        } catch (AssertionFailedError assertionFailedError) {
             assertEquals("Unable to find <setId> for field <private long com.robertsmieja.test.utils.junit.domain.ReadOnlyObject.id>", assertionFailedError.getMessage());
         }
     }

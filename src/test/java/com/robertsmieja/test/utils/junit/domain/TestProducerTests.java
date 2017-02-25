@@ -19,12 +19,11 @@ package com.robertsmieja.test.utils.junit.domain;
 import com.robertsmieja.test.utils.junit.TestProducer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class TestProducerTests implements TestProducer<SimplePojo>{
+public class TestProducerTests implements TestProducer<SimplePojo> {
     @Override
     public Class<SimplePojo> getClassOfGenericTypeArgument() {
         return SimplePojo.class;

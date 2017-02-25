@@ -33,13 +33,12 @@ import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getSetter
 
 public class GenericObjectFactory {
 
-    GenericObjectFactory() {
-    }
-
     //Create sensible defaults
     //Delegate to valueOf() to take advantage of caching when possible, except for Strings
     //It doesn't make sense to use valueOf for String
     final static Map<Class<?>, Pair<?, ?>> classToValuesMap = new ConcurrentHashMap<>();
+    //Keep track of user inputs
+    final static Map<Class<?>, Pair<?, ?>> additionalClassToValuesMap = new ConcurrentHashMap<>();
 
     static {
         //primitives
@@ -65,8 +64,8 @@ public class GenericObjectFactory {
         classToValuesMap.put(String[].class, new ImmutablePair<>(new String[]{"value"}, new String[]{"differentValue"}));
     }
 
-    //Keep track of user inputs
-    final static Map<Class<?>, Pair<?, ?>> additionalClassToValuesMap = new ConcurrentHashMap<>();
+    GenericObjectFactory() {
+    }
 
     public static <T> void registerClassAndValues(Class<T> aClass, T value, T differentValue) {
         additionalClassToValuesMap.put(aClass, new ImmutablePair<>(value, differentValue));
@@ -120,8 +119,8 @@ public class GenericObjectFactory {
         return additionalClassToValuesMap.getOrDefault(aClass, classToValuesMap.get(aClass));
     }
 
-    private static Class convertPrimitivesToWrapperType(Class primitiveClass){
-        if (primitiveClass.isPrimitive()){
+    private static Class convertPrimitivesToWrapperType(Class primitiveClass) {
+        if (primitiveClass.isPrimitive()) {
             return ClassUtils.primitiveToWrapper(primitiveClass);
         }
         return primitiveClass;

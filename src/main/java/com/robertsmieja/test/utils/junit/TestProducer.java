@@ -40,7 +40,7 @@ import static com.robertsmieja.test.utils.junit.Internal.createObjectFromDefault
  * @since 1.0.0
  */
 public interface TestProducer<T> {
-    default Class<T> getClassOfGenericTypeArgument(){
+    default Class<T> getClassOfGenericTypeArgument() {
         //TODO Clean this up to be more readable? is that possible?
         //TODO make sure this works with complicated interface/class hierarchies
         Class ourCurrentClass = getClass();
