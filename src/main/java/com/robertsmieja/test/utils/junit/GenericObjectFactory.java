@@ -17,6 +17,7 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -83,12 +84,12 @@ public class GenericObjectFactory {
 
         for (Field field : fields) {
             Method setter = getSetterForField(field);
-            Pair valuesForType = getPairForClass(field.getType());
-            Object valueToSet = valuesForType.getLeft();
+            Pair valuesForType = getPairForClass(convertPrimitivesToWrapperType(field.getType()));
             if (valuesForType == null) {
                 throw new ObjectFactoryException("No values registered for <" + field.getType() + ">");
             }
 
+            Object valueToSet = valuesForType.getLeft();
             try {
                 setter.invoke(object, valueToSet);
             } catch (InvocationTargetException | IllegalAccessException e) {
@@ -117,5 +118,12 @@ public class GenericObjectFactory {
     private static <T> Pair getPairForClass(Class<T> aClass) {
         //TODO Default value will always be evaluated before checking additionalClassToValuesMap, will this cause a performance issue?
         return additionalClassToValuesMap.getOrDefault(aClass, classToValuesMap.get(aClass));
+    }
+
+    private static Class convertPrimitivesToWrapperType(Class primitiveClass){
+        if (primitiveClass.isPrimitive()){
+            return ClassUtils.primitiveToWrapper(primitiveClass);
+        }
+        return primitiveClass;
     }
 }

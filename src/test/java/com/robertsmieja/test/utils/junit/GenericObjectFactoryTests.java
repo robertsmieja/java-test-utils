@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.domain.ComplexPojo;
 import com.robertsmieja.test.utils.junit.domain.SimplePojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.DisplayName;
@@ -44,5 +45,12 @@ public class GenericObjectFactoryTests {
     public void instantiateSimplePojoSuccessfully() throws ObjectFactoryException {
         SimplePojo simplePojo = GenericObjectFactory.createObjectForClass(SimplePojo.class);
         assertNotNull(simplePojo);
+    }
+
+    @Test
+    @DisplayName("Instantiate ComplexPojo successfully")
+    public void instantiateComplexPojoSuccessfully() throws ObjectFactoryException {
+        ComplexPojo complexPojo = GenericObjectFactory.createObjectForClass(ComplexPojo.class);
+        assertNotNull(complexPojo);
     }
 }
