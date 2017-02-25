@@ -16,25 +16,23 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.domain.ChildComplexPojo;
 import com.robertsmieja.test.utils.junit.domain.ComplexPojo;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class ComplexPojoTests implements AllBasicTests<ComplexPojo>{
-
+public class ChildComplexPojoTests implements AllBasicTests<ChildComplexPojo> {
     @Override
-    public ComplexPojo createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return new ComplexPojo();
-    }
-
-    @Override
-    public ComplexPojo createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        ComplexPojo value = new ComplexPojo();
+    public ChildComplexPojo createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        ChildComplexPojo value = new ChildComplexPojo();
         value.setLongValue(2L);
         value.setIntegerValue(1);
         value.setStringValue("String");
         value.setBooleanValue(true);
         value.setBigBooleanValue(true);
+
+        value.setChildIntValue(-1);
+        value.setChildStringValue("childString");
         return value;
     }
 }

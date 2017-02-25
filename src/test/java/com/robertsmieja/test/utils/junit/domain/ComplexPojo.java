@@ -101,5 +101,4 @@ public class ComplexPojo {
         result = 31 * result + (bigBooleanValue != null ? bigBooleanValue.hashCode() : 0);
         return result;
     }
-
 }

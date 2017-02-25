@@ -24,7 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import static com.robertsmieja.test.utils.junit.Internal.defaultCreateValueImplementation;
+import static com.robertsmieja.test.utils.junit.Internal.createObjectFromDefaultConstructor;
 
 /**
  * A base interface that defines the following methods:
@@ -52,11 +52,11 @@ public interface TestProducer<T> {
 
     //TODO find a way to intelligently create values of the class under test
     default T createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return defaultCreateValueImplementation(getClassOfGenericTypeArgument());
+        return createObjectFromDefaultConstructor(getClassOfGenericTypeArgument());
     }
 
     default T createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return defaultCreateValueImplementation(getClassOfGenericTypeArgument());
+        return createObjectFromDefaultConstructor(getClassOfGenericTypeArgument());
     }
 
     @Test

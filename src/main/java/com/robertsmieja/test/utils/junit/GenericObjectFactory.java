@@ -75,7 +75,7 @@ public class GenericObjectFactory {
     public static <T> T createObjectForClass(Class<T> aClass) throws ObjectFactoryException {
         T object;
         try {
-            object = Internal.defaultCreateValueImplementation(aClass);
+            object = Internal.createObjectFromDefaultConstructor(aClass);
         } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
             throw new ObjectFactoryException("Unable to create an instance of <" + aClass + ">, is there a non-arg constructor?", e);

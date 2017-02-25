@@ -19,6 +19,7 @@ package com.robertsmieja.test.utils.junit;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 
 import java.lang.reflect.Constructor;
@@ -37,7 +38,8 @@ class Internal {
     Internal() {
     } //package default for code coverage
 
-    static <T> T defaultCreateValueImplementation(Class<T> tClass) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    @NotNull
+    static <T> T createObjectFromDefaultConstructor(Class<T> tClass) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<T> constructor = ConstructorUtils.getAccessibleConstructor(tClass);
         return constructor.newInstance();
     }
@@ -55,6 +57,7 @@ class Internal {
         Assertions.fail("Unable to find <" + desiredMethodName + "> for field <" + field + ">");
     }
 
+    @NotNull
     static String accessorMethodNameForField(String accessorPrefix, Field field) {
         return accessorPrefix + StringUtils.capitalize(field.getName());
     }
