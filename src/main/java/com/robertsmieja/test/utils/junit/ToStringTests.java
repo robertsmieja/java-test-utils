@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,13 +42,13 @@ public interface ToStringTests<T> extends TestProducer<T> {
 
     @Test
     @DisplayName("Different values should have different toString() results")
-    default void differentValuesShouldHaveDifferentToStringResults() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void differentValuesShouldHaveDifferentToStringResults() throws ObjectFactoryException {
         assertNotEquals(createValue().toString(), createDifferentValue().toString());
     }
 
     @Test
     @DisplayName("Same values should have the same toString() results")
-    default void sameValuesShouldHaveTheSameToStringResults() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void sameValuesShouldHaveTheSameToStringResults() throws ObjectFactoryException {
         Assertions.assertEquals(createValue().toString(), createValue().toString());
         Assertions.assertEquals(createDifferentValue().toString(), createDifferentValue().toString());
     }

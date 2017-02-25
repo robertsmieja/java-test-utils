@@ -21,17 +21,4 @@ import com.robertsmieja.test.utils.junit.domain.ChildComplexPojo;
 import java.lang.reflect.InvocationTargetException;
 
 public class ChildComplexPojoTests implements AllBasicTests<ChildComplexPojo> {
-    @Override
-    public ChildComplexPojo createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        ChildComplexPojo value = new ChildComplexPojo();
-        value.setLongValue(2L);
-        value.setIntegerValue(1);
-        value.setStringValue("String");
-        value.setBooleanValue(true);
-        value.setBigBooleanValue(true);
-
-        value.setChildIntValue(-1);
-        value.setChildStringValue("childString");
-        return value;
-    }
 }

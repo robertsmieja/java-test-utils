@@ -14,9 +14,11 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit.domain;
+package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.TestProducer;
+import com.robertsmieja.test.utils.junit.domain.SimplePojo;
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,12 +33,15 @@ public class TestProducerTests implements TestProducer<SimplePojo> {
 
     @Test
     @DisplayName("Default values are created successfully")
-    public void defaultValuesAreCreatedSuccessfully() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void defaultValuesAreCreatedSuccessfully() throws ObjectFactoryException {
         SimplePojo value = createValue();
         SimplePojo differentValue = createDifferentValue();
+        SimplePojo valueFromFactory = GenericObjectFactory.createObjectForClass(SimplePojo.class);
+        SimplePojo differentValueFromFactory = GenericObjectFactory.createDifferentObjectForClass(SimplePojo.class);
 
-        Assertions.assertEquals(value, new SimplePojo());
-        Assertions.assertEquals(differentValue, value);
+        Assertions.assertEquals(value, valueFromFactory);
+        Assertions.assertEquals(differentValue, differentValueFromFactory);
+        Assertions.assertNotEquals(value, differentValue);
         Assertions.assertNotSame(differentValue, value);
         Assertions.assertNotSame(value, createValue());
         Assertions.assertNotSame(differentValue, createDifferentValue());

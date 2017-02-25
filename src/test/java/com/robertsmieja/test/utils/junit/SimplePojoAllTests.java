@@ -22,13 +22,5 @@ import com.robertsmieja.test.utils.junit.domain.factory.SimplePojoFactory;
 import java.lang.reflect.InvocationTargetException;
 
 public class SimplePojoAllTests implements AllBasicTests<SimplePojo> {
-    @Override
-    public SimplePojo createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return SimplePojoFactory.createValue();
-    }
 
-    @Override
-    public SimplePojo createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return SimplePojoFactory.createDifferentValue();
-    }
 }

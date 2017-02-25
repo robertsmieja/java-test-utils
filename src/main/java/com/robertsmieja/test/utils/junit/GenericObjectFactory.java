@@ -18,8 +18,10 @@ package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.apache.commons.lang3.ClassUtils;
+import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -32,6 +34,9 @@ import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getFields
 import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getSetterForField;
 
 public class GenericObjectFactory {
+
+    private final static String GET_LEFT_FROM_PAIR = "getLeft";
+    private final static String GET_RIGHT_FROM_PAIR = "getRight";
 
     //Create sensible defaults
     //Delegate to valueOf() to take advantage of caching when possible, except for Strings
@@ -71,7 +76,18 @@ public class GenericObjectFactory {
         additionalClassToValuesMap.put(aClass, new ImmutablePair<>(value, differentValue));
     }
 
+    @NotNull
     public static <T> T createObjectForClass(Class<T> aClass) throws ObjectFactoryException {
+        return genericCreateObjectForClass(aClass, GET_LEFT_FROM_PAIR);
+    }
+
+    @NotNull
+    public static <T> T createDifferentObjectForClass(Class<T> aClass) throws ObjectFactoryException {
+        return genericCreateObjectForClass(aClass, GET_RIGHT_FROM_PAIR);
+    }
+
+    @NotNull
+    private static <T> T genericCreateObjectForClass(Class<T> aClass, String functionToUse) throws ObjectFactoryException {
         T object;
         try {
             object = Internal.createObjectFromDefaultConstructor(aClass);
@@ -88,7 +104,14 @@ public class GenericObjectFactory {
                 throw new ObjectFactoryException("No values registered for <" + field.getType() + ">");
             }
 
-            Object valueToSet = valuesForType.getLeft();
+            Object valueToSet;
+            try {
+                valueToSet = MethodUtils.invokeExactMethod(valuesForType, functionToUse);
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+                throw new ObjectFactoryException("Error getting value from <" + valuesForType + ">", e);
+            }
+
             try {
                 setter.invoke(object, valueToSet);
             } catch (InvocationTargetException | IllegalAccessException e) {
@@ -96,22 +119,7 @@ public class GenericObjectFactory {
                 throw new ObjectFactoryException("Unable to call setter for <" + field + "> on <" + aClass + ">", e);
             }
         }
-
         return object;
-    }
-
-    public static <T> T createDifferentObjectForClass(Class<T> aClass) throws ObjectFactoryException {
-        return null;
-    }
-
-    public static <T> T getValueForClass(Class<T> aClass) {
-        T value = (T) getPairForClass(aClass).getLeft();
-        return value;
-    }
-
-    public static <T> T getDifferentValueForClass(Class<T> aClass) {
-        T value = (T) getPairForClass(aClass).getRight();
-        return value;
     }
 
     private static <T> Pair getPairForClass(Class<T> aClass) {

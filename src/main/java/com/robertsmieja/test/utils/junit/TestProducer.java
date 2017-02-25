@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,6 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-
-import static com.robertsmieja.test.utils.junit.Internal.createObjectFromDefaultConstructor;
 
 /**
  * A base interface that defines the following methods:
@@ -51,17 +50,17 @@ public interface TestProducer<T> {
     }
 
     //TODO find a way to intelligently create values of the class under test
-    default T createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return createObjectFromDefaultConstructor(getClassOfGenericTypeArgument());
+    default T createValue() throws ObjectFactoryException {
+        return GenericObjectFactory.createObjectForClass(getClassOfGenericTypeArgument());
     }
 
-    default T createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return createObjectFromDefaultConstructor(getClassOfGenericTypeArgument());
+    default T createDifferentValue() throws ObjectFactoryException {
+        return GenericObjectFactory.createDifferentObjectForClass(getClassOfGenericTypeArgument());
     }
 
     @Test
     @DisplayName("Can create values successfully")
-    default void canCreateValuesSuccessfully() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void canCreateValuesSuccessfully() throws ObjectFactoryException {
         T value = createValue();
         T differentValue = createDifferentValue();
 

@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,14 +46,14 @@ public interface HashCodeTests<T> extends TestProducer<T> {
 
     @Test
     @DisplayName("Same values have different hashCode() results")
-    default void sameValuesHaveDifferentHashCodeResults() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void sameValuesHaveDifferentHashCodeResults() throws ObjectFactoryException {
         Assertions.assertEquals(createValue().hashCode(), createValue().hashCode());
         Assertions.assertEquals(createDifferentValue().hashCode(), createDifferentValue().hashCode());
     }
 
     @Test
     @DisplayName("Different values have different hashCode() results")
-    default void differentValuesHaveDifferentHashCodeResults() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void differentValuesHaveDifferentHashCodeResults() throws ObjectFactoryException {
         Assertions.assertNotEquals(createDifferentValue().hashCode(), createValue().hashCode());
     }
 }

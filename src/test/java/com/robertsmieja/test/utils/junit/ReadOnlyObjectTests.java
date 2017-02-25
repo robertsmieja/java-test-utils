@@ -17,6 +17,7 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.domain.ReadOnlyObject;
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
@@ -30,18 +31,18 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 public class ReadOnlyObjectTests implements GettersAndSettersTests<ReadOnlyObject> {
     @Override
-    public ReadOnlyObject createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    public ReadOnlyObject createValue() throws ObjectFactoryException {
         return new ReadOnlyObject(1, "coolData");
     }
 
     @Override
-    public ReadOnlyObject createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    public ReadOnlyObject createDifferentValue() throws ObjectFactoryException {
         return new ReadOnlyObject(2, "lessCoolData");
     }
 
     @Override
     @Test
-    public void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void testGettersAndSetters() throws ObjectFactoryException, IllegalAccessException, InstantiationException, InvocationTargetException {
         try {
             GettersAndSettersTests.super.testGettersAndSetters();
             fail("Expected an AssertionFailedError");

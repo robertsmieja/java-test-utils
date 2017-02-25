@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +43,7 @@ public interface GettersAndSettersTests<T> extends TestProducer<T> {
 
     @Test
     @DisplayName("Test getters and setters")
-    default void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void testGettersAndSetters() throws ObjectFactoryException, IllegalAccessException, InvocationTargetException, InstantiationException {
         runAllGettersAndSettersTests(getClassOfGenericTypeArgument(), createValue(), createDifferentValue());
     }
 }

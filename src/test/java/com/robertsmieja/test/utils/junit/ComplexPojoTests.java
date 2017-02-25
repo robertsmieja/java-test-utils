@@ -22,19 +22,4 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ComplexPojoTests implements AllBasicTests<ComplexPojo> {
 
-    @Override
-    public ComplexPojo createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        return new ComplexPojo();
-    }
-
-    @Override
-    public ComplexPojo createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        ComplexPojo value = new ComplexPojo();
-        value.setLongValue(2L);
-        value.setIntegerValue(1);
-        value.setStringValue("String");
-        value.setBooleanValue(true);
-        value.setBigBooleanValue(true);
-        return value;
-    }
 }

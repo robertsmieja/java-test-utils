@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
@@ -28,12 +29,12 @@ public class ObjectTests implements EqualsTests<Object>, ToStringTests<Object>, 
     Object differentValue = new Object();
 
     @Override
-    public Object createValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    public Object createValue() throws ObjectFactoryException {
         return value;
     }
 
     @Override
-    public Object createDifferentValue() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    public Object createDifferentValue() throws ObjectFactoryException {
         return differentValue;
     }
 

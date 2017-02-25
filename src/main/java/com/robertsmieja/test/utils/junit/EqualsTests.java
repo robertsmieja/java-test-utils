@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,14 +40,14 @@ public interface EqualsTests<T> extends TestProducer<T> {
 
     @Test
     @DisplayName("Same value should be equal")
-    default void sameValueShouldBeEqual() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void sameValueShouldBeEqual() throws ObjectFactoryException {
         Assertions.assertEquals(createValue(), createValue());
         Assertions.assertEquals(createDifferentValue(), createDifferentValue());
     }
 
     @Test
     @DisplayName("Different values should not be equal")
-    default void differentValuesShouldNotBeEquals() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    default void differentValuesShouldNotBeEquals() throws ObjectFactoryException {
         Assertions.assertNotEquals(createValue(), createDifferentValue());
         Assertions.assertNotEquals(createDifferentValue(), createValue());
     }
