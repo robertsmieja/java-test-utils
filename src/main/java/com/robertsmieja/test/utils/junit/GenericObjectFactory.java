@@ -40,7 +40,7 @@ public class GenericObjectFactory {
     //It doesn't make sense to use valueOf for String
     final static Map<Class<?>, Pair<?, ?>> classToValuesMap = new ConcurrentHashMap<>();
 
-    {
+    static {
         {
             //primitives
             classToValuesMap.put(Boolean.class, new ImmutablePair<>(Boolean.valueOf(false), Boolean.valueOf(true)));
@@ -102,7 +102,9 @@ public class GenericObjectFactory {
         return object;
     }
 
-    public static <T> T createDifferentObjectForClass(Class<T> aClass) throws ObjectFactoryException { return null; }
+    public static <T> T createDifferentObjectForClass(Class<T> aClass) throws ObjectFactoryException {
+        return null;
+    }
 
     public static <T> T getValueForClass(Class<T> aClass) {
         T value = (T) getPairForClass(aClass).getLeft();
