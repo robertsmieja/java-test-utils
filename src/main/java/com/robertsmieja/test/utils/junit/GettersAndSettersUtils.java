@@ -30,17 +30,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.robertsmieja.test.utils.junit.Internal.accessorMethodNameForField;
-import static com.robertsmieja.test.utils.junit.Internal.findMethodForFieldOrFail;
+import static com.robertsmieja.test.utils.junit.Internal.failToFindMethodForField;
 
-class GettersAndSettersTestUtil {
-    GettersAndSettersTestUtil() {
+class GettersAndSettersUtils {
+    GettersAndSettersUtils() {
     }
 
     static <T> void runAllGettersAndSettersTests(Class<T> aClass, T value, T differentValue) throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        List<Field> fieldsToTest = GettersAndSettersTestUtil.getFields(aClass);
+        List<Field> fieldsToTest = GettersAndSettersUtils.getFields(aClass);
 
         for (Field field : fieldsToTest) {
-            ImmutablePair<Method, Method> getterAndSetter = GettersAndSettersTestUtil.getGetterAndSetterForField(aClass, field);
+            ImmutablePair<Method, Method> getterAndSetter = GettersAndSettersUtils.getGetterAndSetterForField(field);
             Method getter = getterAndSetter.getLeft();
             Method setter = getterAndSetter.getRight();
 
@@ -49,15 +49,23 @@ class GettersAndSettersTestUtil {
         }
     }
 
-    @NotNull
-    static ImmutablePair<Method, Method> getGetterAndSetterForField(@NotNull Class aClass, @NotNull Field field) {
-        Method getter = MethodUtils.getAccessibleMethod(aClass, accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
+    static ImmutablePair<Method, Method> getGetterAndSetterForField(@NotNull Field field) {
+        Method getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
         if (getter == null) {
-            getter = findMethodForFieldOrFail(aClass, GettersAndSettersTests.GET_METHOD_PREFIX, field);
+            getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.GET_METHOD_PREFIX, field));
         }
-        Method setter = Internal.findMethodForFieldOrFail(aClass, GettersAndSettersTests.SET_METHOD_PREFIX, field, field.getType());
-
+        if (getter == null){
+            failToFindMethodForField(field, accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
+        }
+        Method setter = getSetterForField(field);
+        if (setter == null){
+            failToFindMethodForField(field, accessorMethodNameForField(GettersAndSettersTests.SET_METHOD_PREFIX, field));
+        }
         return new ImmutablePair<>(getter, setter);
+    }
+
+    static Method getSetterForField(@NotNull Field field) {
+        return MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.SET_METHOD_PREFIX, field), field.getType());
     }
 
     static <T> void ensureFieldCanHandleDifferentValues(T value, T differentValue, Method getter, Method setter) throws IllegalAccessException, InvocationTargetException {

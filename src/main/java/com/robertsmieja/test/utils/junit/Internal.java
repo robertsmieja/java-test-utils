@@ -51,13 +51,8 @@ class Internal {
         Assertions.assertNotEquals(Object.class, methodToCheck.getDeclaringClass(), methodName + "() method not implemented");
     }
 
-    static Method findMethodForFieldOrFail(Class aClass, String accessorPrefix, Field field, Class... paramTypes) {
-        String desiredMethodName = accessorMethodNameForField(accessorPrefix, field);
-        Method method = MethodUtils.getAccessibleMethod(aClass, desiredMethodName, paramTypes);
-        if (method == null) {
-            Assertions.fail("Unable to find <" + desiredMethodName + "> for field <" + field + ">");
-        }
-        return method;
+    static void failToFindMethodForField(Field field, String desiredMethodName) {
+        Assertions.fail("Unable to find <" + desiredMethodName + "> for field <" + field + ">");
     }
 
     static String accessorMethodNameForField(String accessorPrefix, Field field) {

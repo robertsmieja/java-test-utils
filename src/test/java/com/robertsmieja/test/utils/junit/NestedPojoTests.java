@@ -17,7 +17,6 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.domain.NestedPojo;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +35,6 @@ public class NestedPojoTests {
     @DisplayName("Synthetic fields are filtered out correctly")
     @Disabled //Disabled because it's failing for now
     public void syntheticFieldsAreFilteredOutCorrectly() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        GettersAndSettersTestUtil.runAllGettersAndSettersTests(NestedPojo.getInnerClass(), nestedPojo.createInnerValue(), nestedPojo.createInnerValue());
+        GettersAndSettersUtils.runAllGettersAndSettersTests(NestedPojo.getInnerClass(), nestedPojo.createInnerValue(), nestedPojo.createInnerValue());
     }
 }

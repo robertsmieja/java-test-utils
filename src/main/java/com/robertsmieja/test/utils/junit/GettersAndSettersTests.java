@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static com.robertsmieja.test.utils.junit.GettersAndSettersTestUtil.runAllGettersAndSettersTests;
+import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.runAllGettersAndSettersTests;
 
 /**
  * A set of tests surrounding getter and setter methods.
