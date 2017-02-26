@@ -17,6 +17,7 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
+import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ import java.lang.reflect.Type;
  * @since 1.0.0
  */
 public interface TestProducer<T> {
-    GenericObjectFactory objectFactory = new GenericObjectFactory();
+    ObjectFactory objectFactory = new GenericObjectFactory();
 
     default Class<T> getClassOfGenericTypeArgument() {
         //TODO Clean this up to be more readable? is that possible?

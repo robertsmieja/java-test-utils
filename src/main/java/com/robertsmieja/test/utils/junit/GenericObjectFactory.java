@@ -20,7 +20,6 @@ import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
 import org.apache.commons.collections4.map.UnmodifiableMap;
 import org.apache.commons.lang3.ClassUtils;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -40,7 +39,7 @@ public class GenericObjectFactory implements ObjectFactory {
     //It doesn't make sense to use valueOf for String
     final static Map<Class<?>, Object> primitivesToValuesMap;
     final static Map<Class<?>, Object> primitivesToDifferentValuesMap;
-    private final static int NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS = 9 * 2; //double the number because of arrays
+    protected final static int NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS = 9 * 2; //double the number because of arrays
 
     static {
         Map<Class<?>, Object> initPrimitivesToValuesMap = new HashMap<>(NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS);
@@ -98,7 +97,7 @@ public class GenericObjectFactory implements ObjectFactory {
     //Keep track of user inputs
     final Map<Class<?>, Object> additionalClassToValuesMap = new ConcurrentHashMap<>();
     final Map<Class<?>, Object> additionalClassToDifferentValuesMap = new ConcurrentHashMap<>();
-    private final boolean cacheInstances;
+    protected final boolean cacheInstances;
 
     public GenericObjectFactory() {
         this(true);
@@ -108,7 +107,7 @@ public class GenericObjectFactory implements ObjectFactory {
         this.cacheInstances = cacheInstances;
     }
 
-    private static Class convertPrimitiveToWrapperOrReturn(Class primitiveClass) {
+    protected static Class convertPrimitiveToWrapperOrReturn(Class primitiveClass) {
         if (primitiveClass.isPrimitive()) {
             return ClassUtils.primitiveToWrapper(primitiveClass);
         }
@@ -134,20 +133,20 @@ public class GenericObjectFactory implements ObjectFactory {
     }
 
     //Helpers
-    private <T> boolean doesClassExistInCache(Class<T> aClass) {
+    protected <T> boolean doesClassExistInCache(Class<T> aClass) {
         if (ClassUtils.isPrimitiveOrWrapper(aClass) || String.class.equals(aClass)) {
             return true;
         }
         return additionalClassToValuesMap.containsKey(aClass) && additionalClassToDifferentValuesMap.containsKey(aClass);
     }
 
-    private <T> void populateCacheWithInstancesOfClass(Class<T> aClass) throws ObjectFactoryException {
+    protected <T> void populateCacheWithInstancesOfClass(Class<T> aClass) throws ObjectFactoryException {
         T leftValue = createObjectForClass(aClass, additionalClassToValuesMap);
         T rightValue = createObjectForClass(aClass, additionalClassToDifferentValuesMap);
         registerClassAndValues(aClass, leftValue, rightValue);
     }
 
-    private <T> T getInstanceOfClassUsingValueMap(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
+    protected <T> T getInstanceOfClassUsingValueMap(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         boolean isInCache = doesClassExistInCache(aClass);
         if (isInCache) {
             return getValueFromMapOrDefaultMap(aClass, valueMap);
@@ -159,7 +158,7 @@ public class GenericObjectFactory implements ObjectFactory {
         return createObjectForClass(aClass, valueMap);
     }
 
-    private <T> T createObjectForClass(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
+    protected <T> T createObjectForClass(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         T object;
         try {
             object = Internal.createObjectFromDefaultConstructor(aClass);
@@ -175,7 +174,7 @@ public class GenericObjectFactory implements ObjectFactory {
         return object;
     }
 
-    private <T> void setValueForField(Field field, T object, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
+    protected <T> void setValueForField(Field field, T object, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         Method setter = getSetterForField(field);
         T valueToSet = getValueFromMapOrDefaultMap((Class<T>) field.getType(), valueMap);
         if (valueToSet == null) {
@@ -190,13 +189,13 @@ public class GenericObjectFactory implements ObjectFactory {
         }
     }
 
-    private <T> T getValueFromMapOrDefaultMap(Class<T> fieldClass, Map<Class<?>, Object> valueMap) {
+    protected <T> T getValueFromMapOrDefaultMap(Class<T> fieldClass, Map<Class<?>, Object> valueMap) {
         Class<?> nonPrimitiveClass = convertPrimitiveToWrapperOrReturn(fieldClass);
         Map defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
         return (T) valueMap.getOrDefault(nonPrimitiveClass, defaultValueMap.get(nonPrimitiveClass));
     }
 
-    private Map getCorrectDefaultValueMapFromClassMap(Map classMap) {
+    protected Map getCorrectDefaultValueMapFromClassMap(Map classMap) {
         if (classMap == additionalClassToValuesMap) { //Avoid equals(), since that will be true with an empty map
             return primitivesToValuesMap;
         }
