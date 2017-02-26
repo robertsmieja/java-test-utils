@@ -38,6 +38,8 @@ import java.lang.reflect.Type;
  * @since 1.0.0
  */
 public interface TestProducer<T> {
+    GenericObjectFactory objectFactory = new GenericObjectFactory();
+
     default Class<T> getClassOfGenericTypeArgument() {
         //TODO Clean this up to be more readable? is that possible?
         //TODO make sure this works with complicated interface/class hierarchies
@@ -48,13 +50,12 @@ public interface TestProducer<T> {
         return (Class<T>) genericTypeArgument;
     }
 
-    //TODO find a way to intelligently create values of the class under test
     default T createValue() throws ObjectFactoryException {
-        return GenericObjectFactory.createObjectForClass(getClassOfGenericTypeArgument());
+        return objectFactory.getInstanceOfClass(getClassOfGenericTypeArgument());
     }
 
     default T createDifferentValue() throws ObjectFactoryException {
-        return GenericObjectFactory.createDifferentObjectForClass(getClassOfGenericTypeArgument());
+        return objectFactory.getInstanceOfClassWithDifferentValues(getClassOfGenericTypeArgument());
     }
 
     @Test

@@ -17,15 +17,15 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
+import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
+import org.apache.commons.collections4.map.UnmodifiableMap;
 import org.apache.commons.lang3.ClassUtils;
-import org.apache.commons.lang3.reflect.MethodUtils;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,103 +33,168 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getFields;
 import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getSetterForField;
 
-public class GenericObjectFactory {
-
+public class GenericObjectFactory implements ObjectFactory {
     //Create sensible defaults
     //Delegate to valueOf() to take advantage of caching when possible, except for Strings
     //It doesn't make sense to use valueOf for String
-    final static Map<Class<?>, Pair<?, ?>> classToValuesMap = new ConcurrentHashMap<>();
-    //Keep track of user inputs
-    final static Map<Class<?>, Pair<?, ?>> additionalClassToValuesMap = new ConcurrentHashMap<>();
-    private final static String GET_LEFT_FROM_PAIR = "getLeft";
-    private final static String GET_RIGHT_FROM_PAIR = "getRight";
+    final static Map<Class<?>, Object> primitivesToValuesMap;
+    final static Map<Class<?>, Object> primitivesToDifferentValuesMap;
+    private final static int NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS = 9 * 2; //double the number because of arrays
 
     static {
+        Map<Class<?>, Object> initPrimitivesToValuesMap = new HashMap<>(NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS);
+        Map<Class<?>, Object> initPrimitivesToDifferentValuesMap = new HashMap<>(NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS);
+
         //primitives
-        classToValuesMap.put(Boolean.class, new ImmutablePair<>(Boolean.valueOf(false), Boolean.valueOf(true)));
-        classToValuesMap.put(Byte.class, new ImmutablePair<>(Byte.valueOf((byte) 0x11), Byte.valueOf((byte) 0xCC)));
-        classToValuesMap.put(Character.class, new ImmutablePair<>(Character.valueOf('b'), Character.valueOf('d')));
-        classToValuesMap.put(Double.class, new ImmutablePair<>(Double.valueOf(-2.22F), Double.valueOf(2.22F)));
-        classToValuesMap.put(Float.class, new ImmutablePair<>(Float.valueOf(-1.1F), Float.valueOf(1.1F)));
-        classToValuesMap.put(Integer.class, new ImmutablePair<>(Integer.valueOf(-100), Integer.valueOf(100)));
-        classToValuesMap.put(Long.class, new ImmutablePair<>(Long.valueOf(-1000L), Long.valueOf(1000L)));
-        classToValuesMap.put(Short.class, new ImmutablePair<>(Short.valueOf((short) -10), Short.valueOf((short) 10)));
-        classToValuesMap.put(String.class, new ImmutablePair<>("value", "differentValue"));
+        initPrimitivesToValuesMap.put(Boolean.class, Boolean.valueOf(false));
+        initPrimitivesToValuesMap.put(Byte.class, Byte.valueOf((byte) 0x11));
+        initPrimitivesToValuesMap.put(Character.class, Character.valueOf('b'));
+        initPrimitivesToValuesMap.put(Double.class, Double.valueOf(-2.22F));
+        initPrimitivesToValuesMap.put(Float.class, Float.valueOf(-1.1F));
+        initPrimitivesToValuesMap.put(Integer.class, Integer.valueOf(-100));
+        initPrimitivesToValuesMap.put(Long.class, Long.valueOf(-1000L));
+        initPrimitivesToValuesMap.put(Short.class, Short.valueOf((short) -10));
+        initPrimitivesToValuesMap.put(String.class, "value");
 
         //arrays
-        classToValuesMap.put(Boolean[].class, new ImmutablePair<>(new Boolean[]{Boolean.valueOf(false)}, new Boolean[]{Boolean.valueOf(true)}));
-        classToValuesMap.put(Byte[].class, new ImmutablePair<>(new Byte[]{Byte.valueOf((byte) 0x11)}, new Byte[]{Byte.valueOf((byte) 0xCC)}));
-        classToValuesMap.put(Character[].class, new ImmutablePair<>(new Character[]{Character.valueOf('b')}, new Character[]{Character.valueOf('d')}));
-        classToValuesMap.put(Double[].class, new ImmutablePair<>(new Double[]{Double.valueOf(-2.22F)}, new Double[]{Double.valueOf(2.22F)}));
-        classToValuesMap.put(Float[].class, new ImmutablePair<>(new Float[]{Float.valueOf(-1.1F)}, new Float[]{Float.valueOf(1.1F)}));
-        classToValuesMap.put(Integer[].class, new ImmutablePair<>(new Integer[]{Integer.valueOf(-100)}, new Integer[]{Integer.valueOf(100)}));
-        classToValuesMap.put(Long[].class, new ImmutablePair<>(new Long[]{Long.valueOf(-1000L)}, new Long[]{Long.valueOf(1000L)}));
-        classToValuesMap.put(Short[].class, new ImmutablePair<>(new Short[]{Short.valueOf((short) -10)}, new Short[]{Short.valueOf((short) 10)}));
-        classToValuesMap.put(String[].class, new ImmutablePair<>(new String[]{"value"}, new String[]{"differentValue"}));
+        initPrimitivesToValuesMap.put(Boolean[].class, new Boolean[]{Boolean.valueOf(false)});
+        initPrimitivesToValuesMap.put(Byte[].class, new Byte[]{Byte.valueOf((byte) 0x11)});
+        initPrimitivesToValuesMap.put(Character[].class, new Character[]{Character.valueOf('b')});
+        initPrimitivesToValuesMap.put(Double[].class, new Double[]{Double.valueOf(-2.22F)});
+        initPrimitivesToValuesMap.put(Float[].class, new Float[]{Float.valueOf(-1.1F)});
+        initPrimitivesToValuesMap.put(Integer[].class, new Integer[]{Integer.valueOf(-100)});
+        initPrimitivesToValuesMap.put(Long[].class, new Long[]{Long.valueOf(-1000L)});
+        initPrimitivesToValuesMap.put(Short[].class, new Short[]{Short.valueOf((short) -10)});
+        initPrimitivesToValuesMap.put(String[].class, new String[]{"value"});
+
+        primitivesToValuesMap = UnmodifiableMap.unmodifiableMap(initPrimitivesToValuesMap);
+
+        //primitives
+        initPrimitivesToDifferentValuesMap.put(Boolean.class, Boolean.valueOf(true));
+        initPrimitivesToDifferentValuesMap.put(Byte.class, Byte.valueOf((byte) 0xCC));
+        initPrimitivesToDifferentValuesMap.put(Character.class, Character.valueOf('d'));
+        initPrimitivesToDifferentValuesMap.put(Double.class, Double.valueOf(2.22F));
+        initPrimitivesToDifferentValuesMap.put(Float.class, Float.valueOf(1.1F));
+        initPrimitivesToDifferentValuesMap.put(Integer.class, Integer.valueOf(100));
+        initPrimitivesToDifferentValuesMap.put(Long.class, Long.valueOf(1000L));
+        initPrimitivesToDifferentValuesMap.put(Short.class, Short.valueOf((short) 10));
+        initPrimitivesToDifferentValuesMap.put(String.class, "differentValue");
+
+        //arrays
+        initPrimitivesToDifferentValuesMap.put(Boolean[].class, new Boolean[]{Boolean.valueOf(true)});
+        initPrimitivesToDifferentValuesMap.put(Byte[].class, new Byte[]{Byte.valueOf((byte) 0xCC)});
+        initPrimitivesToDifferentValuesMap.put(Character[].class, new Character[]{Character.valueOf('d')});
+        initPrimitivesToDifferentValuesMap.put(Double[].class, new Double[]{Double.valueOf(2.22F)});
+        initPrimitivesToDifferentValuesMap.put(Float[].class, new Float[]{Float.valueOf(1.1F)});
+        initPrimitivesToDifferentValuesMap.put(Integer[].class, new Integer[]{Integer.valueOf(100)});
+        initPrimitivesToDifferentValuesMap.put(Long[].class, new Long[]{Long.valueOf(1000L)});
+        initPrimitivesToDifferentValuesMap.put(Short[].class, new Short[]{Short.valueOf((short) 10)});
+        initPrimitivesToDifferentValuesMap.put(String[].class, new String[]{"differentValue"});
+
+        primitivesToDifferentValuesMap = UnmodifiableMap.unmodifiableMap(initPrimitivesToDifferentValuesMap);
     }
 
-    GenericObjectFactory() {
+    //Keep track of user inputs
+    final Map<Class<?>, Object> additionalClassToValuesMap = new ConcurrentHashMap<>();
+    final Map<Class<?>, Object> additionalClassToDifferentValuesMap = new ConcurrentHashMap<>();
+    private final boolean cacheInstances;
+
+    public GenericObjectFactory() {
+        this(true);
     }
 
-    public static <T> void registerClassAndValues(Class<T> aClass, T value, T differentValue) {
-        additionalClassToValuesMap.put(aClass, new ImmutablePair<>(value, differentValue));
+    public GenericObjectFactory(boolean cacheInstances) {
+        this.cacheInstances = cacheInstances;
     }
 
+    private static Class convertPrimitiveToWrapperOrReturn(Class primitiveClass) {
+        if (primitiveClass.isPrimitive()) {
+            return ClassUtils.primitiveToWrapper(primitiveClass);
+        }
+        return primitiveClass;
+    }
+
+    @Override
+    public <T> void registerClassAndValues(Class<T> aClass, T value, T differentValue) {
+        additionalClassToValuesMap.put(aClass, value);
+        additionalClassToDifferentValuesMap.put(aClass, differentValue);
+    }
+
+    @Override
     @NotNull
-    public static <T> T createObjectForClass(Class<T> aClass) throws ObjectFactoryException {
-        return genericCreateObjectForClass(aClass, GET_LEFT_FROM_PAIR);
+    public <T> T getInstanceOfClass(Class<T> aClass) throws ObjectFactoryException {
+        return getInstanceOfClassUsingValueMap(aClass, additionalClassToValuesMap);
     }
 
+    @Override
     @NotNull
-    public static <T> T createDifferentObjectForClass(Class<T> aClass) throws ObjectFactoryException {
-        return genericCreateObjectForClass(aClass, GET_RIGHT_FROM_PAIR);
+    public <T> T getInstanceOfClassWithDifferentValues(Class<T> aClass) throws ObjectFactoryException {
+        return getInstanceOfClassUsingValueMap(aClass, additionalClassToDifferentValuesMap);
     }
 
-    @NotNull
-    private static <T> T genericCreateObjectForClass(Class<T> aClass, String functionToUse) throws ObjectFactoryException {
+    //Helpers
+    private <T> boolean doesClassExistInCache(Class<T> aClass) {
+        if (ClassUtils.isPrimitiveOrWrapper(aClass) || String.class.equals(aClass)) {
+            return true;
+        }
+        return additionalClassToValuesMap.containsKey(aClass) && additionalClassToDifferentValuesMap.containsKey(aClass);
+    }
+
+    private <T> void populateCacheWithInstancesOfClass(Class<T> aClass) throws ObjectFactoryException {
+        T leftValue = createObjectForClass(aClass, additionalClassToValuesMap);
+        T rightValue = createObjectForClass(aClass, additionalClassToDifferentValuesMap);
+        registerClassAndValues(aClass, leftValue, rightValue);
+    }
+
+    private <T> T getInstanceOfClassUsingValueMap(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
+        boolean isInCache = doesClassExistInCache(aClass);
+        if (isInCache) {
+            return (T) valueMap.get(aClass);
+        }
+        if (cacheInstances) {
+            populateCacheWithInstancesOfClass(aClass);
+            return (T) valueMap.get(aClass);
+        }
+        return createObjectForClass(aClass, valueMap);
+    }
+
+    private <T> T createObjectForClass(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         T object;
         try {
             object = Internal.createObjectFromDefaultConstructor(aClass);
         } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
-            throw new ObjectFactoryException("Unable to create an instance of <" + aClass + ">, is there a non-arg constructor?", e);
+            throw new ObjectFactoryException("Unable to create an instance of <" + aClass + ">. Is there a non-arg constructor?", e);
         }
         List<Field> fields = getFields(aClass);
 
         for (Field field : fields) {
-            Method setter = getSetterForField(field);
-            Pair valuesForType = getPairForClass(convertPrimitivesToWrapperType(field.getType()));
-            if (valuesForType == null) {
-                throw new ObjectFactoryException("No values registered for <" + field.getType() + ">");
-            }
-
-            Object valueToSet;
-            try {
-                valueToSet = MethodUtils.invokeExactMethod(valuesForType, functionToUse);
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-                throw new ObjectFactoryException("Error getting value from <" + valuesForType + ">", e);
-            }
-
-            try {
-                setter.invoke(object, valueToSet);
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                e.printStackTrace();
-                throw new ObjectFactoryException("Unable to call setter for <" + field + "> on <" + aClass + ">", e);
-            }
+            setValueForField(field, object, valueMap);
         }
         return object;
     }
 
-    private static <T> Pair getPairForClass(Class<T> aClass) {
-        //TODO Default value will always be evaluated before checking additionalClassToValuesMap, will this cause a performance issue?
-        return additionalClassToValuesMap.getOrDefault(aClass, classToValuesMap.get(aClass));
+    private <T> void setValueForField(Field field, T object, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
+        Method setter = getSetterForField(field);
+        Class<T> fieldClass = convertPrimitiveToWrapperOrReturn(field.getType());
+        Map defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
+        T valueToSet = (T) valueMap.getOrDefault(fieldClass, defaultValueMap.get(fieldClass));
+        if (valueToSet == null) {
+            throw new ObjectFactoryException("No values registered for <" + field.getType() + ">");
+        }
+
+        try {
+            setter.invoke(object, valueToSet);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+            throw new ObjectFactoryException("Unable to call setter for <" + field + "> on <" + object.getClass() + ">", e);
+        }
     }
 
-    private static Class convertPrimitivesToWrapperType(Class primitiveClass) {
-        if (primitiveClass.isPrimitive()) {
-            return ClassUtils.primitiveToWrapper(primitiveClass);
+    private Map getCorrectDefaultValueMapFromClassMap(Map classMap) {
+        if (classMap == additionalClassToValuesMap) { //Avoid equals(), since that will be true with an empty map
+            return primitivesToValuesMap;
         }
-        return primitiveClass;
+        return primitivesToDifferentValuesMap;
     }
 }

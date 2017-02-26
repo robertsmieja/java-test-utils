@@ -18,11 +18,13 @@ package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.domain.SimplePojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class TestProducerTests implements TestProducer<SimplePojo> {
+
     @Override
     public Class<SimplePojo> getClassOfGenericTypeArgument() {
         return SimplePojo.class;
@@ -33,14 +35,14 @@ public class TestProducerTests implements TestProducer<SimplePojo> {
     public void defaultValuesAreCreatedSuccessfully() throws ObjectFactoryException {
         SimplePojo value = createValue();
         SimplePojo differentValue = createDifferentValue();
-        SimplePojo valueFromFactory = GenericObjectFactory.createObjectForClass(SimplePojo.class);
-        SimplePojo differentValueFromFactory = GenericObjectFactory.createDifferentObjectForClass(SimplePojo.class);
+        SimplePojo valueFromFactory = objectFactory.getInstanceOfClass(SimplePojo.class);
+        SimplePojo differentValueFromFactory = objectFactory.getInstanceOfClassWithDifferentValues(SimplePojo.class);
 
-        Assertions.assertEquals(value, valueFromFactory);
-        Assertions.assertEquals(differentValue, differentValueFromFactory);
-        Assertions.assertNotEquals(value, differentValue);
-        Assertions.assertNotSame(differentValue, value);
-        Assertions.assertNotSame(value, createValue());
-        Assertions.assertNotSame(differentValue, createDifferentValue());
+        assertEquals(value, valueFromFactory);
+        assertEquals(differentValue, differentValueFromFactory);
+        assertSame(value, valueFromFactory);
+        assertSame(differentValue, differentValueFromFactory);
+        assertNotEquals(value, differentValue);
+        assertNotEquals(differentValue, value);
     }
 }

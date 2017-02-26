@@ -26,8 +26,9 @@ dependencies {
     api 'org.apache.commons:commons-lang3:3.5'
     api 'org.jetbrains:annotations:15.0'
     api 'org.junit.jupiter:junit-jupiter-api:5.0.0-M3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.0.0-M3'
+    implementation 'org.apache.commons:commons-collections4:4.1'
     testCompile 'org.junit.vintage:junit-vintage-engine:4.12.0-M3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.0.0-M3'
 }
 
 /* Code Coverage */

@@ -19,38 +19,70 @@ package com.robertsmieja.test.utils.junit;
 import com.robertsmieja.test.utils.junit.domain.ComplexPojo;
 import com.robertsmieja.test.utils.junit.domain.SimplePojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GenericObjectFactoryTests {
+
+    static GenericObjectFactory objectUnderTest;
+
+    @BeforeAll
+    public static void oneTimeSetup() {
+        objectUnderTest = new GenericObjectFactory();
+    }
 
     @Test
     @DisplayName("Test constructor")
     public void testConstructor() {
-        GenericObjectFactory objectUnderTest = new GenericObjectFactory();
         assertNotNull(objectUnderTest);
     }
 
     @Test
     @DisplayName("Instantiate Object successfully")
     public void instantiateObjectSuccessfully() throws ObjectFactoryException {
-        Object object = GenericObjectFactory.createObjectForClass(Object.class);
+        testInstantiation(Object.class);
+    }
+
+    @Test
+    @DisplayName("Object is cached successfully")
+    public void objectIsCachedSuccessfully() throws ObjectFactoryException {
+        Object object = objectUnderTest.getInstanceOfClass(Object.class);
+        Object differentObject = objectUnderTest.getInstanceOfClassWithDifferentValues(Object.class);
+
         assertNotNull(object);
+        assertNotNull(differentObject);
+        assertNotEquals(object, differentObject);
+
+        Object sameObject = objectUnderTest.getInstanceOfClass(Object.class);
+        Object sameObjectWithDifferentValues = objectUnderTest.getInstanceOfClassWithDifferentValues(Object.class);
+
+        assertNotNull(sameObject);
+        assertNotNull(sameObjectWithDifferentValues);
+        assertSame(object, sameObject);
+        assertSame(differentObject, sameObjectWithDifferentValues);
     }
 
     @Test
     @DisplayName("Instantiate SimplePojo successfully")
     public void instantiateSimplePojoSuccessfully() throws ObjectFactoryException {
-        SimplePojo simplePojo = GenericObjectFactory.createObjectForClass(SimplePojo.class);
-        assertNotNull(simplePojo);
+        testInstantiation(SimplePojo.class);
     }
 
     @Test
     @DisplayName("Instantiate ComplexPojo successfully")
     public void instantiateComplexPojoSuccessfully() throws ObjectFactoryException {
-        ComplexPojo complexPojo = GenericObjectFactory.createObjectForClass(ComplexPojo.class);
-        assertNotNull(complexPojo);
+        testInstantiation(ComplexPojo.class);
+    }
+
+    private <T> void testInstantiation(Class<T> tClass) throws ObjectFactoryException {
+        T object = objectUnderTest.getInstanceOfClass(tClass);
+        T objectWithDifferentValues = objectUnderTest.getInstanceOfClassWithDifferentValues(tClass);
+
+        assertNotNull(object);
+        assertNotNull(objectWithDifferentValues);
+        assertNotEquals(object, objectWithDifferentValues);
     }
 }
