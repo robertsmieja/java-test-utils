@@ -66,6 +66,18 @@ public class GenericObjectFactoryTests {
     }
 
     @Test
+    @DisplayName("Can create primitive types successfully")
+    public void canCreatePrimitiveTypesSuccessfully() throws ObjectFactoryException {
+        String stringValue = objectUnderTest.getInstanceOfClass(String.class);
+        int intValue = objectUnderTest.getInstanceOfClass(int.class);
+
+        assertNotNull(stringValue);
+        assertNotNull(intValue);
+        assertEquals("value", stringValue);
+        assertEquals(-100, intValue);
+    }
+
+    @Test
     @DisplayName("Instantiate SimplePojo successfully")
     public void instantiateSimplePojoSuccessfully() throws ObjectFactoryException {
         testInstantiation(SimplePojo.class);

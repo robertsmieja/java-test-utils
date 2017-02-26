@@ -20,6 +20,7 @@ import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
 import org.apache.commons.collections4.map.UnmodifiableMap;
 import org.apache.commons.lang3.ClassUtils;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -149,11 +150,11 @@ public class GenericObjectFactory implements ObjectFactory {
     private <T> T getInstanceOfClassUsingValueMap(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         boolean isInCache = doesClassExistInCache(aClass);
         if (isInCache) {
-            return (T) valueMap.get(aClass);
+            return getValueFromMapOrDefaultMap(aClass, valueMap);
         }
         if (cacheInstances) {
             populateCacheWithInstancesOfClass(aClass);
-            return (T) valueMap.get(aClass);
+            return getValueFromMapOrDefaultMap(aClass, valueMap);
         }
         return createObjectForClass(aClass, valueMap);
     }
@@ -176,9 +177,7 @@ public class GenericObjectFactory implements ObjectFactory {
 
     private <T> void setValueForField(Field field, T object, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         Method setter = getSetterForField(field);
-        Class<T> fieldClass = convertPrimitiveToWrapperOrReturn(field.getType());
-        Map defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
-        T valueToSet = (T) valueMap.getOrDefault(fieldClass, defaultValueMap.get(fieldClass));
+        T valueToSet = getValueFromMapOrDefaultMap((Class<T>) field.getType(), valueMap);
         if (valueToSet == null) {
             throw new ObjectFactoryException("No values registered for <" + field.getType() + ">");
         }
@@ -189,6 +188,12 @@ public class GenericObjectFactory implements ObjectFactory {
             e.printStackTrace();
             throw new ObjectFactoryException("Unable to call setter for <" + field + "> on <" + object.getClass() + ">", e);
         }
+    }
+
+    private <T> T getValueFromMapOrDefaultMap(Class<T> fieldClass, Map<Class<?>, Object> valueMap) {
+        Class<?> nonPrimitiveClass = convertPrimitiveToWrapperOrReturn(fieldClass);
+        Map defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
+        return (T) valueMap.getOrDefault(nonPrimitiveClass, defaultValueMap.get(nonPrimitiveClass));
     }
 
     private Map getCorrectDefaultValueMapFromClassMap(Map classMap) {
