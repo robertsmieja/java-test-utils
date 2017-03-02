@@ -10,24 +10,28 @@ buildscript {
 
 plugins {
     id 'com.gradle.build-scan' version '1.6'
-}
-
-buildScan {
-    licenseAgree = 'yes'
-    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
-    if (System.getenv('CI')) {
-        publishAlways()
-        tag 'CI'
-    }
+    id "com.jfrog.bintray" version "1.7.3"
+    id 'nebula.contacts' version '3.0.1'
+    id 'nebula.info-basic' version '3.5.0'
+    id 'nebula.info-broker' version '3.5.0'
+    id 'nebula.info-jar' version '3.5.0'
+    id 'nebula.info-owners' version '3.5.0'
+    id 'nebula.info-props' version '3.5.0'
+    id 'nebula.info-scm' version '3.5.0'
+    id 'nebula.javadoc-jar' version '4.9.1'
+    id 'nebula.maven-publish' version '4.9.1'
+    id 'nebula.release' version '4.1.1'
+    id 'nebula.source-jar' version '4.9.1'
 }
 
 group 'com.robertsmieja'
-version '1.0-SNAPSHOT'
+//version '1.0-SNAPSHOT'
 
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
+
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 repositories {
@@ -42,6 +46,61 @@ dependencies {
     implementation 'org.apache.commons:commons-collections4:4.1'
     testCompile 'org.junit.vintage:junit-vintage-engine:4.12.0-M3'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.0.0-M3'
+}
+
+contacts {
+    'robertsmieja@robertsmieja.com' {
+        moniker 'Robert Smieja'
+        github 'robertsmieja'
+        role 'owner'
+    }
+}
+
+/* BinTray config */
+tasks.release.dependsOn tasks.bintrayUpload
+
+bintray {
+//    user = <user from hidden properties file>
+//    key = <key from hidden properties file>
+
+    publications = ['nebula']
+    dryRun = false
+    publish = true
+    pkg {
+        repo = 'maven'
+//        userOrg = 'nebula'
+        name = '${project.name}'
+        desc = hasProperty('description') ? description : ''
+        websiteUrl = 'https://github.com/robertsmieja/${project.name}'
+        issueTrackerUrl = 'https://github.com/robertsmieja/${project.name}/issues'
+        vcsUrl = 'https://github.com/robertsmieja/${project.name}.git'
+        licenses = ['Apache-2.0']
+//        labels = []
+        publicDownloadNumbers = true
+        attributes = [:]
+        version {
+            name = project.version
+            vcsTag = "${project.version}"
+            attributes = [:]
+            gpg {
+                sign = true
+            }
+//            mavenCentralSync {
+//                user = ''
+//                password = ''
+//            }
+        }
+    }
+}
+
+/* Build Scan config */
+buildScan {
+    licenseAgree = 'yes'
+    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
+    if (System.getenv('CI')) {
+        publishAlways()
+        tag 'CI'
+    }
 }
 
 /* Code Coverage */
@@ -61,37 +120,3 @@ jacocoTestReport {
     executionData = files('build/jacoco/junitPlatformTest.exec')
 }
 
-/* Maven publishing */
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-
-            artifact javadocJar {
-                classifier "javadoc"
-            }
-            artifact sourceJar {
-                classifier "sources"
-            }
-        }
-    }
-    repositories {
-        maven {
-            //url ""
-        }
-    }
-}
-
-/* Additional Jars */
-task javadocJar(type: Jar){
-    from javadoc
-}
-
-task sourceJar(type: Jar) {
-    from sourceSets.main.allJava
-}
-
-artifacts {
-    archives jar, javadocJar, sourceJar
-}
