@@ -20,10 +20,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+install: true
+
 script:
-  - ./gradlew assemble
-  - ./gradlew check
-  - ./gradlew jacocoTestReport
+  - ./gradlew check jacocoTestReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
