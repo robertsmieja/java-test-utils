@@ -36,7 +36,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @since 1.0.0
  */
-public interface HashCodeTests<T> extends TestProducer<T> {
+public interface HashCodeTests<T> extends ObjectInstantiatorForTests<T> {
 
     @Test
     @DisplayName("Do not use default hashCode()")

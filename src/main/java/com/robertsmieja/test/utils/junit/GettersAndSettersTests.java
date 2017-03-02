@@ -35,7 +35,7 @@ import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.runAllGet
  *
  * @since 1.0.0
  */
-public interface GettersAndSettersTests<T> extends TestProducer<T> {
+public interface GettersAndSettersTests<T> extends ObjectInstantiatorForTests<T> {
 
     String GET_METHOD_PREFIX = "get";
     String IS_METHOD_PREFIX = "is";

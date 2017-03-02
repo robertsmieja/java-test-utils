@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  *
  * @since 1.0.0
  */
-public interface ToStringTests<T> extends TestProducer<T> {
+public interface ToStringTests<T> extends ObjectInstantiatorForTests<T> {
 
     @Test
     @DisplayName("Different values should have different toString() results")

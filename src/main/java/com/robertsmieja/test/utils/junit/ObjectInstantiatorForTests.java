@@ -38,7 +38,7 @@ import java.lang.reflect.Type;
  *
  * @since 1.0.0
  */
-public interface TestProducer<T> {
+public interface ObjectInstantiatorForTests<T> {
     ObjectFactory objectFactory = new GenericObjectFactory();
 
     default Class<T> getClassOfGenericTypeArgument() {

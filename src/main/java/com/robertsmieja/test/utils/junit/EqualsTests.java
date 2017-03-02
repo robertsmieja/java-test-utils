@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 1.0.0
  */
-public interface EqualsTests<T> extends TestProducer<T> {
+public interface EqualsTests<T> extends ObjectInstantiatorForTests<T> {
 
     @Test
     @DisplayName("Same value should be equal")
