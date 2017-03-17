@@ -25,7 +25,6 @@ plugins {
 }
 
 group 'com.robertsmieja'
-//version '1.0-SNAPSHOT'
 
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
@@ -60,8 +59,13 @@ contacts {
 tasks.release.dependsOn tasks.bintrayUpload
 
 bintray {
-//    user = <user from hidden properties file>
-//    key = <key from hidden properties file>
+    if (!"$bintrayUser" || !"bintrayKey"){
+        throw new MissingPropertyException("Missing bintray credentials!"+
+                " User: <$bintrayUser> Key: <$bintrayKey>")
+    }
+
+    user = bintrayUser
+    key = bintrayKey
 
     publications = ['nebula']
     dryRun = false
@@ -69,11 +73,11 @@ bintray {
     pkg {
         repo = 'maven'
 //        userOrg = 'nebula'
-        name = '${project.name}'
+        name = "${project.name}"
         desc = hasProperty('description') ? description : ''
-        websiteUrl = 'https://github.com/robertsmieja/${project.name}'
-        issueTrackerUrl = 'https://github.com/robertsmieja/${project.name}/issues'
-        vcsUrl = 'https://github.com/robertsmieja/${project.name}.git'
+        websiteUrl = "https://github.com/robertsmieja/${project.name}"
+        issueTrackerUrl = "https://github.com/robertsmieja/${project.name}/issues"
+        vcsUrl = "https://github.com/robertsmieja/${project.name}.git"
         licenses = ['Apache-2.0']
 //        labels = []
         publicDownloadNumbers = true
