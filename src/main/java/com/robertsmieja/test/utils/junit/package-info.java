@@ -25,6 +25,6 @@
  * @see com.robertsmieja.test.utils.junit.EqualsTests
  * @see com.robertsmieja.test.utils.junit.GettersAndSettersTests
  * @see com.robertsmieja.test.utils.junit.HashCodeTests
- * @since 1.0.0
+ * @since 0.1.0
  */
 package com.robertsmieja.test.utils.junit;

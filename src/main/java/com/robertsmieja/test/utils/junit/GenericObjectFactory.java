@@ -20,7 +20,6 @@ import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
 import org.apache.commons.collections4.map.UnmodifiableMap;
 import org.apache.commons.lang3.ClassUtils;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -121,13 +120,11 @@ public class GenericObjectFactory implements ObjectFactory {
     }
 
     @Override
-    @NotNull
     public <T> T getInstanceOfClass(Class<T> aClass) throws ObjectFactoryException {
         return getInstanceOfClassUsingValueMap(aClass, additionalClassToValuesMap);
     }
 
     @Override
-    @NotNull
     public <T> T getInstanceOfClassWithDifferentValues(Class<T> aClass) throws ObjectFactoryException {
         return getInstanceOfClassUsingValueMap(aClass, additionalClassToDifferentValuesMap);
     }

@@ -21,7 +21,7 @@ package com.robertsmieja.test.utils.junit;
  *
  * @param <T> The class under test
  *
- * @since 1.0.0
+ * @since 0.1.0
  */
 public interface AllBasicTests<T> extends EqualsTests<T>, GettersAndSettersTests<T>, HashCodeTests<T>, ToStringTests<T> {
 }

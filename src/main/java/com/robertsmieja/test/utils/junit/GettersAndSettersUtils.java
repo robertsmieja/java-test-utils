@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 
 import java.lang.reflect.Field;
@@ -49,7 +48,7 @@ class GettersAndSettersUtils {
         }
     }
 
-    static ImmutablePair<Method, Method> getGetterAndSetterForField(@NotNull Field field) {
+    static ImmutablePair<Method, Method> getGetterAndSetterForField(Field field) {
         Method getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
         if (getter == null) {
             getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.GET_METHOD_PREFIX, field));
@@ -64,7 +63,7 @@ class GettersAndSettersUtils {
         return new ImmutablePair<>(getter, setter);
     }
 
-    static Method getSetterForField(@NotNull Field field) {
+    static Method getSetterForField(Field field) {
         return MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.SET_METHOD_PREFIX, field), field.getType());
     }
 
@@ -82,7 +81,7 @@ class GettersAndSettersUtils {
         Assertions.assertEquals(originalFieldValue, newFieldValue);
     }
 
-    static <T> void ensureFieldCanHandleNullValues(@NotNull T value, @NotNull Method getter, @NotNull Method setter) throws IllegalAccessException, InvocationTargetException {
+    static <T> void ensureFieldCanHandleNullValues(T value, Method getter, Method setter) throws IllegalAccessException, InvocationTargetException {
         Object newFieldValue;
         if (!getter.getReturnType().isPrimitive()) {
             setter.invoke(value, (Object) null);
@@ -91,7 +90,7 @@ class GettersAndSettersUtils {
         }
     }
 
-    static List<Field> getFields(@NotNull Class aClass) {
+    static List<Field> getFields(Class aClass) {
         List<Field> allFields = FieldUtils.getAllFieldsList(aClass);
         List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
         return allFields.stream()
@@ -100,7 +99,6 @@ class GettersAndSettersUtils {
                 .collect(Collectors.toList());
     }
 
-    @NotNull
     static String accessorMethodNameForField(String accessorPrefix, Field field) {
         return accessorPrefix + StringUtils.capitalize(field.getName());
     }

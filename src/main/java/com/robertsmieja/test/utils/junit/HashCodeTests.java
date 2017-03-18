@@ -34,7 +34,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @param <T> The class under test
  *
- * @since 1.0.0
+ * @since 0.1.0
  */
 public interface HashCodeTests<T> extends ObjectInstantiatorForTests<T> {
 

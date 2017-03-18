@@ -21,7 +21,7 @@ import java.lang.annotation.*;
 /**
  * An annotation to mark a field that the {@link com.robertsmieja.test.utils.junit.GettersAndSettersTests} should ignore
  *
- * @since 1.0.0
+ * @since 0.1.0
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

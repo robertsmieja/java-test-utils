@@ -17,12 +17,11 @@
 package com.robertsmieja.test.utils.junit.interfaces;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
-import org.jetbrains.annotations.NotNull;
 
 public interface ObjectFactory {
     <T> void registerClassAndValues(Class<T> aClass, T value, T differentValue);
 
-    @NotNull <T> T getInstanceOfClass(Class<T> aClass) throws ObjectFactoryException;
+    <T> T getInstanceOfClass(Class<T> aClass) throws ObjectFactoryException;
 
-    @NotNull <T> T getInstanceOfClassWithDifferentValues(Class<T> aClass) throws ObjectFactoryException;
+    <T> T getInstanceOfClassWithDifferentValues(Class<T> aClass) throws ObjectFactoryException;
 }

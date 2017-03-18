@@ -33,7 +33,7 @@ import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.runAllGet
  *
  * @param <T> The class under test
  *
- * @since 1.0.0
+ * @since 0.1.0
  */
 public interface GettersAndSettersTests<T> extends ObjectInstantiatorForTests<T> {
 

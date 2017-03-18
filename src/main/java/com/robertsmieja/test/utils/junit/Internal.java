@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
  * <p>
  * This class solely holds static methods, in order to reduce code duplication.
  *
- * @since 1.0.0
+ * @since 0.1.0
  */
 class Internal {
     Internal() {
