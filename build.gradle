@@ -59,27 +59,19 @@ contacts {
 tasks.release.dependsOn tasks.bintrayUpload
 
 bintray {
-    if (!"$bintrayUser" || !"bintrayKey"){
-        throw new MissingPropertyException("Missing bintray credentials!"+
-                " User: <$bintrayUser> Key: <$bintrayKey>")
-    }
-
-    user = bintrayUser
-    key = bintrayKey
-
+    user = hasProperty('bintrayUser') ? "$bintrayUser" : System.env.'BINTRAY_USER'
+    key = hasProperty('bintrayApiKey') ? "$bintrayApiKey" : System.env.'BINTRAY_API_KEY'
     publications = ['nebula']
     dryRun = false
     publish = true
     pkg {
         repo = 'maven'
-//        userOrg = 'nebula'
         name = "${project.name}"
         desc = hasProperty('description') ? description : ''
         websiteUrl = "https://github.com/robertsmieja/${project.name}"
         issueTrackerUrl = "https://github.com/robertsmieja/${project.name}/issues"
         vcsUrl = "https://github.com/robertsmieja/${project.name}.git"
         licenses = ['Apache-2.0']
-//        labels = []
         publicDownloadNumbers = true
         attributes = [:]
         version {
