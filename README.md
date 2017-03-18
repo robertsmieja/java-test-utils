@@ -1,9 +1,9 @@
 Java Test Utils
 ===============
 
-[![Join the chat at https://gitter.im/java-test-utils/Lobby](https://badges.gitter.im/java-test-utils/Lobby.svg)](https://gitter.im/java-test-utils/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/robertsmieja/java-test-utils.svg?branch=master)](https://travis-ci.org/robertsmieja/java-test-utils)
 [![codecov](https://codecov.io/gh/robertsmieja/java-test-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/robertsmieja/java-test-utils)
+[![Join the chat at https://gitter.im/java-test-utils/Lobby](https://badges.gitter.im/java-test-utils/Lobby.svg)](https://gitter.im/java-test-utils/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This project is intended to serve as a set of common utilities used in testing, between my personal project.
 
