@@ -18,7 +18,6 @@ package com.robertsmieja.test.utils.junit;
 
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 
 import java.lang.reflect.Constructor;
@@ -37,7 +36,6 @@ class Internal {
     Internal() {
     } //package default for code coverage
 
-    @NotNull
     static <T> T createObjectFromDefaultConstructor(Class<T> tClass) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<T> constructor = ConstructorUtils.getAccessibleConstructor(tClass);
         return constructor.newInstance();
