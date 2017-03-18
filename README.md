@@ -1,6 +1,7 @@
 Java Test Utils
 ===============
 
+[![Download](https://api.bintray.com/packages/robertsmieja/maven/java-test-utils/images/download.svg) ](https://bintray.com/robertsmieja/maven/java-test-utils/_latestVersion)
 [![Build Status](https://travis-ci.org/robertsmieja/java-test-utils.svg?branch=master)](https://travis-ci.org/robertsmieja/java-test-utils)
 [![codecov](https://codecov.io/gh/robertsmieja/java-test-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/robertsmieja/java-test-utils)
 [![Join the chat at https://gitter.im/java-test-utils/Lobby](https://badges.gitter.im/java-test-utils/Lobby.svg)](https://gitter.im/java-test-utils/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)

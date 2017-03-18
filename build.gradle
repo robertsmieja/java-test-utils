@@ -59,8 +59,8 @@ contacts {
 tasks.release.dependsOn tasks.bintrayUpload
 
 bintray {
-    user = hasProperty('bintrayUser') ? "$bintrayUser" : System.env.'BINTRAY_USER'
-    key = hasProperty('bintrayApiKey') ? "$bintrayApiKey" : System.env.'BINTRAY_API_KEY'
+    user = project.hasProperty('bintrayUser') ? "$bintrayUser" : System.env.'BINTRAY_USER'
+    key = project.hasProperty('bintrayApiKey') ? "$bintrayApiKey" : System.env.'BINTRAY_API_KEY'
     publications = ['nebula']
     dryRun = false
     publish = true
