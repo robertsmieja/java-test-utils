@@ -15,6 +15,10 @@ It currently consists of a set of utilities to simplify unit testing of all gett
 * IDE support for JUnit 5 (Currently only IntelliJ IDEA)
 
 ### Usage
+The library is currently available on JCenter at the following [repository](https://bintray.com/robertsmieja/maven/java-test-utils).
+
+There is no current stable release yet.
+
 See [this unit test](src/test/java/com/robertsmieja/test/utils/junit/SimplePojoTests.java) as an example of how to use the current implementation.
 
 ### Issues
