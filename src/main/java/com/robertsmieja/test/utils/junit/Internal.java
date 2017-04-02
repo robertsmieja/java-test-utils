@@ -41,7 +41,7 @@ class Internal {
         return constructor.newInstance();
     }
 
-    static void doNotUseDefaultMethod(Class aClass, String methodName, Class... parameterTypes) {
+    static void doNotUseDefaultMethod(Class<?> aClass, String methodName, Class<?>... parameterTypes) {
         Method methodToCheck = MethodUtils.getAccessibleMethod(aClass, methodName, parameterTypes);
         Assertions.assertNotEquals(Object.class, methodToCheck.getDeclaringClass(), methodName + "() method not implemented");
     }

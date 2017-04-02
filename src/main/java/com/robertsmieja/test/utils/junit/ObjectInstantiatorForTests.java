@@ -44,11 +44,14 @@ public interface ObjectInstantiatorForTests<T> {
     default Class<T> getClassOfGenericTypeArgument() {
         //TODO Clean this up to be more readable? is that possible?
         //TODO make sure this works with complicated interface/class hierarchies
-        Class ourCurrentClass = getClass();
+        Class<? extends ObjectInstantiatorForTests> ourCurrentClass = this.getClass();
         Type[] ourCurrentInterfaces = ourCurrentClass.getGenericInterfaces();
         ParameterizedType currentInterface = (ParameterizedType) ourCurrentInterfaces[0];
         Type genericTypeArgument = currentInterface.getActualTypeArguments()[0];
-        return (Class<T>) genericTypeArgument;
+        //noinspection unchecked
+        @SuppressWarnings("unchecked")
+        Class<T> classType = (Class<T>) genericTypeArgument;
+        return classType;
     }
 
     default T createValue() throws ObjectFactoryException {

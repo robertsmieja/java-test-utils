@@ -90,7 +90,7 @@ class GettersAndSettersUtils {
         }
     }
 
-    static List<Field> getFields(Class aClass) {
+    static List<Field> getFields(Class<?> aClass) {
         List<Field> allFields = FieldUtils.getAllFieldsList(aClass);
         List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
         return allFields.stream()

@@ -106,7 +106,7 @@ public class GenericObjectFactory implements ObjectFactory {
         this.cacheInstances = cacheInstances;
     }
 
-    protected static Class convertPrimitiveToWrapperOrReturn(Class primitiveClass) {
+    protected static Class<?> convertPrimitiveToWrapperOrReturn(Class<?> primitiveClass) {
         if (primitiveClass.isPrimitive()) {
             return ClassUtils.primitiveToWrapper(primitiveClass);
         }
@@ -188,11 +188,13 @@ public class GenericObjectFactory implements ObjectFactory {
 
     protected <T> T getValueFromMapOrDefaultMap(Class<T> fieldClass, Map<Class<?>, Object> valueMap) {
         Class<?> nonPrimitiveClass = convertPrimitiveToWrapperOrReturn(fieldClass);
-        Map defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
-        return (T) valueMap.getOrDefault(nonPrimitiveClass, defaultValueMap.get(nonPrimitiveClass));
+        Map<Class<?>, Object> defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
+        Object value = valueMap.getOrDefault(nonPrimitiveClass, defaultValueMap.get(nonPrimitiveClass));
+        T castedValue = fieldClass.cast(value);
+        return castedValue;
     }
 
-    protected Map getCorrectDefaultValueMapFromClassMap(Map classMap) {
+    protected Map<Class<?>, Object> getCorrectDefaultValueMapFromClassMap(Map<Class<?>, Object> classMap) {
         if (classMap == additionalClassToValuesMap) { //Avoid equals(), since that will be true with an empty map
             return primitivesToValuesMap;
         }
