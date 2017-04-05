@@ -17,24 +17,4 @@
 package com.robertsmieja.test.utils.junit.exceptions;
 
 public class ObjectFactoryException extends Exception {
-
-    public ObjectFactoryException() {
-        super();
-    }
-
-    public ObjectFactoryException(String message) {
-        super(message);
-    }
-
-    public ObjectFactoryException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public ObjectFactoryException(Throwable cause) {
-        super(cause);
-    }
-
-    protected ObjectFactoryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }
