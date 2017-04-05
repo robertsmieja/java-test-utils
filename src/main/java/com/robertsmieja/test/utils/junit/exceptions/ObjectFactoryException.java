@@ -17,4 +17,11 @@
 package com.robertsmieja.test.utils.junit.exceptions;
 
 public class ObjectFactoryException extends Exception {
+    public ObjectFactoryException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public ObjectFactoryException(String message) {
+        super(message);
+    }
 }
