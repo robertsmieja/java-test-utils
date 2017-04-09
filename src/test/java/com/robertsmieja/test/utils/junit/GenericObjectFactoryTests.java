@@ -16,11 +16,16 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.factory.ConstructorThatThrowsObject;
+import com.robertsmieja.test.utils.junit.factory.NoDefaultConstructorObject;
+import com.robertsmieja.test.utils.junit.factory.PrivateConstructorObject;
 import com.robertsmieja.test.utils.junit.pojos.ComplexPojo;
 import com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo;
 import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.*;
+
+import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -112,8 +117,29 @@ public class GenericObjectFactoryTests {
     @Test
     @DisplayName("Unable to instantiate a Class that doesn't have a no-arg constructor")
     public void unableToInstantiateAClassThatDoesntHaveANoArgConstructor(){
-        ObjectFactoryException exception = Assertions.assertThrows(ObjectFactoryException.class, () -> testInstantiation(ReadOnlyPojo.class));
-        assertEquals("Unable to find a no-arg constructor for <class com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo>", exception.getMessage());
+        ObjectFactoryException exception = Assertions.assertThrows(ObjectFactoryException.class, () -> testInstantiation(NoDefaultConstructorObject.class));
+        assertEquals("Unable to find a public no-arg constructor for <class com.robertsmieja.test.utils.junit.factory.NoDefaultConstructorObject>", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Unable to instantiate a Class that has a private constructor")
+    public void unableToInstantiateAClassThatHasAPrivateConstructor(){
+        ObjectFactoryException exception = Assertions.assertThrows(ObjectFactoryException.class, () -> testInstantiation(PrivateConstructorObject.class));
+        assertEquals("Unable to find a public no-arg constructor for <class com.robertsmieja.test.utils.junit.factory.PrivateConstructorObject>", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Correctly handles an Exception during Constructor.newInstance()")
+    public void correctlyHandlesAnExceptionDuringConstructorNewInstance(){
+        ObjectFactoryException exception = Assertions.assertThrows(ObjectFactoryException.class, () -> testInstantiation(ConstructorThatThrowsObject.class));
+        assertEquals("Exception encountered while trying to create an instance of <class com.robertsmieja.test.utils.junit.factory.ConstructorThatThrowsObject>", exception.getMessage());
+
+        Throwable cause = exception.getCause();
+        assertEquals(InvocationTargetException.class, cause.getClass());
+
+        Throwable actualCause = cause.getCause();
+        assertEquals("Don't call this constructor!", actualCause.getMessage());
+        assertSame(ConstructorThatThrowsObject.constructorException, actualCause);
     }
 
     private <T> void testInstantiation(Class<T> tClass) throws ObjectFactoryException {

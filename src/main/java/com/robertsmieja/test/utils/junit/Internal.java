@@ -40,13 +40,13 @@ class Internal {
     static <T> T createObjectFromDefaultConstructor(Class<T> aClass) throws ObjectFactoryException {
         Constructor<T> constructor = ConstructorUtils.getAccessibleConstructor(aClass);
         if (constructor == null){
-            throw new ObjectFactoryException("Unable to find a no-arg constructor for <" + aClass + ">");
+            throw new ObjectFactoryException("Unable to find a public no-arg constructor for <" + aClass + ">");
         }
 
         try {
             return constructor.newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ObjectFactoryException("Unable to create an instance of <" + aClass + ">. Is the no-arg constructor public?", e);
+            throw new ObjectFactoryException("Exception encountered while trying to create an instance of <" + aClass + ">", e);
         }
     }
 
