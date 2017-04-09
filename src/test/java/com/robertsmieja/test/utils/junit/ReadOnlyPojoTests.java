@@ -24,7 +24,7 @@ import org.opentest4j.AssertionFailedError;
 import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * This test class covers instances where there are no setters for fields
@@ -43,11 +43,7 @@ public class ReadOnlyPojoTests implements GettersAndSettersTests<ReadOnlyPojo> {
     @Override
     @Test
     public void testGettersAndSetters() throws ObjectFactoryException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        try {
-            GettersAndSettersTests.super.testGettersAndSetters();
-            fail("Expected an AssertionFailedError");
-        } catch (AssertionFailedError assertionFailedError) {
-            assertEquals("Unable to find <setId> for field <private long com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo.id>", assertionFailedError.getMessage());
-        }
+        AssertionFailedError error = assertThrows(AssertionFailedError.class, () -> GettersAndSettersTests.super.testGettersAndSetters());
+        assertEquals("Unable to find <setId> for field <private long com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo.id>", error.getMessage());
     }
 }
