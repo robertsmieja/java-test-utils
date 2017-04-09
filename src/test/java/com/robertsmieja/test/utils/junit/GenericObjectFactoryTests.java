@@ -65,6 +65,27 @@ public class GenericObjectFactoryTests {
     }
 
     @Test
+    @DisplayName("Object is not cached when caching is turned off")
+    public void objectIsNotCachedWhenCachingIsTurnedOff() throws ObjectFactoryException {
+        objectUnderTest = new GenericObjectFactory(false);
+
+        Object object = objectUnderTest.getInstanceOfClass(Object.class);
+        Object differentObject = objectUnderTest.getInstanceOfClassWithDifferentValues(Object.class);
+
+        assertNotNull(object);
+        assertNotNull(differentObject);
+        assertNotEquals(object, differentObject);
+
+        Object sameObject = objectUnderTest.getInstanceOfClass(Object.class);
+        Object sameObjectWithDifferentValues = objectUnderTest.getInstanceOfClassWithDifferentValues(Object.class);
+
+        assertNotNull(sameObject);
+        assertNotNull(sameObjectWithDifferentValues);
+        assertNotSame(object, sameObject);
+        assertNotSame(differentObject, sameObjectWithDifferentValues);
+    }
+
+    @Test
     @DisplayName("Can create primitive types successfully")
     public void canCreatePrimitiveTypesSuccessfully() throws ObjectFactoryException {
         String stringValue = objectUnderTest.getInstanceOfClass(String.class);
