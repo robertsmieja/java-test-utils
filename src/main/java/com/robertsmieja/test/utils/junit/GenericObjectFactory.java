@@ -190,7 +190,7 @@ public class GenericObjectFactory implements ObjectFactory {
         Class<?> nonPrimitiveClass = convertPrimitiveToWrapperOrReturn(fieldClass);
         Map<Class<?>, Object> defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
         Object value = valueMap.getOrDefault(nonPrimitiveClass, defaultValueMap.get(nonPrimitiveClass));
-        T castedValue = fieldClass.cast(value);
+        T castedValue = (T) value;
         return castedValue;
     }
 
