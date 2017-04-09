@@ -35,6 +35,6 @@ public class NestedPojoTests {
     @DisplayName("Synthetic fields are filtered out correctly")
     @Disabled //Disabled because it's failing for now
     public void syntheticFieldsAreFilteredOutCorrectly() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        GettersAndSettersUtils.runAllGettersAndSettersTests(NestedPojo.getInnerClass(), nestedPojo.createInnerValue(), nestedPojo.createInnerValue());
+        GettersAndSettersUtils.runAllGettersAndSettersTests(nestedPojo.createInnerValue(), nestedPojo.createInnerValue());
     }
 }

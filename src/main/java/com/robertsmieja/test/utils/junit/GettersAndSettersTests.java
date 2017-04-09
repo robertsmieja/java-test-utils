@@ -44,6 +44,6 @@ public interface GettersAndSettersTests<T> extends ObjectInstantiatorForTests<T>
     @Test
     @DisplayName("Test getters and setters")
     default void testGettersAndSetters() throws ObjectFactoryException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        runAllGettersAndSettersTests(getClassOfGenericTypeArgument(), createValue(), createDifferentValue());
+        runAllGettersAndSettersTests(createValue(), createDifferentValue());
     }
 }

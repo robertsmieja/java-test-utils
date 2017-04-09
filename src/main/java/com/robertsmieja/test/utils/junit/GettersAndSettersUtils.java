@@ -31,12 +31,13 @@ import java.util.stream.Collectors;
 
 import static com.robertsmieja.test.utils.junit.Internal.failToFindMethodForField;
 
-class GettersAndSettersUtils {
+public class GettersAndSettersUtils {
     GettersAndSettersUtils() {
     }
 
-    static <T> void runAllGettersAndSettersTests(Class<T> aClass, T value, T differentValue) throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        List<Field> fieldsToTest = GettersAndSettersUtils.getFields(aClass);
+    public static <T> void runAllGettersAndSettersTests(T value, T differentValue) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        Class<T> classUnderTest = (Class<T>) value.getClass();
+        List<Field> fieldsToTest = GettersAndSettersUtils.getFields(classUnderTest);
 
         for (Field field : fieldsToTest) {
             ImmutablePair<Method, Method> getterAndSetter = GettersAndSettersUtils.getGetterAndSetterForField(field);

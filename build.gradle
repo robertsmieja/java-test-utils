@@ -56,9 +56,9 @@ contacts {
 }
 
 /* Javac config */
-compileJava {
-    options.compilerArgs << "-Xlint"
-}
+//compileJava {
+//    options.compilerArgs << "-Xlint"
+//}
 
 /* BinTray config */
 tasks.release.dependsOn tasks.bintrayUpload

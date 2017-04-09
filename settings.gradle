@@ -1,2 +1,9 @@
-rootProject.name = 'java-test-utils'
+include 'junit4'
 
+rootProject.name = 'java-test-utils'
+rootProject.children.each {project ->
+    String projectName = project.name
+    String projectDirName = "testProjects/$projectName"
+    project.projectDir = new File(settingsDir, projectDirName)
+    assert project.projectDir.isDirectory()
+}

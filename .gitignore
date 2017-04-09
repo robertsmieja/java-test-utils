@@ -41,9 +41,11 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
 ### Gradle template
 .gradle
 /build/
+testProjects/junit4/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
