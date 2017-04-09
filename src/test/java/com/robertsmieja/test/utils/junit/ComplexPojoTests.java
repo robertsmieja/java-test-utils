@@ -33,10 +33,12 @@ public class ComplexPojoTests implements ObjectInstantiatorForTests<ComplexPojo>
 
     private static ReadOnlyPojo value;
     private static ReadOnlyPojo differentValue;
+    private static boolean previousCacheInstancesValue = true;
 
     @BeforeAll
     static public void testSetup() {
         GenericObjectFactory genericObjectFactory = (GenericObjectFactory) objectFactory;
+        previousCacheInstancesValue = genericObjectFactory.isCacheInstances();
         genericObjectFactory.setCacheInstances(false);
 
         value = new ReadOnlyPojo(1, "foo");
@@ -47,7 +49,7 @@ public class ComplexPojoTests implements ObjectInstantiatorForTests<ComplexPojo>
     @AfterAll
     static public void testTearDown() {
         GenericObjectFactory genericObjectFactory = (GenericObjectFactory) objectFactory;
-        genericObjectFactory.setCacheInstances(true);
+        genericObjectFactory.setCacheInstances(previousCacheInstancesValue);
     }
 
     @Test
