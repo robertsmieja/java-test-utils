@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.junit.jupiter.api.Assertions;
@@ -36,9 +37,17 @@ class Internal {
     Internal() {
     } //package default for code coverage
 
-    static <T> T createObjectFromDefaultConstructor(Class<T> tClass) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor<T> constructor = ConstructorUtils.getAccessibleConstructor(tClass);
-        return constructor.newInstance();
+    static <T> T createObjectFromDefaultConstructor(Class<T> aClass) throws ObjectFactoryException {
+        Constructor<T> constructor = ConstructorUtils.getAccessibleConstructor(aClass);
+        if (constructor == null){
+            throw new ObjectFactoryException("Unable to find a no-arg constructor for <" + aClass + ">");
+        }
+
+        try {
+            return constructor.newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new ObjectFactoryException("Unable to create an instance of <" + aClass + ">. Is the no-arg constructor public?", e);
+        }
     }
 
     static void doNotUseDefaultMethod(Class<?> aClass, String methodName, Class<?>... parameterTypes) {

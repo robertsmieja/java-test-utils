@@ -157,12 +157,7 @@ public class GenericObjectFactory implements ObjectFactory {
 
     protected <T> T createObjectForClass(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         T object;
-        try {
-            object = Internal.createObjectFromDefaultConstructor(aClass);
-        } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
-            throw new ObjectFactoryException("Unable to create an instance of <" + aClass + ">. Is there a non-arg constructor?", e);
-        }
+        object = Internal.createObjectFromDefaultConstructor(aClass);
         List<Field> fields = getFields(aClass);
 
         for (Field field : fields) {

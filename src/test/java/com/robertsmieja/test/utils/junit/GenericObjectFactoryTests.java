@@ -17,11 +17,10 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.domain.ComplexPojo;
+import com.robertsmieja.test.utils.junit.domain.ReadOnlyObject;
 import com.robertsmieja.test.utils.junit.domain.SimplePojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -87,6 +86,13 @@ public class GenericObjectFactoryTests {
     @DisplayName("Instantiate ComplexPojo successfully")
     public void instantiateComplexPojoSuccessfully() throws ObjectFactoryException {
         testInstantiation(ComplexPojo.class);
+    }
+
+    @Test
+    @DisplayName("Unable to instantiate a Class that doesn't have a no-arg constructor")
+    public void unableToInstantiateAClassThatDoesntHaveANoArgConstructor(){
+        ObjectFactoryException exception = Assertions.assertThrows(ObjectFactoryException.class, () -> testInstantiation(ReadOnlyObject.class));
+        assertEquals("Unable to find a no-arg constructor for <class com.robertsmieja.test.utils.junit.domain.ReadOnlyObject>", exception.getMessage());
     }
 
     private <T> void testInstantiation(Class<T> tClass) throws ObjectFactoryException {
