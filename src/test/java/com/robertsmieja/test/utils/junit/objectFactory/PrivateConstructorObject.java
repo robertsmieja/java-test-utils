@@ -14,9 +14,9 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit;
+package com.robertsmieja.test.utils.junit.objectFactory;
 
-import com.robertsmieja.test.utils.junit.pojos.ChildComplexPojo;
-
-public class ChildComplexPojoTests implements AllBasicTests<ChildComplexPojo> {
+public class PrivateConstructorObject {
+    private PrivateConstructorObject() {
+    }
 }

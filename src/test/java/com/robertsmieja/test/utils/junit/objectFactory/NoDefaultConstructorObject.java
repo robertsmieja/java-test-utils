@@ -14,12 +14,13 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit.factory;
+package com.robertsmieja.test.utils.junit.objectFactory;
 
-public class ConstructorThatThrowsObject {
-    public static RuntimeException constructorException  = new RuntimeException("Don't call this constructor!");
+/**
+ * Class that doesn't have a default constructor
+ */
+public class NoDefaultConstructorObject {
 
-    public ConstructorThatThrowsObject(){
-        throw constructorException;
+    public NoDefaultConstructorObject(String foo) {
     }
 }

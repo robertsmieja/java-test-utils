@@ -14,13 +14,10 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit.factory;
+package com.robertsmieja.test.utils.junit;
 
-/**
- * Class that doesn't have a default constructor
- */
-public class NoDefaultConstructorObject {
+import com.robertsmieja.test.utils.junit.pojos.ComplexPojoWithIgnores;
 
-    public NoDefaultConstructorObject(String foo) {
-    }
+public class ComplexPojoWithIgnoresTests implements AllBasicTests<ComplexPojoWithIgnores> {
+
 }

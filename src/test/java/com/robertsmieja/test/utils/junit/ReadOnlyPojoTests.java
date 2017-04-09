@@ -16,8 +16,8 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
+import com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 

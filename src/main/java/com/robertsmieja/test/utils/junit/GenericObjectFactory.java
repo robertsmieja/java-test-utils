@@ -33,12 +33,12 @@ import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getFields
 import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getSetterForField;
 
 public class GenericObjectFactory implements ObjectFactory {
+    protected final static int NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS = 9 * 2; //double the number because of arrays
     //Create sensible defaults
     //Delegate to valueOf() to take advantage of caching when possible, except for Strings
     //It doesn't make sense to use valueOf for String
     final static Map<Class<?>, Object> primitivesToValuesMap;
     final static Map<Class<?>, Object> primitivesToDifferentValuesMap;
-    protected final static int NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS = 9 * 2; //double the number because of arrays
 
     static {
         Map<Class<?>, Object> initPrimitivesToValuesMap = new HashMap<>(NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS);
@@ -96,7 +96,7 @@ public class GenericObjectFactory implements ObjectFactory {
     //Keep track of user inputs
     final Map<Class<?>, Object> additionalClassToValuesMap = new ConcurrentHashMap<>();
     final Map<Class<?>, Object> additionalClassToDifferentValuesMap = new ConcurrentHashMap<>();
-    protected final boolean cacheInstances;
+    protected boolean cacheInstances;
 
     public GenericObjectFactory() {
         this(true);
@@ -113,10 +113,24 @@ public class GenericObjectFactory implements ObjectFactory {
         return primitiveClass;
     }
 
+    public boolean isCacheInstances() {
+        return cacheInstances;
+    }
+
+    public void setCacheInstances(boolean cacheInstances) {
+        this.cacheInstances = cacheInstances;
+    }
+
     @Override
     public <T> void registerClassAndValues(Class<T> aClass, T value, T differentValue) {
         additionalClassToValuesMap.put(aClass, value);
         additionalClassToDifferentValuesMap.put(aClass, differentValue);
+    }
+
+    @Override
+    public <T> void clearValuesForClass(Class<T> aClass) {
+        additionalClassToValuesMap.remove(aClass);
+        additionalClassToDifferentValuesMap.remove(aClass);
     }
 
     @Override

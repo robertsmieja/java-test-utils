@@ -17,6 +17,7 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
+import com.robertsmieja.test.utils.junit.exceptions.FieldNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -35,18 +36,53 @@ public class GettersAndSettersUtils {
     GettersAndSettersUtils() {
     }
 
+    /**
+     * Runs all tests relating to getters and setters for the passed in objects
+     *
+     * @param value          An instance of the object under test
+     * @param differentValue An instance of the object under test that contains different values in it's fields
+     * @param <T>            The class under test
+     *
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws InvocationTargetException
+     */
     public static <T> void runAllGettersAndSettersTests(T value, T differentValue) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         Class<T> classUnderTest = (Class<T>) value.getClass();
         List<Field> fieldsToTest = GettersAndSettersUtils.getFields(classUnderTest);
 
         for (Field field : fieldsToTest) {
-            ImmutablePair<Method, Method> getterAndSetter = GettersAndSettersUtils.getGetterAndSetterForField(field);
-            Method getter = getterAndSetter.getLeft();
-            Method setter = getterAndSetter.getRight();
-
-            ensureFieldCanHandleDifferentValues(value, differentValue, getter, setter);
-            ensureFieldCanHandleNullValues(value, getter, setter);
+            runGettersAndSettersTestOnField(value, differentValue, field);
         }
+    }
+
+    /**
+     * Run the tests only on one specific field for the passed in objects
+     *
+     * @param value          An instance of the object under test
+     * @param differentValue An instance of the object under test that contains different values in it's fields
+     * @param fieldName      The name of hte field to test
+     * @param <T>            The class under test
+     *
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    public static <T> void runGettersAndSettersTestOnField(T value, T differentValue, String fieldName) throws InvocationTargetException, IllegalAccessException {
+        Class<?> aClass = value.getClass();
+        Field field = FieldUtils.getField(aClass, fieldName, true);
+        if (field == null) {
+            throw new FieldNotFoundException("Field <" + fieldName + "> not found on <" + aClass + ">");
+        }
+        runGettersAndSettersTestOnField(value, differentValue, field);
+    }
+
+    static <T> void runGettersAndSettersTestOnField(T value, T differentValue, Field field) throws InvocationTargetException, IllegalAccessException {
+        ImmutablePair<Method, Method> getterAndSetter = GettersAndSettersUtils.getGetterAndSetterForField(field);
+        Method getter = getterAndSetter.getLeft();
+        Method setter = getterAndSetter.getRight();
+
+        ensureFieldCanHandleDifferentValues(value, differentValue, getter, setter);
+        ensureFieldCanHandleNullValues(value, getter, setter);
     }
 
     static ImmutablePair<Method, Method> getGetterAndSetterForField(Field field) {

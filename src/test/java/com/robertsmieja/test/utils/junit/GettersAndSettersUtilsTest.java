@@ -15,15 +15,26 @@
  */
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.FieldNotFoundException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.lang.reflect.InvocationTargetException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class GettersAndSettersUtilsTest {
-
     @Test
-    public void testConstructor(){
+    @DisplayName("Test constructor")
+    public void testConstructor() {
         GettersAndSettersUtils objectUnderTest = new GettersAndSettersUtils();
         assertNotNull(objectUnderTest);
+    }
+
+    @Test
+    @DisplayName("Trying to test a non-existent field returns the correct exception")
+    public void tryingToTestANonExistentFieldReturnsTheCorrectException() throws InvocationTargetException, IllegalAccessException {
+        FieldNotFoundException exception = assertThrows(FieldNotFoundException.class, () -> GettersAndSettersUtils.runGettersAndSettersTestOnField(new Object(), new Object(), "foo"));
+        assertEquals("Field <foo> not found on <class java.lang.Object>", exception.getMessage());
     }
 }

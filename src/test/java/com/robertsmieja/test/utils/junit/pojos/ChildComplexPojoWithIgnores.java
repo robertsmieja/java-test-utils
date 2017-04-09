@@ -16,7 +16,7 @@
 
 package com.robertsmieja.test.utils.junit.pojos;
 
-public class ChildComplexPojo extends ComplexPojo {
+public class ChildComplexPojoWithIgnores extends ComplexPojoWithIgnores {
     String childStringValue;
     int childIntValue;
 
@@ -38,7 +38,7 @@ public class ChildComplexPojo extends ComplexPojo {
 
     @Override
     public String toString() {
-        return "ChildComplexPojo{" +
+        return "ChildComplexPojoWithIgnores{" +
                 "childStringValue='" + childStringValue + '\'' +
                 ", childIntValue=" + childIntValue +
                 '}';
@@ -50,7 +50,7 @@ public class ChildComplexPojo extends ComplexPojo {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        ChildComplexPojo that = (ChildComplexPojo) o;
+        ChildComplexPojoWithIgnores that = (ChildComplexPojoWithIgnores) o;
 
         if (childIntValue != that.childIntValue) return false;
         return childStringValue != null ? childStringValue.equals(that.childStringValue) : that.childStringValue == null;

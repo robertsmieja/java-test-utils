@@ -16,8 +16,8 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
+import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

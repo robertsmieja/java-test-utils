@@ -16,8 +16,55 @@
 
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.pojos.ComplexPojo;
+import com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-public class ComplexPojoTests implements AllBasicTests<ComplexPojo> {
+import java.lang.reflect.InvocationTargetException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public class ComplexPojoTests implements ObjectInstantiatorForTests<ComplexPojo> {
+
+    private static ReadOnlyPojo value;
+    private static ReadOnlyPojo differentValue;
+
+    @BeforeAll
+    static public void testSetup() {
+        GenericObjectFactory genericObjectFactory = (GenericObjectFactory) objectFactory;
+        genericObjectFactory.setCacheInstances(false);
+
+        value = new ReadOnlyPojo(1, "foo");
+        differentValue = new ReadOnlyPojo(2, "bar");
+        objectFactory.registerClassAndValues(ReadOnlyPojo.class, value, differentValue);
+    }
+
+    @AfterAll
+    static public void testTearDown() {
+        GenericObjectFactory genericObjectFactory = (GenericObjectFactory) objectFactory;
+        genericObjectFactory.setCacheInstances(true);
+    }
+
+    @Test
+    @DisplayName("Registering values allows testing when unable to create a default value for a field")
+    public void registeringValuesAllowsTestingWhenUnableToCreateADefaultValueForAField() throws ObjectFactoryException, InvocationTargetException, IllegalAccessException {
+        GettersAndSettersUtils.runGettersAndSettersTestOnField(createValue(), createDifferentValue(), "fieldToIgnore");
+    }
+
+    @Test
+    @DisplayName("Exception is thrown when unable to create a default value for a field")
+    public void exceptionIsThrownWhenUnableToCreateADefaultValueForAField() throws ObjectFactoryException, InvocationTargetException, IllegalAccessException {
+        objectFactory.clearValuesForClass(ReadOnlyPojo.class);
+        try {
+            ObjectFactoryException exception = assertThrows(ObjectFactoryException.class, () -> GettersAndSettersUtils.runGettersAndSettersTestOnField(createValue(), createDifferentValue(), "fieldToIgnore"));
+            assertEquals("No values registered for <class com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo>", exception.getMessage());
+        } finally { //if this test fails, we don't pollute others
+            objectFactory.registerClassAndValues(ReadOnlyPojo.class, value, differentValue);
+        }
+    }
 }

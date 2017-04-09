@@ -14,9 +14,10 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit.factory;
+package com.robertsmieja.test.utils.junit.exceptions;
 
-public class PrivateConstructorObject {
-    private PrivateConstructorObject() {
+public class FieldNotFoundException extends RuntimeException {
+    public FieldNotFoundException(String message) {
+        super(message);
     }
 }

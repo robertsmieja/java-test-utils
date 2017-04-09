@@ -39,7 +39,7 @@ class Internal {
 
     static <T> T createObjectFromDefaultConstructor(Class<T> aClass) throws ObjectFactoryException {
         Constructor<T> constructor = ConstructorUtils.getAccessibleConstructor(aClass);
-        if (constructor == null){
+        if (constructor == null) {
             throw new ObjectFactoryException("Unable to find a public no-arg constructor for <" + aClass + ">");
         }
 

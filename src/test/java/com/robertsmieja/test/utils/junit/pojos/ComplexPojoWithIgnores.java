@@ -16,21 +16,16 @@
 
 package com.robertsmieja.test.utils.junit.pojos;
 
-public class ComplexPojo {
+import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
+
+public class ComplexPojoWithIgnores {
+    @IgnoreForTests
     private ReadOnlyPojo fieldToIgnore;
     private String stringValue;
     private Integer integerValue;
     private Long longValue;
     private boolean booleanValue;
     private Boolean bigBooleanValue;
-
-    public ReadOnlyPojo getFieldToIgnore() {
-        return fieldToIgnore;
-    }
-
-    public void setFieldToIgnore(ReadOnlyPojo fieldToIgnore) {
-        this.fieldToIgnore = fieldToIgnore;
-    }
 
     public String getStringValue() {
         return stringValue;
@@ -74,7 +69,7 @@ public class ComplexPojo {
 
     @Override
     public String toString() {
-        return "ComplexPojo{" +
+        return "ComplexPojoWithIgnores{" +
                 "fieldToIgnore=" + fieldToIgnore +
                 ", stringValue='" + stringValue + '\'' +
                 ", integerValue=" + integerValue +
@@ -89,7 +84,7 @@ public class ComplexPojo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ComplexPojo that = (ComplexPojo) o;
+        ComplexPojoWithIgnores that = (ComplexPojoWithIgnores) o;
 
         if (booleanValue != that.booleanValue) return false;
         if (fieldToIgnore != null ? !fieldToIgnore.equals(that.fieldToIgnore) : that.fieldToIgnore != null)
