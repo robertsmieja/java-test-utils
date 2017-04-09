@@ -14,12 +14,12 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit.domain.factory;
+package com.robertsmieja.test.utils.junit.pojos.factory;
 
-import com.robertsmieja.test.utils.junit.domain.SimplePojo;
+import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
 
 /**
- * A set of convenience methods to instantiate instances of {@link com.robertsmieja.test.utils.junit.domain.SimplePojo}
+ * A set of convenience methods to instantiate instances of {@link SimplePojo}
  * for tests
  */
 public class SimplePojoFactory {

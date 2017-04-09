@@ -16,7 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.domain.ComplexPojo;
+import com.robertsmieja.test.utils.junit.pojos.ComplexPojo;
 
 public class ComplexPojoTests implements AllBasicTests<ComplexPojo> {
 

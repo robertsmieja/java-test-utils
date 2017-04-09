@@ -16,9 +16,9 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.domain.ComplexPojo;
-import com.robertsmieja.test.utils.junit.domain.ReadOnlyObject;
-import com.robertsmieja.test.utils.junit.domain.SimplePojo;
+import com.robertsmieja.test.utils.junit.pojos.ComplexPojo;
+import com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo;
+import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.*;
 
@@ -26,10 +26,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GenericObjectFactoryTests {
 
-    static GenericObjectFactory objectUnderTest;
+    GenericObjectFactory objectUnderTest;
 
-    @BeforeAll
-    public static void oneTimeSetup() {
+    @BeforeEach
+    public void setup() {
         objectUnderTest = new GenericObjectFactory();
     }
 
@@ -67,7 +67,7 @@ public class GenericObjectFactoryTests {
     @Test
     @DisplayName("Object is not cached when caching is turned off")
     public void objectIsNotCachedWhenCachingIsTurnedOff() throws ObjectFactoryException {
-        objectUnderTest = new GenericObjectFactory(false);
+       objectUnderTest = new GenericObjectFactory(false);
 
         Object object = objectUnderTest.getInstanceOfClass(Object.class);
         Object differentObject = objectUnderTest.getInstanceOfClassWithDifferentValues(Object.class);
@@ -112,8 +112,8 @@ public class GenericObjectFactoryTests {
     @Test
     @DisplayName("Unable to instantiate a Class that doesn't have a no-arg constructor")
     public void unableToInstantiateAClassThatDoesntHaveANoArgConstructor(){
-        ObjectFactoryException exception = Assertions.assertThrows(ObjectFactoryException.class, () -> testInstantiation(ReadOnlyObject.class));
-        assertEquals("Unable to find a no-arg constructor for <class com.robertsmieja.test.utils.junit.domain.ReadOnlyObject>", exception.getMessage());
+        ObjectFactoryException exception = Assertions.assertThrows(ObjectFactoryException.class, () -> testInstantiation(ReadOnlyPojo.class));
+        assertEquals("Unable to find a no-arg constructor for <class com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo>", exception.getMessage());
     }
 
     private <T> void testInstantiation(Class<T> tClass) throws ObjectFactoryException {

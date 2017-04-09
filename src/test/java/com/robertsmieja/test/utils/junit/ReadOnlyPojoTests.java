@@ -16,7 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.domain.ReadOnlyObject;
+import com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
@@ -29,15 +29,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * This test class covers instances where there are no setters for fields
  */
-public class ReadOnlyObjectTests implements GettersAndSettersTests<ReadOnlyObject> {
+public class ReadOnlyPojoTests implements GettersAndSettersTests<ReadOnlyPojo> {
     @Override
-    public ReadOnlyObject createValue() throws ObjectFactoryException {
-        return new ReadOnlyObject(1, "coolData");
+    public ReadOnlyPojo createValue() throws ObjectFactoryException {
+        return new ReadOnlyPojo(1, "coolData");
     }
 
     @Override
-    public ReadOnlyObject createDifferentValue() throws ObjectFactoryException {
-        return new ReadOnlyObject(2, "lessCoolData");
+    public ReadOnlyPojo createDifferentValue() throws ObjectFactoryException {
+        return new ReadOnlyPojo(2, "lessCoolData");
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ReadOnlyObjectTests implements GettersAndSettersTests<ReadOnlyObjec
             GettersAndSettersTests.super.testGettersAndSetters();
             fail("Expected an AssertionFailedError");
         } catch (AssertionFailedError assertionFailedError) {
-            assertEquals("Unable to find <setId> for field <private long com.robertsmieja.test.utils.junit.domain.ReadOnlyObject.id>", assertionFailedError.getMessage());
+            assertEquals("Unable to find <setId> for field <private long com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo.id>", assertionFailedError.getMessage());
         }
     }
 }

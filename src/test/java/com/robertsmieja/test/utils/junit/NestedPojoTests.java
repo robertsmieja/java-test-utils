@@ -16,7 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.domain.NestedPojo;
+import com.robertsmieja.test.utils.junit.pojos.NestedPojo;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

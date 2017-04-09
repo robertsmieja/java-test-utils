@@ -16,7 +16,7 @@
 
 package com.robertsmieja.test.utils.junit;
 
-import com.robertsmieja.test.utils.junit.domain.SimplePojo;
+import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
 
 public class SimplePojoTests implements EqualsTests<SimplePojo>, GettersAndSettersTests<SimplePojo>, HashCodeTests<SimplePojo>, ToStringTests<SimplePojo> {
 

@@ -14,13 +14,13 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit.domain;
+package com.robertsmieja.test.utils.junit.pojos;
 
-public class ReadOnlyObject {
+public class ReadOnlyPojo {
     private long id;
     private String coolData;
 
-    public ReadOnlyObject(long id, String coolData) {
+    public ReadOnlyPojo(long id, String coolData) {
         this.id = id;
         this.coolData = coolData;
     }
@@ -38,7 +38,7 @@ public class ReadOnlyObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ReadOnlyObject that = (ReadOnlyObject) o;
+        ReadOnlyPojo that = (ReadOnlyPojo) o;
 
         if (id != that.id) return false;
         return coolData != null ? coolData.equals(that.coolData) : that.coolData == null;
@@ -53,7 +53,7 @@ public class ReadOnlyObject {
 
     @Override
     public String toString() {
-        return "ReadOnlyObject{" +
+        return "ReadOnlyPojo{" +
                 "id=" + id +
                 ", coolData='" + coolData + '\'' +
                 '}';

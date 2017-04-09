@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit.domain;
+package com.robertsmieja.test.utils.junit.pojos;
 
 public class ChildComplexPojo extends ComplexPojo {
     String childStringValue;
