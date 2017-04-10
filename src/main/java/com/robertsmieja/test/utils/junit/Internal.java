@@ -58,5 +58,4 @@ class Internal {
     static void failToFindMethodForField(Field field, String desiredMethodName) {
         Assertions.fail("Unable to find <" + desiredMethodName + "> for field <" + field + ">");
     }
-
 }

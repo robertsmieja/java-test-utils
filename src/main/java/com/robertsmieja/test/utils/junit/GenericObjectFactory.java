@@ -190,7 +190,6 @@ public class GenericObjectFactory implements ObjectFactory {
         try {
             setter.invoke(object, valueToSet);
         } catch (InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
             throw new ObjectFactoryException("Unable to call setter for <" + field + "> on <" + object.getClass() + ">", e);
         }
     }

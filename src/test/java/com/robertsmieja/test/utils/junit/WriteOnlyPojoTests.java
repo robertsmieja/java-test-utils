@@ -13,28 +13,27 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+
 package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.pojos.WriteOnlyPojo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class GettersAndSettersUtilsTest {
-    @Test
-    @DisplayName("Test constructor")
-    public void testConstructor() {
-        GettersAndSettersUtils objectUnderTest = new GettersAndSettersUtils();
-        assertNotNull(objectUnderTest);
-    }
+public class WriteOnlyPojoTests {
 
     @Test
-    @DisplayName("Trying to test a non-existent field returns the correct exception")
-    public void tryingToTestANonExistentFieldReturnsTheCorrectException() throws InvocationTargetException, IllegalAccessException {
-        AssertionFailedError error = assertThrows(AssertionFailedError.class, () -> GettersAndSettersUtils.runGettersAndSettersTestOnField(new Object(), new Object(), "foo"));
-        assertEquals("Field <foo> not found on <class java.lang.Object>", error.getMessage());
+    @DisplayName("Exception expected when unable to find Getter for Field")
+    public void exceptionExpectedWhenUnableToFindGetterForField() throws InvocationTargetException, IllegalAccessException {
+        WriteOnlyPojo value = new WriteOnlyPojo();
+        AssertionFailedError error = assertThrows(AssertionFailedError.class, () -> GettersAndSettersUtils.runGettersAndSettersTestOnField(value, value, "data"));
+        assertEquals("Unable to find <getData> for field <public java.lang.String com.robertsmieja.test.utils.junit.pojos.WriteOnlyPojo.data>", error.getMessage());
     }
 }

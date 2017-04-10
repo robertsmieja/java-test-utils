@@ -17,7 +17,6 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
-import com.robertsmieja.test.utils.junit.exceptions.FieldNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -71,7 +70,7 @@ public class GettersAndSettersUtils {
         Class<?> aClass = value.getClass();
         Field field = FieldUtils.getField(aClass, fieldName, true);
         if (field == null) {
-            throw new FieldNotFoundException("Field <" + fieldName + "> not found on <" + aClass + ">");
+            Assertions.fail("Field <" + fieldName + "> not found on <" + aClass + ">");
         }
         runGettersAndSettersTestOnField(value, differentValue, field);
     }
@@ -91,7 +90,7 @@ public class GettersAndSettersUtils {
             getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.GET_METHOD_PREFIX, field));
         }
         if (getter == null) {
-            failToFindMethodForField(field, accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
+            failToFindMethodForField(field, accessorMethodNameForField(GettersAndSettersTests.GET_METHOD_PREFIX, field));
         }
         Method setter = getSetterForField(field);
         if (setter == null) {

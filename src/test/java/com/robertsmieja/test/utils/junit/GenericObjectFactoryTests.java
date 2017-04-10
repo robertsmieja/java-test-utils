@@ -19,6 +19,7 @@ package com.robertsmieja.test.utils.junit;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.objectFactory.ConstructorThatThrowsObject;
 import com.robertsmieja.test.utils.junit.objectFactory.NoDefaultConstructorObject;
+import com.robertsmieja.test.utils.junit.objectFactory.ObjectWithSetterThatThrows;
 import com.robertsmieja.test.utils.junit.objectFactory.PrivateConstructorObject;
 import com.robertsmieja.test.utils.junit.pojos.ComplexPojoWithIgnores;
 import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
@@ -131,7 +132,7 @@ public class GenericObjectFactoryTests {
     }
 
     @Test
-    @DisplayName("Correctly handles an Exception during Constructor.newInstance()")
+    @DisplayName("Correctly handle an Exception during Constructor.newInstance()")
     public void correctlyHandlesAnExceptionDuringConstructorNewInstance() {
         ObjectFactoryException exception = Assertions.assertThrows(ObjectFactoryException.class, () -> testInstantiation(ConstructorThatThrowsObject.class));
         assertEquals("Exception encountered while trying to create an instance of <class com.robertsmieja.test.utils.junit.objectFactory.ConstructorThatThrowsObject>", exception.getMessage());
@@ -142,6 +143,21 @@ public class GenericObjectFactoryTests {
         Throwable actualCause = cause.getCause();
         assertEquals("Don't call this constructor!", actualCause.getMessage());
         assertSame(ConstructorThatThrowsObject.constructorException, actualCause);
+    }
+
+    @Test
+    @DisplayName("Correctly handle an Exception during SetterMethod.invoke")
+    public void correctlyHandleAnExceptionDuringSetterMethodInvoke() throws ObjectFactoryException {
+        ObjectFactoryException exception = assertThrows(ObjectFactoryException.class, () -> objectUnderTest.getInstanceOfClass(ObjectWithSetterThatThrows.class));
+        assertEquals("Unable to call setter for <public java.lang.String com.robertsmieja.test.utils.junit.objectFactory.ObjectWithSetterThatThrows.data> on <class com.robertsmieja.test.utils.junit.objectFactory.ObjectWithSetterThatThrows>", exception.getMessage());
+
+        Throwable cause = exception.getCause();
+        assertEquals(InvocationTargetException.class, cause.getClass());
+
+        Throwable realCause = cause.getCause();
+        assertEquals(RuntimeException.class, realCause.getClass());
+        assertEquals("Don't call me!", realCause.getMessage());
+        assertSame(ObjectWithSetterThatThrows.exception, realCause);
     }
 
     private <T> void testInstantiation(Class<T> tClass) throws ObjectFactoryException {

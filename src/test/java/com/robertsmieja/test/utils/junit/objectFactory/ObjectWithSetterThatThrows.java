@@ -14,10 +14,17 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit.exceptions;
+package com.robertsmieja.test.utils.junit.objectFactory;
 
-public class FieldNotFoundException extends RuntimeException {
-    public FieldNotFoundException(String message) {
-        super(message);
+public class ObjectWithSetterThatThrows {
+    public String data;
+    public static RuntimeException exception = new RuntimeException("Don't call me!");
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        throw exception;
     }
 }
