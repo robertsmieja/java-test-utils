@@ -1,0 +1,20 @@
+/**
+ * Project that consumes our library in order to check compatibility with JUnit 4
+ */
+
+apply plugin: 'eclipse'
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy:2.4.10'
+    testCompile project(':')
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0-M4'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.0.0-M4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.0.0-M4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-runner:1.0.0-M4'
+}

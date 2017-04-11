@@ -45,7 +45,7 @@ fabric.properties
 ### Gradle template
 .gradle
 /build/
-testProjects/junit4/build/
+testProjects/**/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
