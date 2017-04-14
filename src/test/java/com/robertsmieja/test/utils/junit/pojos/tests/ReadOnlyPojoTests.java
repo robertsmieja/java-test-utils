@@ -14,8 +14,9 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit;
+package com.robertsmieja.test.utils.junit.pojos.tests;
 
+import com.robertsmieja.test.utils.junit.GettersAndSettersTests;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo;
 import org.junit.jupiter.api.Test;

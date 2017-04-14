@@ -14,10 +14,10 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit;
+package com.robertsmieja.test.utils.junit.pojos.tests;
 
-import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
+import com.robertsmieja.test.utils.junit.pojos.ComplexPojoWithIgnores;
 
-public class SimplePojoAllTests implements AllBasicTests<SimplePojo> {
+public class ComplexPojoWithIgnoresTests implements AllBasicTests<ComplexPojoWithIgnores> {
 
 }

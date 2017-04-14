@@ -14,8 +14,9 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit;
+package com.robertsmieja.test.utils.junit.pojos.tests;
 
+import com.robertsmieja.test.utils.junit.GettersAndSettersUtils;
 import com.robertsmieja.test.utils.junit.pojos.NestedPojo;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;

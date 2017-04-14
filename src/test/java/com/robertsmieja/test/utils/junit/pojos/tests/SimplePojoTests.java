@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit;
+package com.robertsmieja.test.utils.junit.pojos.tests;
 
 import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
 
