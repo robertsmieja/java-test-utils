@@ -15,6 +15,7 @@
  */
 package com.robertsmieja.test.utils.junit4test.domain;
 
+import com.robertsmieja.test.utils.junit.EqualsUtils;
 import com.robertsmieja.test.utils.junit.GettersAndSettersUtils;
 import com.robertsmieja.test.utils.junit.HashCodeUtils;
 import com.robertsmieja.test.utils.junit4test.domain.factory.SimplePojoFactory;
@@ -44,4 +45,8 @@ public class SimplePojoTests {
         HashCodeUtils.runAllHashCodeTests(value, differentValue);
     }
 
+    @Test
+    void testEquals(){
+        EqualsUtils.runAllEqualsTests(value, differentValue);
+    }
 }

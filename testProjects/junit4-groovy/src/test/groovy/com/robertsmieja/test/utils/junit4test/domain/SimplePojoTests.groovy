@@ -13,8 +13,9 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.robertsmieja.test.utils.junit4test.domain;
+package com.robertsmieja.test.utils.junit4test.domain
 
+import com.robertsmieja.test.utils.junit.EqualsUtils;
 import com.robertsmieja.test.utils.junit.GettersAndSettersUtils
 import com.robertsmieja.test.utils.junit.HashCodeUtils;
 import com.robertsmieja.test.utils.junit4test.domain.factory.SimplePojoFactory;
@@ -41,5 +42,10 @@ class SimplePojoTests {
     @Test
     void testHashCode() {
         HashCodeUtils.runAllHashCodeTests(value, differentValue)
+    }
+
+    @Test
+    void testEquals(){
+        EqualsUtils.runAllEqualsTests(value, differentValue)
     }
 }

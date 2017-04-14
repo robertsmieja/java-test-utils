@@ -21,6 +21,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.robertsmieja.test.utils.junit.EqualsUtils.ensureDefaultEqualsIsNotUsed;
+import static com.robertsmieja.test.utils.junit.EqualsUtils.ensureDifferentValuesAreNotEquals;
+import static com.robertsmieja.test.utils.junit.EqualsUtils.ensureSameValuesAreEquals;
+
 /**
  * A set of tests for the equals() method.
  * Contains the following tests:
@@ -35,24 +39,21 @@ import org.junit.jupiter.api.Test;
  * @since 0.1.0
  */
 public interface EqualsTests<T> extends ObjectInstantiatorForTests<T> {
+    @Test
+    @DisplayName("Do not use default equals()")
+    default void doNotUseDefaultEquals() {
+        ensureDefaultEqualsIsNotUsed(getClassOfGenericTypeArgument());
+    }
 
     @Test
     @DisplayName("Same value should be equal")
     default void sameValueShouldBeEqual() throws ObjectFactoryException {
-        Assertions.assertEquals(createValue(), createValue());
-        Assertions.assertEquals(createDifferentValue(), createDifferentValue());
+        ensureSameValuesAreEquals(createValue(), createDifferentValue());
     }
 
     @Test
     @DisplayName("Different values should not be equal")
     default void differentValuesShouldNotBeEquals() throws ObjectFactoryException {
-        Assertions.assertNotEquals(createValue(), createDifferentValue());
-        Assertions.assertNotEquals(createDifferentValue(), createValue());
-    }
-
-    @Test
-    @DisplayName("Do not use default equals()")
-    default void doNotUseDefaultEquals() {
-        Internal.doNotUseDefaultMethod(getClassOfGenericTypeArgument(), "equals", Object.class);
+        ensureDifferentValuesAreNotEquals(createValue(), createDifferentValue());
     }
 }
