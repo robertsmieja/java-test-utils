@@ -46,7 +46,7 @@ public class SimplePojoTests {
     }
 
     @Test
-    void testEquals(){
+    public void testEquals(){
         EqualsUtils.runAllEqualsTests(value, differentValue);
     }
 }
