@@ -22,20 +22,18 @@ import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class SimplePojoTests {
-
-    SimplePojo value;
-    SimplePojo differentValue;
+class SimplePojoTests {
+    SimplePojo value
+    SimplePojo differentValue
 
     @Before
-    public void setup(){
-        value = SimplePojoFactory.createValue();
-        differentValue = SimplePojoFactory.createDifferentValue();
+    void setup(){
+        value = SimplePojoFactory.createValue()
+        differentValue = SimplePojoFactory.createDifferentValue()
     }
 
     @Test
-    public void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        GettersAndSettersUtils.runAllGettersAndSettersTests(value, differentValue);
+    void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        GettersAndSettersUtils.runAllGettersAndSettersTests(value, differentValue)
     }
-
 }

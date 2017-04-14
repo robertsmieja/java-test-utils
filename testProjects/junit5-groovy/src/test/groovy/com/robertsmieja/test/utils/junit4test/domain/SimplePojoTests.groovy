@@ -15,6 +15,7 @@
  */
 package com.robertsmieja.test.utils.junit4test.domain
 
+import com.robertsmieja.test.utils.junit.AllBasicTests
 import com.robertsmieja.test.utils.junit.GettersAndSettersUtils
 import com.robertsmieja.test.utils.junit4test.domain.factory.SimplePojoFactory
 import org.junit.jupiter.api.BeforeEach
@@ -22,19 +23,5 @@ import org.junit.jupiter.api.Test
 
 import java.lang.reflect.InvocationTargetException
 
-class SimplePojoTests {
-    SimplePojo value
-    SimplePojo differentValue
-
-    @BeforeEach
-    void setup() {
-        value = SimplePojoFactory.createValue()
-        differentValue = SimplePojoFactory.createDifferentValue()
-    }
-
-    @Test
-    void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        GettersAndSettersUtils.runAllGettersAndSettersTests(value, differentValue)
-    }
-
+class SimplePojoTests implements AllBasicTests<SimplePojo>{
 }
