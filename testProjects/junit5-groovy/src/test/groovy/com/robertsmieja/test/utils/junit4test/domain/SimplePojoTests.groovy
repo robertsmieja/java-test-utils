@@ -16,12 +16,6 @@
 package com.robertsmieja.test.utils.junit4test.domain
 
 import com.robertsmieja.test.utils.junit.AllBasicTests
-import com.robertsmieja.test.utils.junit.GettersAndSettersUtils
-import com.robertsmieja.test.utils.junit4test.domain.factory.SimplePojoFactory
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-
-import java.lang.reflect.InvocationTargetException
 
 class SimplePojoTests implements AllBasicTests<SimplePojo>{
 }

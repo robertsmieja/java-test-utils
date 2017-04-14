@@ -16,6 +16,10 @@
 
 package com.robertsmieja.test.utils.junit.pojos.tests;
 
+import com.robertsmieja.test.utils.junit.EqualsTests;
+import com.robertsmieja.test.utils.junit.GettersAndSettersTests;
+import com.robertsmieja.test.utils.junit.HashCodeTests;
+import com.robertsmieja.test.utils.junit.ToStringTests;
 import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
 
 public class SimplePojoTests implements EqualsTests<SimplePojo>, GettersAndSettersTests<SimplePojo>, HashCodeTests<SimplePojo>, ToStringTests<SimplePojo> {

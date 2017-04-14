@@ -17,15 +17,12 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static com.robertsmieja.test.utils.junit.HashCodeUtils.ensureDefaultHashCodeIsNotUsed;
-import static com.robertsmieja.test.utils.junit.HashCodeUtils.ensureDifferentValuesReturnDifferentHashCodes;
-import static com.robertsmieja.test.utils.junit.HashCodeUtils.ensureSameValuesReturnSameHashCode;
+import static com.robertsmieja.test.utils.junit.HashCodeUtils.*;
 
 /**
  * A set of tests for the hashCode() method.

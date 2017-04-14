@@ -16,6 +16,7 @@
 
 package com.robertsmieja.test.utils.junit.pojos.tests;
 
+import com.robertsmieja.test.utils.junit.AllBasicTests;
 import com.robertsmieja.test.utils.junit.pojos.ChildComplexPojoWithIgnores;
 
 public class ChildComplexPojoWithIgnoresTests implements AllBasicTests<ChildComplexPojoWithIgnores> {

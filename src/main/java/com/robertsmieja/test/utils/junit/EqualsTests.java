@@ -17,13 +17,10 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.robertsmieja.test.utils.junit.EqualsUtils.ensureDefaultEqualsIsNotUsed;
-import static com.robertsmieja.test.utils.junit.EqualsUtils.ensureDifferentValuesAreNotEquals;
-import static com.robertsmieja.test.utils.junit.EqualsUtils.ensureSameValuesAreEquals;
+import static com.robertsmieja.test.utils.junit.EqualsUtils.*;
 
 /**
  * A set of tests for the equals() method.
