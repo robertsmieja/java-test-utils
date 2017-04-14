@@ -15,7 +15,8 @@
  */
 package com.robertsmieja.test.utils.junit4test.domain;
 
-import com.robertsmieja.test.utils.junit.GettersAndSettersUtils;
+import com.robertsmieja.test.utils.junit.GettersAndSettersUtils
+import com.robertsmieja.test.utils.junit.HashCodeUtils;
 import com.robertsmieja.test.utils.junit4test.domain.factory.SimplePojoFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,5 +36,10 @@ class SimplePojoTests {
     @Test
     void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
         GettersAndSettersUtils.runAllGettersAndSettersTests(value, differentValue)
+    }
+
+    @Test
+    void testHashCode() {
+        HashCodeUtils.runAllHashCodeTests(value, differentValue)
     }
 }

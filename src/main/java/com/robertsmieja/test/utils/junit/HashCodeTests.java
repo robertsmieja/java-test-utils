@@ -23,6 +23,10 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
+import static com.robertsmieja.test.utils.junit.HashCodeUtils.ensureDefaultHashCodeIsNotUsed;
+import static com.robertsmieja.test.utils.junit.HashCodeUtils.ensureDifferentValuesReturnDifferentHashCodes;
+import static com.robertsmieja.test.utils.junit.HashCodeUtils.ensureSameValuesReturnSameHashCode;
+
 /**
  * A set of tests for the hashCode() method.
  * Contains the following tests:
@@ -33,7 +37,6 @@ import java.lang.reflect.InvocationTargetException;
  * </ul>
  *
  * @param <T> The class under test
- *
  * @since 0.1.0
  */
 public interface HashCodeTests<T> extends ObjectInstantiatorForTests<T> {
@@ -41,19 +44,18 @@ public interface HashCodeTests<T> extends ObjectInstantiatorForTests<T> {
     @Test
     @DisplayName("Do not use default hashCode()")
     default void doNotUseDefaultHashCode() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        Internal.doNotUseDefaultMethod(getClassOfGenericTypeArgument(), "hashCode");
+        ensureDefaultHashCodeIsNotUsed(getClassOfGenericTypeArgument());
     }
 
     @Test
     @DisplayName("Same values have different hashCode() results")
     default void sameValuesHaveDifferentHashCodeResults() throws ObjectFactoryException {
-        Assertions.assertEquals(createValue().hashCode(), createValue().hashCode());
-        Assertions.assertEquals(createDifferentValue().hashCode(), createDifferentValue().hashCode());
+        ensureSameValuesReturnSameHashCode(createValue(), createDifferentValue());
     }
 
     @Test
     @DisplayName("Different values have different hashCode() results")
     default void differentValuesHaveDifferentHashCodeResults() throws ObjectFactoryException {
-        Assertions.assertNotEquals(createDifferentValue().hashCode(), createValue().hashCode());
+        ensureDifferentValuesReturnDifferentHashCodes(createValue(), createDifferentValue());
     }
 }

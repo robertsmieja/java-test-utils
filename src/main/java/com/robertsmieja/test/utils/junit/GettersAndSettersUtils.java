@@ -31,17 +31,21 @@ import java.util.stream.Collectors;
 
 import static com.robertsmieja.test.utils.junit.Internal.failToFindMethodForField;
 
+/**
+ * This class provides a public API to invoke the GettersAndSetters tests.
+ * <p>
+ * It's main purpose is to provide a way to call the tests from JUnit 4 projects.
+ */
 public class GettersAndSettersUtils {
     GettersAndSettersUtils() {
     }
 
     /**
-     * Runs all tests relating to getters and setters for the passed in objects
+     * Runs all tests relating to Getters and Setters for the passed in objects
      *
      * @param value          An instance of the object under test
      * @param differentValue An instance of the object under test that contains different values in it's fields
      * @param <T>            The class under test
-     *
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws InvocationTargetException
@@ -62,7 +66,6 @@ public class GettersAndSettersUtils {
      * @param differentValue An instance of the object under test that contains different values in it's fields
      * @param fieldName      The name of hte field to test
      * @param <T>            The class under test
-     *
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
