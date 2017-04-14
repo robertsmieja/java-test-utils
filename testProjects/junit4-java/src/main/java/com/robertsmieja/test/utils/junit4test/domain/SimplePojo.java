@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit4test.domain.domain;
+package com.robertsmieja.test.utils.junit4test.domain;
 
 public class SimplePojo {
     String stringValue;

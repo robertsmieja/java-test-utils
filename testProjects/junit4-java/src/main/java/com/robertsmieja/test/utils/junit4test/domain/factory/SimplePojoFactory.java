@@ -14,9 +14,9 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit4test.domain.domain.factory;
+package com.robertsmieja.test.utils.junit4test.domain.factory;
 
-import com.robertsmieja.test.utils.junit4test.domain.domain.SimplePojo;
+import com.robertsmieja.test.utils.junit4test.domain.SimplePojo;
 
 /**
  * A set of convenience methods to instantiate instances of {@link SimplePojo}

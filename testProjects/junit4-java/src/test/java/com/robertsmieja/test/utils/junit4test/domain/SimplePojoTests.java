@@ -16,8 +16,7 @@
 package com.robertsmieja.test.utils.junit4test.domain;
 
 import com.robertsmieja.test.utils.junit.GettersAndSettersUtils;
-import com.robertsmieja.test.utils.junit4test.domain.domain.SimplePojo;
-import com.robertsmieja.test.utils.junit4test.domain.domain.factory.SimplePojoFactory;
+import com.robertsmieja.test.utils.junit4test.domain.factory.SimplePojoFactory;
 import org.junit.Before;
 import org.junit.Test;
 

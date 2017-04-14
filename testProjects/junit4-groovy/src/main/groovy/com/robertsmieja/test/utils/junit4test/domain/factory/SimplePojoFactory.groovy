@@ -14,31 +14,28 @@
  *    limitations under the License.
  */
 
-package com.robertsmieja.test.utils.junit4test.domain.domain.factory;
+package com.robertsmieja.test.utils.junit4test.domain.factory;
 
-import com.robertsmieja.test.utils.junit4test.domain.domain.SimplePojo;
+import com.robertsmieja.test.utils.junit4test.domain.SimplePojo;
 
 /**
  * A set of convenience methods to instantiate instances of {@link SimplePojo}
  * for tests
  */
-public class SimplePojoFactory {
-    private SimplePojoFactory() {
+class SimplePojoFactory {
+    static SimplePojo createValue() {
+        SimplePojo pojo = new SimplePojo()
+        pojo.setIntegerValue(99)
+        pojo.setLongValue(22L)
+        pojo.setStringValue("CoolString")
+        return pojo
     }
 
-    public static SimplePojo createValue() {
-        SimplePojo pojo = new SimplePojo();
-        pojo.setIntegerValue(99);
-        pojo.setLongValue(22L);
-        pojo.setStringValue("CoolString");
-        return pojo;
-    }
-
-    public static SimplePojo createDifferentValue() {
-        SimplePojo pojo = new SimplePojo();
-        pojo.setIntegerValue(22);
-        pojo.setLongValue(99L);
-        pojo.setStringValue("LessCoolString");
-        return pojo;
+    static SimplePojo createDifferentValue() {
+        SimplePojo pojo = new SimplePojo()
+        pojo.setIntegerValue(22)
+        pojo.setLongValue(99L)
+        pojo.setStringValue("LessCoolString")
+        return pojo
     }
 }
