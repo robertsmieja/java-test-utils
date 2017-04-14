@@ -15,27 +15,33 @@
  */
 package com.robertsmieja.test.utils.junit4test.domain
 
-import com.robertsmieja.test.utils.junit.EqualsUtils;
+import com.robertsmieja.test.utils.junit.EqualsUtils
+import com.robertsmieja.test.utils.junit.GenericObjectFactory
 import com.robertsmieja.test.utils.junit.GettersAndSettersUtils
-import com.robertsmieja.test.utils.junit.HashCodeUtils;
-import com.robertsmieja.test.utils.junit4test.domain.factory.SimplePojoFactory;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.lang.reflect.InvocationTargetException;
+import com.robertsmieja.test.utils.junit.HashCodeUtils
+import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory
+import org.junit.Before
+import org.junit.BeforeClass
+import org.junit.Test
 
 class SimplePojoTests {
+    static ObjectFactory objectFactory
     SimplePojo value
     SimplePojo differentValue
 
+    @BeforeClass
+    static void oneTimeSetup(){
+        objectFactory = new GenericObjectFactory();
+    }
+
     @Before
     void setup(){
-        value = SimplePojoFactory.createValue()
-        differentValue = SimplePojoFactory.createDifferentValue()
+        value = objectFactory.getInstanceOfClass(SimplePojo)
+        differentValue = objectFactory.getInstanceOfClassWithDifferentValues(SimplePojo)
     }
 
     @Test
-    void testGettersAndSetters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    void testGettersAndSetters() {
         GettersAndSettersUtils.runAllGettersAndSettersTests(value, differentValue)
     }
 
