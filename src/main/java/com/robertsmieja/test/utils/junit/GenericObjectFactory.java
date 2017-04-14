@@ -32,6 +32,20 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getFields;
 import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getSetterForField;
 
+/**
+ * This class attempts to create generic Objects using default values in the Unit Tests.
+ * <p>
+ * It will scan the Fields on the passed in Class, and attempt to fill in those fields using
+ * Setter methods.
+ * <p>
+ * If the Field is a primitive or primitive wrapper, then it will fill in the Field with a default value.
+ * If the Field is a complex type, it will attempt to construct an instance of the complex type, using a recursive call.
+ * <p>
+ * If the Factory is unable to create an Object, it is possible to create and register instances of the Object,
+ * so the tests can run using the {@link #registerClassAndValues(Class, Object, Object)} method.
+ * <p>
+ * By default, the Factory will "cache" the instances it returns, so subsequent calls will use the previously returned values.
+ */
 public class GenericObjectFactory implements ObjectFactory {
     protected final static int NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS = 9 * 2; //double the number because of arrays
     //Create sensible defaults
@@ -98,10 +112,17 @@ public class GenericObjectFactory implements ObjectFactory {
     final Map<Class<?>, Object> additionalClassToDifferentValuesMap = new ConcurrentHashMap<>();
     protected boolean cacheInstances;
 
+    /**
+     * Default constructor
+     */
     public GenericObjectFactory() {
         this(true);
     }
 
+    /**
+     * Constructor that takes a boolean, that determines if the values returned should be cached.
+     * @param cacheInstances Whether the instances returned by the Factory should be cached
+     */
     public GenericObjectFactory(boolean cacheInstances) {
         this.cacheInstances = cacheInstances;
     }
