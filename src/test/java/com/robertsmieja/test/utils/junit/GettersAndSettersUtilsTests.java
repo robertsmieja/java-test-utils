@@ -23,7 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GettersAndSettersUtilsTest {
+class GettersAndSettersUtilsTests {
     @Test
     @DisplayName("Test constructor")
     public void testConstructor() {
