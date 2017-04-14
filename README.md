@@ -21,10 +21,10 @@ The library is currently available on JCenter at the following [repository](http
 There is no current stable release yet, but I've published a "milestone" release that should be usable.
 See [this unit test](src/test/java/com/robertsmieja/test/utils/junit/SimplePojoTests.java) as an example of how to use the current implementation.
 
-The library should be compatible with JUnit 4 projects, but is not fully fleshed out for those.
-See [this example JUnit 4 project](testProjects/junit4).
+The library should be compatible with JUnit 4 projects, but may not fully fleshed out for those.
+See [this example JUnit 4 project](testProjects/junit4-java).
 
-Currently the Equals, HashCode, and ToString tests are lacking JUnit 4 compatibility.
+Currently the ToString tests are lacking JUnit 4 compatibility.
 
 ### Development Requirements:
 * Java 1.8 or newer
