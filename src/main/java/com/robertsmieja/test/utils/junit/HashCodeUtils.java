@@ -25,6 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * It's main purpose is to provide a way to call the tests from JUnit 4 projects.
  */
 public class HashCodeUtils {
+
+    //protected for code coverage
+    protected HashCodeUtils(){}
+
     /**
      * Runs all tests relating to HashCode for the passed in objects
      *

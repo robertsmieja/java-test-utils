@@ -13,6 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
@@ -22,20 +23,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class EqualsUtilsTests {
+class HashCodeUtilsTests {
     static ObjectFactory objectFactory;
 
     @BeforeAll
     public static void setupOnce(){
-         objectFactory = new GenericObjectFactory();
+        objectFactory = new GenericObjectFactory();
     }
 
     @Test
     @DisplayName("Test default constructor")
     public void testDefaultConstrutor(){
-        assertNotNull(new EqualsUtils());
+        assertNotNull(new HashCodeUtils());
     }
 
     @Test
@@ -44,6 +45,6 @@ public class EqualsUtilsTests {
         SimplePojo value = objectFactory.getInstanceOfClass(SimplePojo.class);
         SimplePojo differentValue = objectFactory.getInstanceOfClassWithDifferentValues(SimplePojo.class);
 
-        EqualsUtils.runAllEqualsTests(value, differentValue);
+        HashCodeUtils.runAllHashCodeTests(value, differentValue);
     }
 }
