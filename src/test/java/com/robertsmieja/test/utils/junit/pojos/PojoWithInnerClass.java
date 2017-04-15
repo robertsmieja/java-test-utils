@@ -16,25 +16,25 @@
 
 package com.robertsmieja.test.utils.junit.pojos;
 
-public class NestedPojo {
-    public static Class<InnerNestedPojo> getInnerClass() {
-        return InnerNestedPojo.class;
+public class PojoWithInnerClass {
+    public static Class<InnerPojo> getInnerClass() {
+        return InnerPojo.class;
     }
 
-    public InnerNestedPojo createInnerValue() {
-        InnerNestedPojo value = new InnerNestedPojo();
+    public InnerPojo createInnerValue() {
+        InnerPojo value = new InnerPojo();
         value.setStringValue("value");
         return value;
     }
 
-    public InnerNestedPojo createInnerDifferentValue() {
-        InnerNestedPojo value = new InnerNestedPojo();
+    public InnerPojo createInnerDifferentValue() {
+        InnerPojo value = new InnerPojo();
         value.setStringValue("differentValue");
         return value;
     }
 
     //Non-static inner class creates a synthetic filed
-    class InnerNestedPojo {
+    class InnerPojo {
         String stringValue;
 
         public String getStringValue() {

@@ -17,7 +17,7 @@
 package com.robertsmieja.test.utils.junit.pojos.tests;
 
 import com.robertsmieja.test.utils.junit.GettersAndSettersUtils;
-import com.robertsmieja.test.utils.junit.pojos.NestedPojo;
+import com.robertsmieja.test.utils.junit.pojos.PojoWithInnerClass;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,14 +28,14 @@ import java.lang.reflect.InvocationTargetException;
  * This covers correct handling synthetic fields.
  * Synthetic fields should be excluded from the testing of Getters/Setters
  */
-public class NestedPojoTests {
+public class PojoWithInnerClassTests {
 
-    NestedPojo nestedPojo = new NestedPojo();
+    PojoWithInnerClass pojoWithInnerClass = new PojoWithInnerClass();
 
     @Test
     @DisplayName("Synthetic fields are filtered out correctly")
     @Disabled //Disabled because it's failing for now
     public void syntheticFieldsAreFilteredOutCorrectly() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        GettersAndSettersUtils.runAllGettersAndSettersTests(nestedPojo.createInnerValue(), nestedPojo.createInnerValue());
+        GettersAndSettersUtils.runAllGettersAndSettersTests(pojoWithInnerClass.createInnerValue(), pojoWithInnerClass.createInnerValue());
     }
 }
