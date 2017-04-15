@@ -23,6 +23,8 @@ public class ComplexPojo {
     private Long longValue;
     private boolean booleanValue;
     private Boolean bigBooleanValue;
+    private Object objectValue;
+    private SimplePojo pojoValue;
 
     public ReadOnlyPojo getFieldToIgnore() {
         return fieldToIgnore;
@@ -72,16 +74,33 @@ public class ComplexPojo {
         this.bigBooleanValue = bigBooleanValue;
     }
 
+    public Object getObjectValue() {
+        return objectValue;
+    }
+
+    public void setObjectValue(Object objectValue) {
+        this.objectValue = objectValue;
+    }
+
+    public SimplePojo getPojoValue() {
+        return pojoValue;
+    }
+
+    public void setPojoValue(SimplePojo pojoValue) {
+        this.pojoValue = pojoValue;
+    }
+
     @Override
-    public String toString() {
-        return "ComplexPojo{" +
-                "fieldToIgnore=" + fieldToIgnore +
-                ", stringValue='" + stringValue + '\'' +
-                ", integerValue=" + integerValue +
-                ", longValue=" + longValue +
-                ", booleanValue=" + booleanValue +
-                ", bigBooleanValue=" + bigBooleanValue +
-                '}';
+    public int hashCode() {
+        int result = fieldToIgnore != null ? fieldToIgnore.hashCode() : 0;
+        result = 31 * result + (stringValue != null ? stringValue.hashCode() : 0);
+        result = 31 * result + (integerValue != null ? integerValue.hashCode() : 0);
+        result = 31 * result + (longValue != null ? longValue.hashCode() : 0);
+        result = 31 * result + (booleanValue ? 1 : 0);
+        result = 31 * result + (bigBooleanValue != null ? bigBooleanValue.hashCode() : 0);
+        result = 31 * result + (objectValue != null ? objectValue.hashCode() : 0);
+        result = 31 * result + (pojoValue != null ? pojoValue.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -97,17 +116,24 @@ public class ComplexPojo {
         if (stringValue != null ? !stringValue.equals(that.stringValue) : that.stringValue != null) return false;
         if (integerValue != null ? !integerValue.equals(that.integerValue) : that.integerValue != null) return false;
         if (longValue != null ? !longValue.equals(that.longValue) : that.longValue != null) return false;
-        return bigBooleanValue != null ? bigBooleanValue.equals(that.bigBooleanValue) : that.bigBooleanValue == null;
+        if (bigBooleanValue != null ? !bigBooleanValue.equals(that.bigBooleanValue) : that.bigBooleanValue != null)
+            return false;
+        if (objectValue != null ? !objectValue.equals(that.objectValue) : that.objectValue != null) return false;
+        return pojoValue != null ? pojoValue.equals(that.pojoValue) : that.pojoValue == null;
     }
 
     @Override
-    public int hashCode() {
-        int result = fieldToIgnore != null ? fieldToIgnore.hashCode() : 0;
-        result = 31 * result + (stringValue != null ? stringValue.hashCode() : 0);
-        result = 31 * result + (integerValue != null ? integerValue.hashCode() : 0);
-        result = 31 * result + (longValue != null ? longValue.hashCode() : 0);
-        result = 31 * result + (booleanValue ? 1 : 0);
-        result = 31 * result + (bigBooleanValue != null ? bigBooleanValue.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "ComplexPojo{" +
+                "fieldToIgnore=" + fieldToIgnore +
+                ", stringValue='" + stringValue + '\'' +
+                ", integerValue=" + integerValue +
+                ", longValue=" + longValue +
+                ", booleanValue=" + booleanValue +
+                ", bigBooleanValue=" + bigBooleanValue +
+                ", objectValue=" + objectValue +
+                ", pojoValue=" + pojoValue +
+                '}';
     }
+
 }
