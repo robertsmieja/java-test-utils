@@ -59,23 +59,13 @@ public class GettersAndSettersUtils {
         }
     }
 
-    /**
-     * Run the tests only on one specific field for the passed in objects
-     *
-     * @param value          An instance of the object under test
-     * @param differentValue An instance of the object under test that contains different values in it's fields
-     * @param fieldName      The name of hte field to test
-     * @param <T>            The class under test
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
-     */
-    public static <T> void runGettersAndSettersTestOnField(T value, T differentValue, String fieldName) throws InvocationTargetException, IllegalAccessException {
-        Class<?> aClass = value.getClass();
-        Field field = FieldUtils.getField(aClass, fieldName, true);
-        if (field == null) {
-            Assertions.fail("Field <" + fieldName + "> not found on <" + aClass + ">");
-        }
-        runGettersAndSettersTestOnField(value, differentValue, field);
+    static List<Field> getFields(Class<?> aClass) {
+        List<Field> allFields = FieldUtils.getAllFieldsList(aClass);
+        List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
+        return allFields.stream()
+                .filter(field -> !field.isSynthetic())
+                .filter(field -> !excludedFields.contains(field))
+                .collect(Collectors.toList());
     }
 
     static <T> void runGettersAndSettersTestOnField(T value, T differentValue, Field field) throws InvocationTargetException, IllegalAccessException {
@@ -102,10 +92,6 @@ public class GettersAndSettersUtils {
         return new ImmutablePair<>(getter, setter);
     }
 
-    static Method getSetterForField(Field field) {
-        return MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.SET_METHOD_PREFIX, field), field.getType());
-    }
-
     static <T> void ensureFieldCanHandleDifferentValues(T value, T differentValue, Method getter, Method setter) throws IllegalAccessException, InvocationTargetException {
         Object originalFieldValue = getter.invoke(value);
         Object differentFieldValue = getter.invoke(differentValue);
@@ -129,16 +115,11 @@ public class GettersAndSettersUtils {
         }
     }
 
-    static List<Field> getFields(Class<?> aClass) {
-        List<Field> allFields = FieldUtils.getAllFieldsList(aClass);
-        List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
-        return allFields.stream()
-                .filter(field -> !field.isSynthetic())
-                .filter(field -> !excludedFields.contains(field))
-                .collect(Collectors.toList());
-    }
-
     static String accessorMethodNameForField(String accessorPrefix, Field field) {
         return accessorPrefix + StringUtils.capitalize(field.getName());
+    }
+
+    static Method getSetterForField(Field field) {
+        return MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.SET_METHOD_PREFIX, field), field.getType());
     }
 }

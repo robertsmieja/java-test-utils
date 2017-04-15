@@ -25,7 +25,8 @@ import org.junit.jupiter.api.Assertions;
 public class EqualsUtils {
 
     //Protected instead of private due to code coverage
-    protected EqualsUtils() {}
+    protected EqualsUtils() {
+    }
 
     /**
      * Runs all tests relating to Equals for the passed in objects

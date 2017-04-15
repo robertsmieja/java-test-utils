@@ -27,7 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 public class HashCodeUtils {
 
     //protected for code coverage
-    protected HashCodeUtils(){}
+    protected HashCodeUtils() {
+    }
 
     /**
      * Runs all tests relating to HashCode for the passed in objects

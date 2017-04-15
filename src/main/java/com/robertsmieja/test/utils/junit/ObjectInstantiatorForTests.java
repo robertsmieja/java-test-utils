@@ -35,11 +35,28 @@ import java.lang.reflect.Type;
  * By default it will attempt to use a no-arg constructor to create for the createValue() and createDifferentValue() methods
  *
  * @param <T> The class under test
- *
  * @since 0.1.0
  */
 public interface ObjectInstantiatorForTests<T> {
     ObjectFactory objectFactory = new GenericObjectFactory();
+
+    @Test
+    @DisplayName("Can create values successfully")
+    default void canCreateValuesSuccessfully() throws ObjectFactoryException {
+        T value = createValue();
+        T differentValue = createDifferentValue();
+
+        Assertions.assertNotNull(value);
+        Assertions.assertNotNull(differentValue);
+    }
+
+    default T createValue() throws ObjectFactoryException {
+        return objectFactory.getInstanceOfClass(getClassOfGenericTypeArgument());
+    }
+
+    default T createDifferentValue() throws ObjectFactoryException {
+        return objectFactory.getInstanceOfClassWithDifferentValues(getClassOfGenericTypeArgument());
+    }
 
     default Class<T> getClassOfGenericTypeArgument() {
         //TODO Clean this up to be more readable? is that possible?
@@ -52,23 +69,5 @@ public interface ObjectInstantiatorForTests<T> {
         @SuppressWarnings("unchecked")
         Class<T> classType = (Class<T>) genericTypeArgument;
         return classType;
-    }
-
-    default T createValue() throws ObjectFactoryException {
-        return objectFactory.getInstanceOfClass(getClassOfGenericTypeArgument());
-    }
-
-    default T createDifferentValue() throws ObjectFactoryException {
-        return objectFactory.getInstanceOfClassWithDifferentValues(getClassOfGenericTypeArgument());
-    }
-
-    @Test
-    @DisplayName("Can create values successfully")
-    default void canCreateValuesSuccessfully() throws ObjectFactoryException {
-        T value = createValue();
-        T differentValue = createDifferentValue();
-
-        Assertions.assertNotNull(value);
-        Assertions.assertNotNull(differentValue);
     }
 }

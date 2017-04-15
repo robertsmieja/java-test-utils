@@ -121,6 +121,7 @@ public class GenericObjectFactory implements ObjectFactory {
 
     /**
      * Constructor that takes a boolean, that determines if the values returned should be cached.
+     *
      * @param cacheInstances Whether the instances returned by the Factory should be cached
      */
     public GenericObjectFactory(boolean cacheInstances) {

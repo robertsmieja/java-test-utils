@@ -35,7 +35,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * </ul>
  *
  * @param <T> The class under test
- *
  * @since 0.1.0
  */
 public interface ToStringTests<T> extends ObjectInstantiatorForTests<T> {

@@ -42,9 +42,7 @@ public interface ObjectFactory {
      *
      * @param aClass
      * @param <T>
-     *
      * @return An instance of aClass
-     *
      * @throws ObjectFactoryException
      */
     <T> T getInstanceOfClass(Class<T> aClass) throws ObjectFactoryException;
@@ -54,9 +52,7 @@ public interface ObjectFactory {
      *
      * @param aClass
      * @param <T>
-     *
      * @return An instance of aClass
-     *
      * @throws ObjectFactoryException
      */
     <T> T getInstanceOfClassWithDifferentValues(Class<T> aClass) throws ObjectFactoryException;
