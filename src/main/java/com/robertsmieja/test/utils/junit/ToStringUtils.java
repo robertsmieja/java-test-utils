@@ -19,7 +19,26 @@ package com.robertsmieja.test.utils.junit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ * This class provides a public API to invoke the ToString tests.
+ * <p>
+ * It's main purpose is to provide a way to call the tests from JUnit 4 projects.
+ *
+ * @since 0.1.0
+ */
 public class ToStringUtils {
+    //protected for code coverage
+    protected ToStringUtils() {
+    }
+
+    /**
+     * Runs all tests relating to ToString for the passed in objects
+     *
+     * @param value          An instance of the object under test
+     * @param differentValue An instance of the object under test that contains different values in it's fields
+     * @param <T>            The class under test
+     */
+
     public static <T> void runAllToStringTests(T value, T differentValue) {
         ensureDefaultToStringIsNotUsed(value.getClass());
         ensureDifferentValuesHaveDifferentToStrings(value, differentValue);

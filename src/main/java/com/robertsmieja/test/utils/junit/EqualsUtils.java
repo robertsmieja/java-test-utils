@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Assertions;
  * This class provides a public API to invoke the Equals tests.
  * <p>
  * It's main purpose is to provide a way to call the tests from JUnit 4 projects.
+ *
+ * @since 0.1.0
  */
 public class EqualsUtils {
 

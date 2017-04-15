@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * This class provides a public API to invoke the HashCode tests.
  * <p>
  * It's main purpose is to provide a way to call the tests from JUnit 4 projects.
+ *
+ * @since 0.1.0
  */
 public class HashCodeUtils {
 
