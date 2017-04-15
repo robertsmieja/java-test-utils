@@ -15,10 +15,7 @@
  */
 package com.robertsmieja.test.utils.junit4test.domain;
 
-import com.robertsmieja.test.utils.junit.EqualsUtils;
-import com.robertsmieja.test.utils.junit.GenericObjectFactory;
-import com.robertsmieja.test.utils.junit.GettersAndSettersUtils;
-import com.robertsmieja.test.utils.junit.HashCodeUtils;
+import com.robertsmieja.test.utils.junit.*;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
 import org.junit.Before;
@@ -57,5 +54,10 @@ public class SimplePojoTests {
     @Test
     public void testEquals() {
         EqualsUtils.runAllEqualsTests(value, differentValue);
+    }
+
+    @Test
+    public void testToString(){
+        ToStringUtils.runAllToStringTests(value, differentValue);
     }
 }

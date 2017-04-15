@@ -19,6 +19,7 @@ import com.robertsmieja.test.utils.junit.EqualsUtils
 import com.robertsmieja.test.utils.junit.GenericObjectFactory
 import com.robertsmieja.test.utils.junit.GettersAndSettersUtils
 import com.robertsmieja.test.utils.junit.HashCodeUtils
+import com.robertsmieja.test.utils.junit.ToStringUtils
 import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory
 import org.junit.Before
 import org.junit.BeforeClass
@@ -53,5 +54,10 @@ class SimplePojoTests {
     @Test
     void testEquals(){
         EqualsUtils.runAllEqualsTests(value, differentValue)
+    }
+
+    @Test
+    void testToString(){
+        ToStringUtils.runAllToStringTests(value, differentValue)
     }
 }

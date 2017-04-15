@@ -17,13 +17,14 @@
 package com.robertsmieja.test.utils.junit;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static com.robertsmieja.test.utils.junit.ToStringUtils.ensureDefaultToStringIsNotUsed;
+import static com.robertsmieja.test.utils.junit.ToStringUtils.ensureDifferentValuesHaveDifferentToStrings;
+import static com.robertsmieja.test.utils.junit.ToStringUtils.ensureSameValuesHaveSameToStrings;
 
 /**
  * A set of tests for the toString() method.
@@ -42,19 +43,18 @@ public interface ToStringTests<T> extends ObjectInstantiatorForTests<T> {
     @Test
     @DisplayName("Different values should have different toString() results")
     default void differentValuesShouldHaveDifferentToStringResults() throws ObjectFactoryException {
-        assertNotEquals(createValue().toString(), createDifferentValue().toString());
+        ensureDifferentValuesHaveDifferentToStrings(createValue(), createDifferentValue());
     }
 
     @Test
     @DisplayName("Same values should have the same toString() results")
     default void sameValuesShouldHaveTheSameToStringResults() throws ObjectFactoryException {
-        Assertions.assertEquals(createValue().toString(), createValue().toString());
-        Assertions.assertEquals(createDifferentValue().toString(), createDifferentValue().toString());
+        ensureSameValuesHaveSameToStrings(createValue(), createDifferentValue());
     }
 
     @Test
     @DisplayName("Do not use default toString()")
     default void doNotUseDefaultToString() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        Internal.doNotUseDefaultMethod(getClassOfGenericTypeArgument(), "toString");
+        ensureDefaultToStringIsNotUsed(getClassUnderTest());
     }
 }

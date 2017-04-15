@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ObjectInstantiatorForTestsTests implements ObjectInstantiatorForTests<SimplePojo> {
 
     @Override
-    public Class<SimplePojo> getClassOfGenericTypeArgument() {
+    public Class<SimplePojo> getClassUnderTest() {
         return SimplePojo.class;
     }
 

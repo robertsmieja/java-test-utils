@@ -34,8 +34,8 @@ class HashCodeUtilsTests {
     }
 
     @Test
-    @DisplayName("Test default constructor")
-    public void testDefaultConstrutor(){
+    @DisplayName("Test constructor")
+    public void testConstructor(){
         assertNotNull(new HashCodeUtils());
     }
 

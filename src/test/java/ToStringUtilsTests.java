@@ -13,8 +13,9 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.robertsmieja.test.utils.junit;
 
+import com.robertsmieja.test.utils.junit.GenericObjectFactory;
+import com.robertsmieja.test.utils.junit.ToStringUtils;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
 import com.robertsmieja.test.utils.junit.pojos.SimplePojo;
@@ -24,26 +25,26 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class EqualsUtilsTests {
+public class ToStringUtilsTests {
     static ObjectFactory objectFactory;
 
     @BeforeAll
     public static void setupOnce(){
-         objectFactory = new GenericObjectFactory();
+        objectFactory = new GenericObjectFactory();
     }
 
     @Test
     @DisplayName("Test constructor")
     public void testConstructor(){
-        assertNotNull(new EqualsUtils());
+        assertNotNull(new com.robertsmieja.test.utils.junit.ToStringUtils());
     }
 
     @Test
-    @DisplayName("Test runAllEqualsTests on SimplePojo")
-    public void testRunAllEqualsTestsOnSimplePojo() throws ObjectFactoryException {
+    @DisplayName("Test runAllToStringTests on SimplePojo")
+    public void testRunAllToStringTestsOnSimplePojo() throws ObjectFactoryException {
         SimplePojo value = objectFactory.getInstanceOfClass(SimplePojo.class);
         SimplePojo differentValue = objectFactory.getInstanceOfClassWithDifferentValues(SimplePojo.class);
 
-        EqualsUtils.runAllEqualsTests(value, differentValue);
+        ToStringUtils.runAllToStringTests(value, differentValue);
     }
 }

@@ -38,7 +38,7 @@ public interface EqualsTests<T> extends ObjectInstantiatorForTests<T> {
     @Test
     @DisplayName("Do not use default equals()")
     default void doNotUseDefaultEquals() {
-        ensureDefaultEqualsIsNotUsed(getClassOfGenericTypeArgument());
+        ensureDefaultEqualsIsNotUsed(getClassUnderTest());
     }
 
     @Test

@@ -18,7 +18,7 @@
  * Various utilities to reduce redundant code in JUnit tests.
  * <p>
  * For the most common use-case, have your test class implement '{@link com.robertsmieja.test.utils.junit.AllBasicTests}'
- * and override {@link com.robertsmieja.test.utils.junit.ObjectInstantiatorForTests#getClassOfGenericTypeArgument()},
+ * and override {@link com.robertsmieja.test.utils.junit.ObjectInstantiatorForTests#getClassUnderTest()},
  * {@link com.robertsmieja.test.utils.junit.ObjectInstantiatorForTests#createValue()}, and
  * {@link com.robertsmieja.test.utils.junit.ObjectInstantiatorForTests#createDifferentValue()}.
  *

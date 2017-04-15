@@ -51,14 +51,14 @@ public interface ObjectInstantiatorForTests<T> {
     }
 
     default T createValue() throws ObjectFactoryException {
-        return objectFactory.getInstanceOfClass(getClassOfGenericTypeArgument());
+        return objectFactory.getInstanceOfClass(getClassUnderTest());
     }
 
     default T createDifferentValue() throws ObjectFactoryException {
-        return objectFactory.getInstanceOfClassWithDifferentValues(getClassOfGenericTypeArgument());
+        return objectFactory.getInstanceOfClassWithDifferentValues(getClassUnderTest());
     }
 
-    default Class<T> getClassOfGenericTypeArgument() {
+    default Class<T> getClassUnderTest() {
         //TODO Clean this up to be more readable? is that possible?
         //TODO make sure this works with complicated interface/class hierarchies
         Class<? extends ObjectInstantiatorForTests> ourCurrentClass = this.getClass();

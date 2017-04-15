@@ -41,7 +41,7 @@ public interface HashCodeTests<T> extends ObjectInstantiatorForTests<T> {
     @Test
     @DisplayName("Do not use default hashCode()")
     default void doNotUseDefaultHashCode() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        ensureDefaultHashCodeIsNotUsed(getClassOfGenericTypeArgument());
+        ensureDefaultHashCodeIsNotUsed(getClassUnderTest());
     }
 
     @Test
