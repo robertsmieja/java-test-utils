@@ -182,18 +182,17 @@ public class GenericObjectFactory implements ObjectFactory {
     protected <T> T getInstanceOfClassUsingValueMap(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         boolean isInCache = doesClassExistInCache(aClass);
         if (isInCache) {
-            return getValueFromMapOrDefaultMap(aClass, valueMap);
+            return (T) getValueFromMapOrDefaultMap(aClass, valueMap);
         }
         if (cacheInstances) {
             populateCacheWithInstancesOfClass(aClass);
-            return getValueFromMapOrDefaultMap(aClass, valueMap);
+            return (T) getValueFromMapOrDefaultMap(aClass, valueMap);
         }
         return createObjectForClass(aClass, valueMap);
     }
 
     protected <T> T createObjectForClass(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
-        T object;
-        object = Internal.createObjectFromDefaultConstructor(aClass);
+        T object = Internal.createObjectFromDefaultConstructor(aClass);
         List<Field> fields = getFields(aClass);
 
         for (Field field : fields) {
@@ -204,9 +203,14 @@ public class GenericObjectFactory implements ObjectFactory {
 
     protected <T> void setValueForField(Field field, T object, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         Method setter = getSetterForField(field);
-        T valueToSet = getValueFromMapOrDefaultMap((Class<T>) field.getType(), valueMap);
-        if (valueToSet == null) {
-            throw new ObjectFactoryException("No values registered for <" + field.getType() + ">");
+        Class<?> desiredType = field.getType();
+        Object valueToSet;
+
+        if (doesClassExistInCache(desiredType)){
+            valueToSet = getValueFromMapOrDefaultMap(desiredType, valueMap);
+        } else {
+            valueToSet = createObjectForClass(desiredType, valueMap);
+//            throw new ObjectFactoryException("No values registered for <" + field.getType() + ">");
         }
 
         try {
@@ -216,12 +220,10 @@ public class GenericObjectFactory implements ObjectFactory {
         }
     }
 
-    protected <T> T getValueFromMapOrDefaultMap(Class<T> fieldClass, Map<Class<?>, Object> valueMap) {
+    protected Object getValueFromMapOrDefaultMap(Class<?> fieldClass, Map<Class<?>, Object> valueMap) {
         Class<?> nonPrimitiveClass = convertPrimitiveToWrapperOrReturn(fieldClass);
         Map<Class<?>, Object> defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
-        Object value = valueMap.getOrDefault(nonPrimitiveClass, defaultValueMap.get(nonPrimitiveClass));
-        T castedValue = (T) value;
-        return castedValue;
+        return valueMap.getOrDefault(nonPrimitiveClass, defaultValueMap.get(nonPrimitiveClass));
     }
 
     protected Map<Class<?>, Object> getCorrectDefaultValueMapFromClassMap(Map<Class<?>, Object> classMap) {

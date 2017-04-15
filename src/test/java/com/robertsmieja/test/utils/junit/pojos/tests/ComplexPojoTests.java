@@ -67,7 +67,7 @@ public class ComplexPojoTests implements ObjectInstantiatorForTests<ComplexPojo>
         objectFactory.clearValuesForClass(ReadOnlyPojo.class);
         try {
             ObjectFactoryException exception = assertThrows(ObjectFactoryException.class, () -> GettersAndSettersUtils.runGettersAndSettersTestOnField(createValue(), createDifferentValue(), "fieldToIgnore"));
-            assertEquals("No values registered for <class com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo>", exception.getMessage());
+            assertEquals("Unable to find a public no-arg constructor for <class com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo>", exception.getMessage());
         } finally { //if this test fails, we don't pollute others
             objectFactory.registerClassAndValues(ReadOnlyPojo.class, value, differentValue);
         }
