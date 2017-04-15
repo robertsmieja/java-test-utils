@@ -76,7 +76,7 @@ public class GettersAndSettersUtils {
         ensureFieldCanHandleDifferentValues(value, differentValue, getter, setter);
         ensureFieldCanHandleNullValues(value, getter, setter);
     }
-    
+
     static ImmutablePair<Method, Method> getGetterAndSetterForField(Field field) {
         Method getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
         if (getter == null) {

@@ -18,13 +18,11 @@ It currently consists of a set of utilities to simplify unit testing of all gett
 
 The library is currently available on JCenter at the following [repository](https://bintray.com/robertsmieja/maven/java-test-utils).
 
-There is no current stable release yet, but I've published a "milestone" release that should be usable.
+There is no current stable release yet, but I've published a "milestone" release that should be relatively stable and usable.
 See [this unit test](src/test/java/com/robertsmieja/test/utils/junit/SimplePojoTests.java) as an example of how to use the current implementation.
 
-The library should be compatible with JUnit 4 projects, but may not fully fleshed out for those.
-See [this example JUnit 4 project](testProjects/junit4-java).
-
-Currently the ToString tests are lacking JUnit 4 compatibility.
+The library is compatible with JUnit 4 projects.
+See [this example JUnit 4 Java project](testProjects/junit4-java).
 
 ### Development Requirements:
 * Java 1.8 or newer
@@ -32,7 +30,7 @@ Currently the ToString tests are lacking JUnit 4 compatibility.
 * IDE support for JUnit 5 (Currently only IntelliJ IDEA)
 
 ### Issues
-If there are any bugs, or ideas on how to improve these classes, please open a new GitHub issue.
+If there are any bugs, or ideas on how to improve these library, please open a new GitHub issue.
 
 ### License
 The code is licensed under Apache 2.0. 
