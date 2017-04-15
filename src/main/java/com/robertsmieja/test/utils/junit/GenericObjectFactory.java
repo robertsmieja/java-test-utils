@@ -203,14 +203,18 @@ public class GenericObjectFactory implements ObjectFactory {
 
     protected <T> void setValueForField(Field field, T object, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         Method setter = getSetterForField(field);
+
+        if (setter == null) {
+            throw new ObjectFactoryException("No setter for <" + field + ">");
+        }
+
         Class<?> desiredType = field.getType();
         Object valueToSet;
 
-        if (doesClassExistInCache(desiredType)){
+        if (doesClassExistInCache(desiredType)) {
             valueToSet = getValueFromMapOrDefaultMap(desiredType, valueMap);
         } else {
             valueToSet = createObjectForClass(desiredType, valueMap);
-//            throw new ObjectFactoryException("No values registered for <" + field.getType() + ">");
         }
 
         try {

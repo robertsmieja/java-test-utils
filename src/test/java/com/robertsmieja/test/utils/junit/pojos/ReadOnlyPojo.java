@@ -20,6 +20,8 @@ public class ReadOnlyPojo {
     private long id;
     private String coolData;
 
+    public ReadOnlyPojo(){}
+
     public ReadOnlyPojo(long id, String coolData) {
         this.id = id;
         this.coolData = coolData;

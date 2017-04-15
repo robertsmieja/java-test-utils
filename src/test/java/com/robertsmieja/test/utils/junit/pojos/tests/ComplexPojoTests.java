@@ -20,12 +20,10 @@ import com.robertsmieja.test.utils.junit.GenericObjectFactory;
 import com.robertsmieja.test.utils.junit.GettersAndSettersUtils;
 import com.robertsmieja.test.utils.junit.ObjectInstantiatorForTests;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
+import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
 import com.robertsmieja.test.utils.junit.pojos.ComplexPojo;
 import com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -66,8 +64,8 @@ public class ComplexPojoTests implements ObjectInstantiatorForTests<ComplexPojo>
     public void exceptionIsThrownWhenUnableToCreateADefaultValueForAField() throws ObjectFactoryException, InvocationTargetException, IllegalAccessException {
         objectFactory.clearValuesForClass(ReadOnlyPojo.class);
         try {
-            ObjectFactoryException exception = assertThrows(ObjectFactoryException.class, () -> GettersAndSettersUtils.runGettersAndSettersTestOnField(createValue(), createDifferentValue(), "fieldToIgnore"));
-            assertEquals("Unable to find a public no-arg constructor for <class com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo>", exception.getMessage());
+            ObjectFactoryException exception = assertThrows(ObjectFactoryException.class, () -> objectFactory.getInstanceOfClass(ReadOnlyPojo.class));
+            assertEquals("No setter for <private long com.robertsmieja.test.utils.junit.pojos.ReadOnlyPojo.id>", exception.getMessage());
         } finally { //if this test fails, we don't pollute others
             objectFactory.registerClassAndValues(ReadOnlyPojo.class, value, differentValue);
         }

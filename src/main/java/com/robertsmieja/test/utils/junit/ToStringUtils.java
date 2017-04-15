@@ -45,7 +45,7 @@ public class ToStringUtils {
         ensureSameValuesHaveSameToStrings(value, differentValue);
     }
 
-    static <T> void ensureDefaultToStringIsNotUsed(Class<T> classUnderTest){
+    static <T> void ensureDefaultToStringIsNotUsed(Class<T> classUnderTest) {
         Internal.doNotUseDefaultMethod(classUnderTest, "toString");
     }
 

@@ -17,6 +17,7 @@
 package com.robertsmieja.test.utils.junit.pojos;
 
 public class ComplexPojo {
+    private static final String CONSTANT = "CONSTANT";
     private ReadOnlyPojo fieldToIgnore;
     private String stringValue;
     private Integer integerValue;

@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.robertsmieja.test.utils.junit.Internal.failToFindMethodForField;
+import static java.lang.reflect.Modifier.isFinal;
 
 /**
  * This class provides a public API to invoke the GettersAndSetters tests.
@@ -65,6 +66,7 @@ public class GettersAndSettersUtils {
         return allFields.stream()
                 .filter(field -> !field.isSynthetic())
                 .filter(field -> !excludedFields.contains(field))
+                .filter(field -> !isFinal(field.getModifiers()))
                 .collect(Collectors.toList());
     }
 

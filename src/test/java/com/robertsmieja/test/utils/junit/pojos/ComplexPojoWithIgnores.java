@@ -19,6 +19,7 @@ package com.robertsmieja.test.utils.junit.pojos;
 import com.robertsmieja.test.utils.junit.annotations.IgnoreForTests;
 
 public class ComplexPojoWithIgnores {
+    private static final String CONSTANT = "CONSTANT";
     @IgnoreForTests
     private ReadOnlyPojo fieldToIgnore;
     private String stringValue;

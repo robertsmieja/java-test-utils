@@ -22,9 +22,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static com.robertsmieja.test.utils.junit.ToStringUtils.ensureDefaultToStringIsNotUsed;
-import static com.robertsmieja.test.utils.junit.ToStringUtils.ensureDifferentValuesHaveDifferentToStrings;
-import static com.robertsmieja.test.utils.junit.ToStringUtils.ensureSameValuesHaveSameToStrings;
+import static com.robertsmieja.test.utils.junit.ToStringUtils.*;
 
 /**
  * A set of tests for the toString() method.
