@@ -20,6 +20,7 @@ class SimplePojo {
     String stringValue
     Integer integerValue
     Long longValue
+    def defValue
 
     boolean equals(o) {
         if (this.is(o)) return true
@@ -27,6 +28,7 @@ class SimplePojo {
 
         SimplePojo that = (SimplePojo) o
 
+        if (defValue != that.defValue) return false
         if (integerValue != that.integerValue) return false
         if (longValue != that.longValue) return false
         if (stringValue != that.stringValue) return false
@@ -39,15 +41,17 @@ class SimplePojo {
         result = (stringValue != null ? stringValue.hashCode() : 0)
         result = 31 * result + (integerValue != null ? integerValue.hashCode() : 0)
         result = 31 * result + (longValue != null ? longValue.hashCode() : 0)
+        result = 31 * result + (defValue != null ? defValue.hashCode() : 0)
         return result
     }
 
     @Override
-    String toString() {
+    public String toString() {
         return "SimplePojo{" +
                 "stringValue='" + stringValue + '\'' +
                 ", integerValue=" + integerValue +
                 ", longValue=" + longValue +
+                ", defValue=" + defValue +
                 '}';
     }
 }

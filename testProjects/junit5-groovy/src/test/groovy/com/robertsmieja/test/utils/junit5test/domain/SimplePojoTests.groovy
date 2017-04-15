@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.robertsmieja.test.utils.junit4test.domain
+package com.robertsmieja.test.utils.junit5test.domain
 
 import com.robertsmieja.test.utils.junit.AllBasicTests
 
