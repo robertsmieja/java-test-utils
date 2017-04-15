@@ -76,7 +76,7 @@ public class GettersAndSettersUtils {
         ensureFieldCanHandleDifferentValues(value, differentValue, getter, setter);
         ensureFieldCanHandleNullValues(value, getter, setter);
     }
-
+    
     static ImmutablePair<Method, Method> getGetterAndSetterForField(Field field) {
         Method getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
         if (getter == null) {
@@ -121,5 +121,24 @@ public class GettersAndSettersUtils {
 
     static Method getSetterForField(Field field) {
         return MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.SET_METHOD_PREFIX, field), field.getType());
+    }
+
+    /**
+     * Run the tests only on one specific field for the passed in objects
+     *
+     * @param value          An instance of the object under test
+     * @param differentValue An instance of the object under test that contains different values in it's fields
+     * @param fieldName      The name of hte field to test
+     * @param <T>            The class under test
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    public static <T> void runGettersAndSettersTestOnField(T value, T differentValue, String fieldName) throws InvocationTargetException, IllegalAccessException {
+        Class<?> aClass = value.getClass();
+        Field field = FieldUtils.getField(aClass, fieldName, true);
+        if (field == null) {
+            Assertions.fail("Field <" + fieldName + "> not found on <" + aClass + ">");
+        }
+        runGettersAndSettersTestOnField(value, differentValue, field);
     }
 }

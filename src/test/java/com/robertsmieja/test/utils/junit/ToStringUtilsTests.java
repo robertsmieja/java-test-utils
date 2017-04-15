@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-import com.robertsmieja.test.utils.junit.GenericObjectFactory;
+package com.robertsmieja.test.utils.junit;import com.robertsmieja.test.utils.junit.GenericObjectFactory;
 import com.robertsmieja.test.utils.junit.ToStringUtils;
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 import com.robertsmieja.test.utils.junit.interfaces.ObjectFactory;
