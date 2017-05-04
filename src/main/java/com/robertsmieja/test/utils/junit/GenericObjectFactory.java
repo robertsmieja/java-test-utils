@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 
 import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getFields;
 import static com.robertsmieja.test.utils.junit.GettersAndSettersUtils.getSetterForField;
@@ -111,6 +112,7 @@ public class GenericObjectFactory implements ObjectFactory {
     final Map<Class<?>, Object> additionalClassToValuesMap = new ConcurrentHashMap<>();
     final Map<Class<?>, Object> additionalClassToDifferentValuesMap = new ConcurrentHashMap<>();
     protected boolean cacheInstances;
+    protected Predicate<Field> fieldFilterPredicate = field -> true;
 
     /**
      * Default constructor
@@ -141,6 +143,19 @@ public class GenericObjectFactory implements ObjectFactory {
 
     public void setCacheInstances(boolean cacheInstances) {
         this.cacheInstances = cacheInstances;
+    }
+
+    public Predicate<Field> getFieldFilterPredicate() {
+        return fieldFilterPredicate;
+    }
+
+    /**
+     * Allows specifying a predicate to filter out {@link Field}s that should be ignored when creating objects.
+     *
+     * @param fieldFilterPredicate Returns true if the {@link Field} should be populated
+     */
+    public void setFieldFilterPredicate(Predicate<Field> fieldFilterPredicate) {
+        this.fieldFilterPredicate = fieldFilterPredicate;
     }
 
     @Override
@@ -193,7 +208,7 @@ public class GenericObjectFactory implements ObjectFactory {
 
     protected <T> T createObjectForClass(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
         T object = Internal.createObjectFromDefaultConstructor(aClass);
-        List<Field> fields = getFields(aClass);
+        List<Field> fields = getFields(aClass, fieldFilterPredicate);
 
         for (Field field : fields) {
             setValueForField(field, object, valueMap);

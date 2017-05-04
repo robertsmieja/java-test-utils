@@ -27,6 +27,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.robertsmieja.test.utils.junit.Internal.failToFindMethodForField;
@@ -47,26 +48,45 @@ public class GettersAndSettersUtils {
      * @param value          An instance of the object under test
      * @param differentValue An instance of the object under test that contains different values in it's fields
      * @param <T>            The class under test
+     *
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws InvocationTargetException
      */
     public static <T> void runAllGettersAndSettersTests(T value, T differentValue) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        runAllGettersAndSettersTests(value, differentValue, field -> true);
+    }
+
+    /**
+     * Runs all tests relating to Getters and Setters for the passed in objects
+     *
+     * @param value          An instance of the object under test
+     * @param differentValue An instance of the object under test that contains different values in it's fields
+     * @param fieldPredicate A predicate to filter {@link Field}s from the {@link Class} under test.
+     *                       The predicate should returns true if a field should be tested.
+     * @param <T>            The class under test
+     *
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws InvocationTargetException
+     */
+    public static <T> void runAllGettersAndSettersTests(T value, T differentValue, Predicate<Field> fieldPredicate) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         Class<T> classUnderTest = (Class<T>) value.getClass();
-        List<Field> fieldsToTest = GettersAndSettersUtils.getFields(classUnderTest);
+        List<Field> fieldsToTest = GettersAndSettersUtils.getFields(classUnderTest, fieldPredicate);
 
         for (Field field : fieldsToTest) {
             runGettersAndSettersTestOnField(value, differentValue, field);
         }
     }
 
-    static List<Field> getFields(Class<?> aClass) {
+    static List<Field> getFields(Class<?> aClass, Predicate<Field> fieldPredicate) {
         List<Field> allFields = FieldUtils.getAllFieldsList(aClass);
         List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
         return allFields.stream()
                 .filter(field -> !field.isSynthetic())
                 .filter(field -> !excludedFields.contains(field))
                 .filter(field -> !isFinal(field.getModifiers()))
+                .filter(fieldPredicate)
                 .collect(Collectors.toList());
     }
 
@@ -132,6 +152,7 @@ public class GettersAndSettersUtils {
      * @param differentValue An instance of the object under test that contains different values in it's fields
      * @param fieldName      The name of hte field to test
      * @param <T>            The class under test
+     *
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
