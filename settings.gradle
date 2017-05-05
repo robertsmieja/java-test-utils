@@ -1,5 +1,6 @@
 include 'junit4-java', 'junit4-groovy'
 include 'junit5-java', 'junit5-groovy'
+include 'junit4-grails3'
 
 rootProject.name = 'java-test-utils'
 rootProject.children.each {project ->

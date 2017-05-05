@@ -149,11 +149,7 @@ public class GenericObjectFactory implements ObjectFactory {
         return fieldFilterPredicate;
     }
 
-    /**
-     * Allows specifying a predicate to filter out {@link Field}s that should be ignored when creating objects.
-     *
-     * @param fieldFilterPredicate Returns true if the {@link Field} should be populated
-     */
+    @Override
     public void setFieldFilterPredicate(Predicate<Field> fieldFilterPredicate) {
         this.fieldFilterPredicate = fieldFilterPredicate;
     }

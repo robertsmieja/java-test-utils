@@ -18,6 +18,9 @@ package com.robertsmieja.test.utils.junit.interfaces;
 
 import com.robertsmieja.test.utils.junit.exceptions.ObjectFactoryException;
 
+import java.lang.reflect.Field;
+import java.util.function.Predicate;
+
 public interface ObjectFactory {
     /**
      * Registers a set of values to use when constructing objects, and instances of aClass are needed
@@ -42,7 +45,9 @@ public interface ObjectFactory {
      *
      * @param aClass
      * @param <T>
+     *
      * @return An instance of aClass
+     *
      * @throws ObjectFactoryException
      */
     <T> T getInstanceOfClass(Class<T> aClass) throws ObjectFactoryException;
@@ -52,8 +57,17 @@ public interface ObjectFactory {
      *
      * @param aClass
      * @param <T>
+     *
      * @return An instance of aClass
+     *
      * @throws ObjectFactoryException
      */
     <T> T getInstanceOfClassWithDifferentValues(Class<T> aClass) throws ObjectFactoryException;
+
+    /**
+     * Allows specifying a predicate to filter out {@link Field}s that should be ignored when creating objects.
+     *
+     * @param fieldFilterPredicate Returns true if the {@link Field} should be populated
+     */
+    void setFieldFilterPredicate(Predicate<Field> fieldFilterPredicate);
 }
