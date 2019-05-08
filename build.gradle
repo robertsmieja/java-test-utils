@@ -9,7 +9,7 @@ plugins {
     id 'nebula.info-props' version '5.0.3'
     id 'nebula.info-scm' version '5.0.3'
     id 'nebula.javadoc-jar' version '9.4.5'
-    id 'nebula.maven-publish' version '9.4.5'
+    id 'nebula.maven-publish' version '11.1.0'
     id 'nebula.release' version '10.1.1'
     id 'nebula.source-jar' version '9.4.5'
 }
