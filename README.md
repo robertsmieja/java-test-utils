@@ -9,7 +9,7 @@ It currently consists of a set of utilities to simplify unit testing of all gett
 
 ### Usage
 #### Requirements
-* Java 17 or newer
+* Java 21 or newer
 * Apache Commons Lang3 at runtime
 * Apache Commons Collections 4 at runtime
 * JUnit 5 API at compile time
@@ -23,10 +23,11 @@ The library is compatible with JUnit 4 projects.
 See [this example JUnit 4 Java project](testProjects/junit4-java).
 
 ### Development Requirements:
-* Java 17 or newer
+* Java 21 or newer
 * Gradle 8.12 or newer
 * JUnit 5 (latest)
 * IDE support for JUnit 5 (IntelliJ IDEA, Eclipse, VS Code, etc.)
+* Kotlin support (optional, for Kotlin-based projects)
 
 ### Building
 ```bash

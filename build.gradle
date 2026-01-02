@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'eclipse'
     id 'jacoco'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
 }
 
 group = 'com.robertsmieja'
@@ -10,10 +11,14 @@ version = '0.1.0'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
     withJavadocJar()
     withSourcesJar()
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 repositories {
