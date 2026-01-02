@@ -1,17 +1,28 @@
 /**
- * Project that consumes our library in order to check compatibility with JUnit 4
+ * Project that consumes our library in order to check compatibility with JUnit 4 and Groovy
  */
 
-apply plugin: 'eclipse'
-apply plugin: 'groovy'
+plugins {
+    id 'groovy'
+    id 'eclipse'
+}
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 dependencies {
-    compile 'org.codehaus.groovy:groovy:2.4.11'
-    testCompile project(':')
-    testCompile 'junit:junit:4.12'
+    implementation 'org.apache.groovy:groovy:4.0.24'
+    testImplementation project(':')
+    testImplementation 'junit:junit:4.13.2'
+}
+
+tasks.named('test') {
+    useJUnit()
 }

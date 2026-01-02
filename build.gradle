@@ -1,106 +1,88 @@
 plugins {
-    id 'com.gradle.build-scan' version '2.3'
-    id "com.jfrog.bintray" version "1.8.4"
-    id 'nebula.contacts' version '5.0.3'
-    id 'nebula.info-basic' version '5.0.3'
-    id 'nebula.info-broker' version '5.0.3'
-    id 'nebula.info-jar' version '5.0.3'
-    id 'nebula.info-owners' version '5.0.3'
-    id 'nebula.info-props' version '5.0.3'
-    id 'nebula.info-scm' version '5.0.3'
-    id 'nebula.javadoc-jar' version '12.0.0'
-    id 'nebula.maven-publish' version '12.0.0'
-    id 'nebula.release' version '10.1.2'
-    id 'nebula.source-jar' version '12.0.0'
+    id 'java-library'
+    id 'maven-publish'
+    id 'eclipse'
+    id 'jacoco'
 }
 
-group 'com.robertsmieja'
+group = 'com.robertsmieja'
+version = '0.1.0'
 
-apply plugin: 'eclipse'
-apply plugin: 'jacoco'
-apply plugin: 'java-library'
-apply plugin: 'maven-publish'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withJavadocJar()
+    withSourcesJar()
+}
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.apache.commons:commons-lang3:3.9'
-    implementation 'org.apache.commons:commons-collections4:4.3'
-    implementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.4.2'
-    testRuntimeOnly 'org.junit.platform:junit-platform-runner:1.4.2'
+    implementation 'org.apache.commons:commons-lang3:3.17.0'
+    implementation 'org.apache.commons:commons-collections4:4.5.0-M2'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.11.4'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
 }
 
-contacts {
-    'robertsmieja@robertsmieja.com' {
-        moniker 'Robert Smieja'
-        github 'robertsmieja'
-        role 'owner'
-    }
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
-/* Javac config */
-//compileJava {
-//    options.compilerArgs << "-Xlint"
-//}
-
-/* BinTray config */
-tasks.release.dependsOn tasks.bintrayUpload
-
-bintray {
-    user = project.hasProperty('bintrayUser') ? "$bintrayUser" : System.env.'BINTRAY_USER'
-    key = project.hasProperty('bintrayApiKey') ? "$bintrayApiKey" : System.env.'BINTRAY_API_KEY'
-    publications = ['nebula']
-    dryRun = false
-    publish = true
-    pkg {
-        repo = 'maven'
-        name = "${project.name}"
-        desc = hasProperty('description') ? description : ''
-        websiteUrl = "https://github.com/robertsmieja/${project.name}"
-        issueTrackerUrl = "https://github.com/robertsmieja/${project.name}/issues"
-        vcsUrl = "https://github.com/robertsmieja/${project.name}.git"
-        licenses = ['Apache-2.0']
-        publicDownloadNumbers = true
-        attributes = [:]
-        version {
-            name = project.version
-            vcsTag = "${project.version}"
-            attributes = [:]
-            gpg {
-                sign = true
-            }
-//            mavenCentralSync {
-//                user = ''
-//                password = ''
-//            }
-        }
-    }
-}
-
-/* Build Scan config */
-buildScan {
-    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
-    termsOfServiceAgree = 'yes'
-    if (System.getenv('CI')) {
-        publishAlways()
-        tag 'CI'
-    }
+tasks.named('compileJava') {
+    options.compilerArgs.add('-Xlint:all')
+    options.compilerArgs.add('-Xlint:-processing')
 }
 
 /* Code Coverage */
 jacoco {
-    toolVersion = '0.8.1'
+    toolVersion = '0.8.12'
 }
 
-jacocoTestReport {
+tasks.named('jacocoTestReport') {
     reports {
-        xml.enabled true
-        csv.enabled false
+        xml.required = true
+        csv.required = false
+        html.required = true
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('jacocoTestReport')
+}
+
+/* Publishing configuration */
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = 'Java Test Utils'
+                description = 'A set of common utilities for testing Java code with JUnit'
+                url = "https://github.com/robertsmieja/${project.name}"
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'robertsmieja'
+                        name = 'Robert Smieja'
+                        email = 'robertsmieja@robertsmieja.com'
+                    }
+                }
+                scm {
+                    connection = "scm:git:git://github.com/robertsmieja/${project.name}.git"
+                    developerConnection = "scm:git:ssh://github.com:robertsmieja/${project.name}.git"
+                    url = "https://github.com/robertsmieja/${project.name}"
+                }
+            }
+        }
     }
 }
 

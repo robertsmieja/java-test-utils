@@ -2,15 +2,26 @@
  * Project that consumes our library in order to check compatibility with JUnit 4
  */
 
-apply plugin: 'eclipse'
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'eclipse'
+}
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 dependencies {
-    testCompile project(':')
-    testCompile 'junit:junit:4.12'
+    testImplementation project(':')
+    testImplementation 'junit:junit:4.13.2'
+}
+
+tasks.named('test') {
+    useJUnit()
 }
