@@ -1,7 +1,6 @@
 Java Test Utils
 ===============
 
-[![Build Status](https://travis-ci.org/robertsmieja/java-test-utils.svg?branch=master)](https://travis-ci.org/robertsmieja/java-test-utils)
 [![codecov](https://codecov.io/gh/robertsmieja/java-test-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/robertsmieja/java-test-utils)
 
 This project is intended to serve as a set of common utilities used in testing, between my personal projects.
