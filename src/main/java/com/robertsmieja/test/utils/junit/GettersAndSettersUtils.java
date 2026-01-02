@@ -72,7 +72,7 @@ public class GettersAndSettersUtils {
      */
     public static <T> void runAllGettersAndSettersTests(T value, T differentValue, Predicate<Field> fieldPredicate) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         Class<T> classUnderTest = (Class<T>) value.getClass();
-        List<Field> fieldsToTest = GettersAndSettersUtils.getFields(classUnderTest, fieldPredicate);
+        var fieldsToTest = GettersAndSettersUtils.getFields(classUnderTest, fieldPredicate);
 
         for (Field field : fieldsToTest) {
             runGettersAndSettersTestOnField(value, differentValue, field);
@@ -80,8 +80,8 @@ public class GettersAndSettersUtils {
     }
 
     static List<Field> getFields(Class<?> aClass, Predicate<Field> fieldPredicate) {
-        List<Field> allFields = FieldUtils.getAllFieldsList(aClass);
-        List<Field> excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
+        var allFields = FieldUtils.getAllFieldsList(aClass);
+        var excludedFields = FieldUtils.getFieldsListWithAnnotation(aClass, IgnoreForTests.class);
         return allFields.stream()
                 .filter(field -> !field.isSynthetic())
                 .filter(field -> !excludedFields.contains(field))
@@ -91,23 +91,23 @@ public class GettersAndSettersUtils {
     }
 
     static <T> void runGettersAndSettersTestOnField(T value, T differentValue, Field field) throws InvocationTargetException, IllegalAccessException {
-        ImmutablePair<Method, Method> getterAndSetter = GettersAndSettersUtils.getGetterAndSetterForField(field);
-        Method getter = getterAndSetter.getLeft();
-        Method setter = getterAndSetter.getRight();
+        var getterAndSetter = GettersAndSettersUtils.getGetterAndSetterForField(field);
+        var getter = getterAndSetter.getLeft();
+        var setter = getterAndSetter.getRight();
 
         ensureFieldCanHandleDifferentValues(value, differentValue, getter, setter);
         ensureFieldCanHandleNullValues(value, getter, setter);
     }
 
     static ImmutablePair<Method, Method> getGetterAndSetterForField(Field field) {
-        Method getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
+        var getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.IS_METHOD_PREFIX, field));
         if (getter == null) {
             getter = MethodUtils.getAccessibleMethod(field.getDeclaringClass(), accessorMethodNameForField(GettersAndSettersTests.GET_METHOD_PREFIX, field));
         }
         if (getter == null) {
             failToFindMethodForField(field, accessorMethodNameForField(GettersAndSettersTests.GET_METHOD_PREFIX, field));
         }
-        Method setter = getSetterForField(field);
+        var setter = getSetterForField(field);
         if (setter == null) {
             failToFindMethodForField(field, accessorMethodNameForField(GettersAndSettersTests.SET_METHOD_PREFIX, field));
         }
@@ -115,11 +115,11 @@ public class GettersAndSettersUtils {
     }
 
     static <T> void ensureFieldCanHandleDifferentValues(T value, T differentValue, Method getter, Method setter) throws IllegalAccessException, InvocationTargetException {
-        Object originalFieldValue = getter.invoke(value);
-        Object differentFieldValue = getter.invoke(differentValue);
+        var originalFieldValue = getter.invoke(value);
+        var differentFieldValue = getter.invoke(differentValue);
 
         setter.invoke(value, differentFieldValue);
-        Object newFieldValue = getter.invoke(value);
+        var newFieldValue = getter.invoke(value);
 
         Assertions.assertNotEquals(originalFieldValue, newFieldValue);
 
@@ -129,10 +129,9 @@ public class GettersAndSettersUtils {
     }
 
     static <T> void ensureFieldCanHandleNullValues(T value, Method getter, Method setter) throws IllegalAccessException, InvocationTargetException {
-        Object newFieldValue;
         if (!getter.getReturnType().isPrimitive()) {
             setter.invoke(value, (Object) null);
-            newFieldValue = getter.invoke(value);
+            var newFieldValue = getter.invoke(value);
             Assertions.assertNull(newFieldValue);
         }
     }
@@ -157,8 +156,8 @@ public class GettersAndSettersUtils {
      * @throws IllegalAccessException
      */
     public static <T> void runGettersAndSettersTestOnField(T value, T differentValue, String fieldName) throws InvocationTargetException, IllegalAccessException {
-        Class<?> aClass = value.getClass();
-        Field field = FieldUtils.getField(aClass, fieldName, true);
+        var aClass = value.getClass();
+        var field = FieldUtils.getField(aClass, fieldName, true);
         if (field == null) {
             Assertions.fail("Field <" + fieldName + "> not found on <" + aClass + ">");
         }

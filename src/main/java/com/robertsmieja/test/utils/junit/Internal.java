@@ -38,7 +38,7 @@ class Internal {
     } //package default for code coverage
 
     static <T> T createObjectFromDefaultConstructor(Class<T> aClass) throws ObjectFactoryException {
-        Constructor<T> constructor = ConstructorUtils.getAccessibleConstructor(aClass);
+        var constructor = ConstructorUtils.getAccessibleConstructor(aClass);
         if (constructor == null) {
             throw new ObjectFactoryException("Unable to find a public no-arg constructor for <" + aClass + ">");
         }
@@ -51,7 +51,7 @@ class Internal {
     }
 
     static void doNotUseDefaultMethod(Class<?> aClass, String methodName, Class<?>... parameterTypes) {
-        Method methodToCheck = MethodUtils.getAccessibleMethod(aClass, methodName, parameterTypes);
+        var methodToCheck = MethodUtils.getAccessibleMethod(aClass, methodName, parameterTypes);
         Assertions.assertNotEquals(Object.class, methodToCheck.getDeclaringClass(), methodName + "() method not implemented");
     }
 
