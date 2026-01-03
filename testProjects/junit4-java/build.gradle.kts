@@ -3,8 +3,8 @@
  */
 
 plugins {
-    id 'java'
-    id 'eclipse'
+    java
+    eclipse
 }
 
 repositories {
@@ -18,10 +18,10 @@ java {
 }
 
 dependencies {
-    testImplementation project(':')
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation(project(":"))
+    testImplementation("junit:junit:4.13.2")
 }
 
-tasks.named('test') {
+tasks.named<Test>("test") {
     useJUnit()
 }

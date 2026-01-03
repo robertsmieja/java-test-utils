@@ -24,10 +24,9 @@ See [this example JUnit 4 Java project](testProjects/junit4-java).
 
 ### Development Requirements:
 * Java 21 or newer
-* Gradle 8.12 or newer
+* Gradle 8.12 or newer (with Kotlin DSL build scripts)
 * JUnit 5 (latest)
 * IDE support for JUnit 5 (IntelliJ IDEA, Eclipse, VS Code, etc.)
-* Kotlin support (optional, for Kotlin-based projects)
 
 ### Building
 ```bash

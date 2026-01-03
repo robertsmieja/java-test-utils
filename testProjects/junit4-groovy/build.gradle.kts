@@ -3,8 +3,8 @@
  */
 
 plugins {
-    id 'groovy'
-    id 'eclipse'
+    groovy
+    eclipse
 }
 
 repositories {
@@ -18,11 +18,11 @@ java {
 }
 
 dependencies {
-    implementation 'org.apache.groovy:groovy:4.0.24'
-    testImplementation project(':')
-    testImplementation 'junit:junit:4.13.2'
+    implementation("org.apache.groovy:groovy:4.0.24")
+    testImplementation(project(":"))
+    testImplementation("junit:junit:4.13.2")
 }
 
-tasks.named('test') {
+tasks.named<Test>("test") {
     useJUnit()
 }
