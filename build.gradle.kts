@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     implementation("org.apache.commons:commons-lang3:3.20.0")
-    implementation("org.apache.commons:commons-collections4:4.5.0-M2")
+    implementation("org.apache.commons:commons-collections4:4.5.0")
     implementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
