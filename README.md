@@ -15,9 +15,7 @@ It currently consists of a set of utilities to simplify unit testing of all gett
 * Apache Commons Collections 4 at runtime
 * JUnit 5 API at compile time
 
-The library is currently available on JCenter at the following [repository](https://bintray.com/robertsmieja/maven/java-test-utils).
-
-There is no current stable release yet, but I've published a "milestone" release that should be relatively stable and usable.
+There is no current stable release yet, but milestone releases are planned.
 See [this unit test](src/test/java/com/robertsmieja/test/utils/junit/SimplePojoTests.java) as an example of how to use the current implementation.
 
 The library is compatible with JUnit 4 projects.
@@ -53,7 +51,7 @@ This project uses GitHub Actions for continuous integration and deployment:
 - **Dependabot**: Keeps dependencies up to date automatically
 
 ### Issues
-If there are any bugs, or ideas on how to improve these library, please open a new GitHub issue.
+If there are any bugs, or ideas on how to improve this library, please open a new GitHub issue.
 
 ### License
 The code is licensed under Apache 2.0. 
