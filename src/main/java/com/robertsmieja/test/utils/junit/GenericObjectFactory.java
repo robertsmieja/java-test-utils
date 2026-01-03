@@ -56,14 +56,14 @@ public class GenericObjectFactory implements ObjectFactory {
     final static Map<Class<?>, Object> primitivesToDifferentValuesMap;
 
     static {
-        Map<Class<?>, Object> initPrimitivesToValuesMap = new HashMap<>(NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS);
-        Map<Class<?>, Object> initPrimitivesToDifferentValuesMap = new HashMap<>(NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS);
+        var initPrimitivesToValuesMap = new HashMap<Class<?>, Object>(NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS);
+        var initPrimitivesToDifferentValuesMap = new HashMap<Class<?>, Object>(NUMBER_OF_PRIMITIVE_CLASSES_INCLUDING_ARRAYS);
 
         //primitives
-        initPrimitivesToValuesMap.put(Boolean.class, Boolean.valueOf(false));
+        initPrimitivesToValuesMap.put(Boolean.class, Boolean.FALSE);
         initPrimitivesToValuesMap.put(Byte.class, Byte.valueOf((byte) 0x11));
         initPrimitivesToValuesMap.put(Character.class, Character.valueOf('b'));
-        initPrimitivesToValuesMap.put(Double.class, Double.valueOf(-2.22F));
+        initPrimitivesToValuesMap.put(Double.class, Double.valueOf(-2.22));
         initPrimitivesToValuesMap.put(Float.class, Float.valueOf(-1.1F));
         initPrimitivesToValuesMap.put(Integer.class, Integer.valueOf(-100));
         initPrimitivesToValuesMap.put(Long.class, Long.valueOf(-1000L));
@@ -71,23 +71,23 @@ public class GenericObjectFactory implements ObjectFactory {
         initPrimitivesToValuesMap.put(String.class, "value");
 
         //arrays
-        initPrimitivesToValuesMap.put(Boolean[].class, new Boolean[]{Boolean.valueOf(false)});
-        initPrimitivesToValuesMap.put(Byte[].class, new Byte[]{Byte.valueOf((byte) 0x11)});
-        initPrimitivesToValuesMap.put(Character[].class, new Character[]{Character.valueOf('b')});
-        initPrimitivesToValuesMap.put(Double[].class, new Double[]{Double.valueOf(-2.22F)});
-        initPrimitivesToValuesMap.put(Float[].class, new Float[]{Float.valueOf(-1.1F)});
-        initPrimitivesToValuesMap.put(Integer[].class, new Integer[]{Integer.valueOf(-100)});
-        initPrimitivesToValuesMap.put(Long[].class, new Long[]{Long.valueOf(-1000L)});
-        initPrimitivesToValuesMap.put(Short[].class, new Short[]{Short.valueOf((short) -10)});
+        initPrimitivesToValuesMap.put(Boolean[].class, new Boolean[]{Boolean.FALSE});
+        initPrimitivesToValuesMap.put(Byte[].class, new Byte[]{(byte) 0x11});
+        initPrimitivesToValuesMap.put(Character[].class, new Character[]{'b'});
+        initPrimitivesToValuesMap.put(Double[].class, new Double[]{-2.22});
+        initPrimitivesToValuesMap.put(Float[].class, new Float[]{-1.1F});
+        initPrimitivesToValuesMap.put(Integer[].class, new Integer[]{-100});
+        initPrimitivesToValuesMap.put(Long[].class, new Long[]{-1000L});
+        initPrimitivesToValuesMap.put(Short[].class, new Short[]{(short) -10});
         initPrimitivesToValuesMap.put(String[].class, new String[]{"value"});
 
         primitivesToValuesMap = UnmodifiableMap.unmodifiableMap(initPrimitivesToValuesMap);
 
         //primitives
-        initPrimitivesToDifferentValuesMap.put(Boolean.class, Boolean.valueOf(true));
+        initPrimitivesToDifferentValuesMap.put(Boolean.class, Boolean.TRUE);
         initPrimitivesToDifferentValuesMap.put(Byte.class, Byte.valueOf((byte) 0xCC));
         initPrimitivesToDifferentValuesMap.put(Character.class, Character.valueOf('d'));
-        initPrimitivesToDifferentValuesMap.put(Double.class, Double.valueOf(2.22F));
+        initPrimitivesToDifferentValuesMap.put(Double.class, Double.valueOf(2.22));
         initPrimitivesToDifferentValuesMap.put(Float.class, Float.valueOf(1.1F));
         initPrimitivesToDifferentValuesMap.put(Integer.class, Integer.valueOf(100));
         initPrimitivesToDifferentValuesMap.put(Long.class, Long.valueOf(1000L));
@@ -95,14 +95,14 @@ public class GenericObjectFactory implements ObjectFactory {
         initPrimitivesToDifferentValuesMap.put(String.class, "differentValue");
 
         //arrays
-        initPrimitivesToDifferentValuesMap.put(Boolean[].class, new Boolean[]{Boolean.valueOf(true)});
-        initPrimitivesToDifferentValuesMap.put(Byte[].class, new Byte[]{Byte.valueOf((byte) 0xCC)});
-        initPrimitivesToDifferentValuesMap.put(Character[].class, new Character[]{Character.valueOf('d')});
-        initPrimitivesToDifferentValuesMap.put(Double[].class, new Double[]{Double.valueOf(2.22F)});
-        initPrimitivesToDifferentValuesMap.put(Float[].class, new Float[]{Float.valueOf(1.1F)});
-        initPrimitivesToDifferentValuesMap.put(Integer[].class, new Integer[]{Integer.valueOf(100)});
-        initPrimitivesToDifferentValuesMap.put(Long[].class, new Long[]{Long.valueOf(1000L)});
-        initPrimitivesToDifferentValuesMap.put(Short[].class, new Short[]{Short.valueOf((short) 10)});
+        initPrimitivesToDifferentValuesMap.put(Boolean[].class, new Boolean[]{Boolean.TRUE});
+        initPrimitivesToDifferentValuesMap.put(Byte[].class, new Byte[]{(byte) 0xCC});
+        initPrimitivesToDifferentValuesMap.put(Character[].class, new Character[]{'d'});
+        initPrimitivesToDifferentValuesMap.put(Double[].class, new Double[]{2.22});
+        initPrimitivesToDifferentValuesMap.put(Float[].class, new Float[]{1.1F});
+        initPrimitivesToDifferentValuesMap.put(Integer[].class, new Integer[]{100});
+        initPrimitivesToDifferentValuesMap.put(Long[].class, new Long[]{1000L});
+        initPrimitivesToDifferentValuesMap.put(Short[].class, new Short[]{(short) 10});
         initPrimitivesToDifferentValuesMap.put(String[].class, new String[]{"differentValue"});
 
         primitivesToDifferentValuesMap = UnmodifiableMap.unmodifiableMap(initPrimitivesToDifferentValuesMap);
@@ -191,7 +191,7 @@ public class GenericObjectFactory implements ObjectFactory {
     }
 
     protected <T> T getInstanceOfClassUsingValueMap(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
-        boolean isInCache = doesClassExistInCache(aClass);
+        var isInCache = doesClassExistInCache(aClass);
         if (isInCache) {
             return (T) getValueFromMapOrDefaultMap(aClass, valueMap);
         }
@@ -203,8 +203,8 @@ public class GenericObjectFactory implements ObjectFactory {
     }
 
     protected <T> T createObjectForClass(Class<T> aClass, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
-        T object = Internal.createObjectFromDefaultConstructor(aClass);
-        List<Field> fields = getFields(aClass, fieldFilterPredicate);
+        var object = Internal.createObjectFromDefaultConstructor(aClass);
+        var fields = getFields(aClass, fieldFilterPredicate);
 
         for (Field field : fields) {
             setValueForField(field, object, valueMap);
@@ -213,13 +213,13 @@ public class GenericObjectFactory implements ObjectFactory {
     }
 
     protected <T> void setValueForField(Field field, T object, Map<Class<?>, Object> valueMap) throws ObjectFactoryException {
-        Method setter = getSetterForField(field);
+        var setter = getSetterForField(field);
 
         if (setter == null) {
             throw new ObjectFactoryException("No setter for <" + field + ">");
         }
 
-        Class<?> desiredType = field.getType();
+        var desiredType = field.getType();
         Object valueToSet;
 
         if (doesClassExistInCache(desiredType)) {
@@ -236,8 +236,8 @@ public class GenericObjectFactory implements ObjectFactory {
     }
 
     protected Object getValueFromMapOrDefaultMap(Class<?> fieldClass, Map<Class<?>, Object> valueMap) {
-        Class<?> nonPrimitiveClass = convertPrimitiveToWrapperOrReturn(fieldClass);
-        Map<Class<?>, Object> defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
+        var nonPrimitiveClass = convertPrimitiveToWrapperOrReturn(fieldClass);
+        var defaultValueMap = getCorrectDefaultValueMapFromClassMap(valueMap);
         return valueMap.getOrDefault(nonPrimitiveClass, defaultValueMap.get(nonPrimitiveClass));
     }
 
