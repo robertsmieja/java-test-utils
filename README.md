@@ -1,6 +1,7 @@
 Java Test Utils
 ===============
 
+[![CI](https://github.com/robertsmieja/java-test-utils/workflows/CI/badge.svg)](https://github.com/robertsmieja/java-test-utils/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/robertsmieja/java-test-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/robertsmieja/java-test-utils)
 
 This project is intended to serve as a set of common utilities used in testing, between my personal projects.
@@ -32,6 +33,24 @@ See [this example JUnit 4 Java project](testProjects/junit4-java).
 ```bash
 ./gradlew build
 ```
+
+### Testing
+```bash
+./gradlew test
+```
+
+### Code Coverage
+```bash
+./gradlew jacocoTestReport
+```
+
+The coverage report will be available at `build/reports/jacoco/test/html/index.html`.
+
+### CI/CD
+This project uses GitHub Actions for continuous integration and deployment:
+- **CI Workflow**: Runs on every push and pull request, testing on Java 21, 22, and 23
+- **Publish Workflow**: Automatically publishes releases to Maven Central
+- **Dependabot**: Keeps dependencies up to date automatically
 
 ### Issues
 If there are any bugs, or ideas on how to improve these library, please open a new GitHub issue.
